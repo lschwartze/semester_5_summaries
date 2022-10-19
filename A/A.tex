@@ -62,5 +62,48 @@ Diese Gruppe hat eine additive Gruppenstruktur durch \[\overline{a} + \overline{
 \textbf{Lemma}:\\
 Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. Dann \[\overline{a} \in (\mathbb{Z}/n\mathbb{Z})^* \Leftrightarrow ggT(a,n) = 1\]
 \textbf{Lemma}:\\
-$\mathbb{Z}/n\mathbb{Z}$ ist Körper $\Leftrightarrow\; n$ ist prim.
+$\mathbb{Z}/n\mathbb{Z}$ ist Körper $\Leftrightarrow\; n$ ist prim.\\
+\textbf{Definition}:\\
+Für eine Gruppe $G$ und eine Teilmenge $S\subset G$ definiert $\langle S \rangle$ die \underline{kleinste Untergruppe}, die $S$ enthält.\\
+\textbf{Proposition}:
+\[\langle S \rangle = \{s_1^{e_1}, ..., s_N^{e_N}: N \in \mathbb{N}, \; e_i \in \mathbb{Z}, s_i \in S\}\]
+\textbf{Definition}:\\
+Sei $g\in G$. $g$ hat (un)endliche Ordnung, wenn \[\langle g \rangle = \{g^e: e \in \mathbb{Z}\}\]
+(un)endlich ist. Es gilt $ord(g) = \left|\langle g \rangle \right|$.\\
+Man definiert $\exp_g: \mathbb{Z} \to \langle g \rangle \subseteq G, \; k \mapsto g^k$ ein Homomorphismus.\\
+\textbf{Theorem}:\\
+$\exp_g$ ist injektiv $\Leftrightarrow g$ hat unendliche Ordnung. Wenn die Ordnung $n$ endlich ist, erhalten wir einen Gruppenisomorphismus \[exp_g: \mathbb{Z}/ n\mathbb{Z} \to \langle g\rangle \subseteq G\]\[\overline{a} = a+n\mathbb{Z} \mapsto g^a\]
+\textbf{Korollar}:
+\[ord(g) = \min\{k \in \mathbb{N}: g^k = 1\}\]
+\textbf{Korollar}:\\
+Sei $g \in G$ mit endlicher Ordnung $n$. Dann $ord(g^k) = \frac{n}{ggT(n,k)}$.\\
+\textbf{Satz} (Lagrange):\\
+Wenn $H\leq G$ und $G$ endlich, dann $\left|H\right| | \left| G \right|$.\\
+\textbf{Korollar}:\\
+Es gilt $ord(g) | \left|G\right|$.
+\subsection{zyklische Gruppen}
+\textbf{Definition}:\\
+Eine Gruppe heißt \underline{zyklisch}, wenn sie von nur einem Element generiert wird. Es gibt einen Isomorphismus \[\exp_g: \mathbb{Z} \to G\] wenn $g$ endliche Ordnung hat. $\mathbb{Z}$ hat zwei Generatoren, $\pm1$. Generell hat $G$ zwei Generatoren, $g$ und $g^{-1}$.\\
+Wenn $G$ ist zyklisch und der Ordnung $n$, dann \[\exp_g: \mathbb{Z}/n\mathbb{Z} \to G\]
+Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. \begin{enumerate}
+	\item $\overline{a}$ generiert $\mathbb{Z}/n\mathbb{Z}$ genau dann, wenn $ord(\overline{a}) = n$.
+	\item $\overline{a}$ hat (additive) Ordnung $n$ genau dann, wenn $ggT(a,n)=1$.
+	\item $\overline{a}$ hat (additive) Ordnung $n$ $\Leftrightarrow$ $\overline{a}$ hat ein \underline{multiplikatives} Inverses. 
+\end{enumerate}
+Es folgt $\overline{a}$ generiert $\mathbb{Z}/n\mathbb{Z} \Leftrightarrow \; \overline{a} \in (\mathbb{Z}/n\mathbb{Z})^*$. Eine endliche Gruppe zyklische Gruppe der Ordnung $n$ besitzt genau $\phi(n)$ Erzeuger.\\
+\textbf{Satz}:\\
+Sei $G$ zyklisch, dann ist jede Untergruppe von $G$ zyklisch.\\
+Wenn $\left|G\right|=n$, und $d|n$, dann existiert genau eine Untergruppe von $G$ der Ordnung $d$.\\
+\textbf{Korollar}:\\
+Sei $G$ zyklisch, von der Ordnung $n$. Dann enthält $G$ für alle $d|n$ genau $\phi(d)$ Elemente der Ordnung $d$.\\
+Es gilt außerdem (für alle Gruppen) \[n = \sum_{d|n} \phi(d)\]
+\textbf{Satz}:\\
+Sei $G$ endlich. Die folgenden Aussagen sind äquivalent:\begin{enumerate}
+	\item $G$ ist zyklisch
+	\item $\forall d$ mit $d|n$ gibt es höchstens $d$ Elemente von $G$ deren Ordnung ein Teiler von $d$ ist. 
+\end{enumerate}
+\textbf{Satz}:\\
+Sei $K$ ein Körper. Dann ist jede endliche Untergruppe von $K^*$ zyklisch. Wenn $K$ endlich ist, ist also $K^*$ endlich.\\
+\textbf{Satz}:\\
+Seien $G_1, ... G_r$ zyklisch. Dann ist $G_1 \times ... \times G_r$ zyklisch genau dann, wenn die Ordnungen paarweise teilerfremd sind. 
 \end{document}
