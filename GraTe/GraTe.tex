@@ -34,6 +34,33 @@
 	\textbf{Proposition}:\\
 	Every finite graph has an unfriendly partition.\\
 	\textbf{Definition} (cycle double cover conjecture):\\
-	Every graph with only edged that lie in cycles has a cycle double cover, i.e. a family of cycles of the graph s.t. each edge lies on exactly two cycles.
+	Every graph with only edges that lie in cycles has a cycle double cover, i.e. a family of cycles on the graph s.t. each edge lies on exactly two cycles. Cycles can be repeated.\\
+	\textbf{Theorem}:\\
+	Every complete graph has a cycle double cover.\\
+	\textbf{Definition} (degree of a vertex):\\
+	The degree of a node gives the number of edges the node lies on \[d_G(v) = \left|\{uv \in E(G)\}\right|\]
+	Minimum degree of a graph $G$ \[\delta(G) = \min_{v \in V(G)} d(v)\]
+	The maximum degree $\Delta(G)$ and the average degree $d(G)$ are defined similarly.\\
+	The average degree can also e written as \[d(G) = \frac{1}{\left|V(G)\right|} \sum_{v \in V(G)} d_G(v) = \frac{2\left|E(G)\right|}{\left|V(G)\right|}\]
+	\textbf{Lemma} (handshake lemma):\\
+	The number of vertices of odd degree is always even.\\
+	\textbf{Theorem} (Mantel's theorem):\\
+	Every graph on $n$ vertices and more than $\frac{n^2}{4}$ edges has a triangle.\\
+	\textbf{Definition}:\\
+	Mantel's theorem creates graphs without any triangles. For any vertex in such a graph the neighborhood doesn't have any edges. A set $X \subseteq V(G)$ with this property is called an \underline{independent set}. \\
+	\section{Paths}
+	\textbf{Proposition}:\\
+	Let $G$ be a graph. Then $G$ has a path of length $\delta(G)$. If $\delta(G) \geq 2$, then there is a cycle of length $\geq \delta(G)+1$.\\
 	
+	Now, let's define a relation on the vertices: \[u\sim v :\Leftrightarrow \exists \text{ a $u-v$ path}\]
+	\textbf{Lemma}:\\
+	$\sim$ is an equivalence relation.
+	\begin{itemize}
+		\item symmetry: if $u-v$ is a path, $v-u$ is a path as well.
+		\item transitivity: if $u-v$ and $v-w$ are paths, $u-w$ is a path.
+		\item reflexivity: $u-u$ is a path.
+	\end{itemize}
+	\textbf{Definition}:\\
+	$G$ is connected, if $\forall u,v \in V(G)$ there is a $u-v$ path.\\
+	The components of $G$ are induced subgraphs on the equivalence classes of $\sim$.
 \end{document}
