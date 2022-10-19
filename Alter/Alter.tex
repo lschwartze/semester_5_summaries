@@ -1,0 +1,34 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{Alter Zusammenfassung}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\section{Analyse von Algorithmen}
+	\subsection{asymptotische Notation}
+	\textbf{Definition} ($\mathcal{O}$-Notation):
+	\[\mathcal{O}(f(n)) = \{g: \exists c>0\; \exists n_0 \; \forall n\geq n_0: g(n) \leq c\cdot f(n)\}\]
+	\textbf{Definition} ($\Omega$-Notation):
+	\[\Omega(f(n)) = \{g: \exists c>0\; \exists n_0 \; \forall n\geq n_0: g(n) \geq c\cdot f(n)\}\]
+	\textbf{Definition} ($\Theta$-Notation): \[\Theta(f(n)) = \mathcal{O}(f(n)) \cap \Omega(f(n))\]
+	
+	Außerdem: asymptotisch äquivalent, wenn \[f(n) \sim g(n) \Leftrightarrow \lim_{n\to\infty} \frac{f(n)}{g(n)} = 1\]
+	\subsection{worst-case und average-case}
+	\textbf{Definition} (worst-case):\\
+	Die worst-case Zeit ist die für eine fixe Länge $n$ des Inputs schlechteste Laufzeit eines Algorithmus $A$. \[wc-time_A(n) := \max_{x: \left|x\right| = n} time_A(x)\]
+	\textbf{Definition} (average-case):\\
+	Bei der average-case Analyse wird angenommen, dass die Eingaben der Länge $n$ gleichverteilt sind. Damit ist die Laufzeit eine Zufallsvariable $T_{A,n}$. \[av-time_{A}(n) := \mathbb{E}[T_{A,n}]\] Mit der Definition des Erwartungswertes der Gleichverteilung also \[av-time_A(n) = \frac{1}{\left|\{x: \left|x\right| = n\}\right|} \cdot \sum_{x: \left|x\right| = n} time_A(n)\]
+\end{document}

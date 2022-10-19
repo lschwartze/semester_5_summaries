@@ -1,0 +1,60 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{Opii summary}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\section{Introduction}
+	\subsection{Turing Machine}
+	\textbf{Definition} (alphabet):\\
+	An alphabet $A$ is a set containing at least two symbols excluding $\sqcup$. $A^n$ is the set of all words with length $n$ over $A$. By convention $A^0 = \{\sqcup\}$. Additionally \[A^* = \bigcup_{n \in \mathbb{N}_0} A^n\] A language $L$ is a subset of $A^*$. A word is an element of $L$.\\
+	\textbf{Definition} (Turing machine)\\
+	Let $\overline{A} = A \cup \{\sqcup\}$. A Turing machine is a function \[\phi : \underbrace{\{0,...,N\}}_{\text{state}} \times \underbrace{\overline{A}}_{\text{symbol}} \to \underbrace{\{-1, 0, ..., N\}}_{\text{new state}} \times \underbrace{\overline{A}}_{\text{new symbol}} \times \underbrace{\{-1, 0, 1\}}_{\text{left, stay, right}}\]
+	for any $N \geq 0$.\\
+	The computation of $\phi$ for input $x \in A^*$ is a sequence of triplets \[(n^{(i)}, s^{(i)}, \pi^{(i)})\]
+	for some $i \in \mathbb{N}_0$ with \begin{itemize}
+		\item $n^{(i)} \in \{-1, 0, ..., N\}$
+		\item $s^{(i)} \in \overline{A}^\mathbb{Z}$
+		\item $\pi^{(i)} \in \mathbb{Z}$ 
+	\end{itemize}
+	For $i = 0$ we have:\begin{itemize}
+		\item $n^0 = 0$ (initial state)
+		\item $s_j^0 = \begin{cases}
+			x_j, & 1\leq j \leq length(x)\\
+			\sqcup, & j \leq 0, \text{ or } j\geq length(x)+1
+		\end{cases}$
+		\item $\pi^0 = 1$
+	\end{itemize} 
+	if $n^{(i)} = -1$, the computation ends. We set $time(\phi, x) := i$ and $output(\phi, x) := (s_1^{(i)}, ..., s_k^{(i)})$ where $k = \min\{j \in \mathbb{N}_0 : s_j^{(i)} = \sqcup\} -1$.\\
+	\textbf{Definition} (computational problem):\\
+	A pair $(X, R)$ where $X\subset A^*$ is a language and $R\subset X \times A^*$ is a relation such that $\forall x \in X: \; \exists y \in A^*$ with $(x,y) \in R$ is called a computational problem. $\phi$ solves a problem if $time(\phi, x) < \infty$ and $(x, output(\phi, x)) \in R$. If $time(\phi, x) < p(length(x))$ for a $p \in \mathbb{P}_n$ then $\phi$ is a polynomial turing machine.\\
+	\section{Complexity and NP-completeness}
+	\textbf{Definition} (Decision problem, class P):\\
+	A decision problem $P$ is a pair $(X,Y)$ where $X$ is a language that is decidable in polynomial time and $Y\subseteq X$. The elements of $Y$ are \underline{yes-instances} of $P$ and the elements of $X\setminus Y$ are \underline{no-instances} of $P$. An algorithm for $P$ (a Turing machine) computes the function $f: X\to \{0,1\}$ where $f(x) = 1$ iff $x \in Y$. If there is an algorithm for $P$ that works in polynomial time, $P$ belongs to the class \textbf{P}.\\
+	\textbf{Definition} (NP and CO-NP classes):\\
+	A problem $P = (X,Y)$ belongs to \textbf{NP} if there is a polynomial $p$ and a decision problem $P' = (X',Y')$ in \textbf{P} where \[X' = \{x\# c \;|\; x \in X \text{ and } c \in \{0,1\}^{\lfloor p(size(x))\rfloor}\}\]
+	such that \[Y = \{x \in X \; |\; \exists c \in \{0,1\}^{\lfloor p(size(x))\rfloor} \text{ s.t. } x\#c \in Y'\}\]
+	The string $c$ is a certificate for $x$. An algorithm for $P'$ checks the certificate. A problem belongs to \textbf{co-NP} iff $(X, X\setminus Y)$ is in \textbf{P}.\\
+	\textbf{Theorem}:
+	\begin{itemize}
+		\item $P \subseteq NP \;\cap\; co-NP$
+		\item \texttt{Hamiltonian cycle} is in $NP$.
+		\item \texttt{Integer linear inequalities} is in $NP$.
+	\end{itemize}
+	\textbf{Definition} (NP-completeness):\\
+	A decision problem $P_1 = (X_1, Y_1)$ can be polynomially transformed to a decision problem $P_2 = (X_2,Y_2)$ if $\exists f: X_1 \to X_2$ computable in polynomial time s.t. \[f(x) \in Y_2 \Leftrightarrow x \in Y_1 \; \forall x \in X_1\]
+	A problem $P$ is \textbf{NP-complete} if all problems in \textbf{NP} can be transformed to $P$.
+\end{document}

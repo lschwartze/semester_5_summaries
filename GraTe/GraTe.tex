@@ -1,0 +1,39 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{GraTe summary}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\section{Introduction}
+	\subsection{Graphs}
+	\textbf{Definition} (graph):\\
+	$G = (V,E)$, as usual. Other stuff that's well known.\\
+	\textbf{Definition} (graph isomorphism problems):\\
+	Input: two graphs $G,H$.\\
+	Output: is $G \cong H$?\\
+	\textbf{Definition} (subgraph):\\
+	$H \subseteq G$ is called \underline{induced} if \[\forall uv \in E(G) \text{ with } u,v \in V(H) \Rightarrow uv \in E(H)\]
+	\textbf{Conjecture}:\\
+	Let $G_1, G_2$ be two finite graphs on at least three vertices. \[\phi: V(G_1) \to V(G_2)\] is a bijection such that \[G_1-v \cong G_2-v \; \forall v\in V(G)\]
+	Then $G_1 \cong G_2$.\\
+	\textbf{Definition} (unfriendly partition conjecture):\\
+	A partition $(A,B)$ of the vertex set $V(G)$ is \underline{unfriendly} if $\forall a \in A:$\[\left|N(a) \cap A \right| \leq \left|N(a) \cap B\right|\] and $\forall b \in B$: \[\left|N(b) \cap B\right| \leq \left|N(b) \cap A\right|\]
+	\textbf{Proposition}:\\
+	Every finite graph has an unfriendly partition.\\
+	\textbf{Definition} (cycle double cover conjecture):\\
+	Every graph with only edged that lie in cycles has a cycle double cover, i.e. a family of cycles of the graph s.t. each edge lies on exactly two cycles.
+	
+\end{document}

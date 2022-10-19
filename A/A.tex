@@ -1,0 +1,66 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{A Zusammenfassung}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\section{EdA Zeugs}
+	\subsection{Gruppen}
+	\textbf{Definition} (Gruppe):\\ $(G,\cdot)$ mit \begin{enumerate}
+		\item $\cdot$ ist assoziativ; $g_1 \cdot (g_2 \cdot g_3) = (g_1 \cdot g_2) \cdot g_3$
+		\item Einselement: $\exists e \in G\; s.t.\; \forall g \in G: e\cdot g = g = g\cdot e$
+		\item $\forall g \in G: \; \exists h \in G: \; g\cdot h = e$
+	\end{enumerate}
+$G$ heißt abelsch falls die Gruppe kommutativ ist.
+\textbf{Lemma} \begin{enumerate}
+	\item Die Identität ist eindeutig
+	\item $g_1h = g_2h \Rightarrow g_1 = g_2$
+	\item ein inverses ist eindeutig (Kürzungslemma)
+\end{enumerate}
+\textbf{Definition} (Untergruppe):\\
+Für $(G,\cdot)$ eine Gruppe ist mit $H\subset G$ $(H,\cdot)$ eine Untergruppe, wenn \begin{enumerate}
+	\item $e \in H$
+	\item $h_1, h_2 \in H \; \Rightarrow \; h_1h_2 \in H$
+	\item $h \in H \Rightarrow h^{-1} \in H$
+\end{enumerate}
+\textbf{Definition} (Homomorphismus):\\
+$(G,\cdot_G)$ und $(H,\cdot_H)$ Gruppen, dann ist ein Homomorphismus $\phi: (G,\cdot_G) \to (H,\cdot_H)$ eine Abbildung mit $\forall g_1, g_2 \in G: \; \phi(g_1 \cdot_G g_2) = \phi(g_1) \cdot_H \phi(g_2)$\\
+\textbf{Proposition} Sei $\phi$ ein Gruppenhomomorphismus dann \begin{enumerate}
+	\item $\phi(e_G) = e_H$
+	\item $\phi(g^{-1}) = \phi(g)^{-1}$
+	\item $ker(\phi) = \{g \in G: \; \phi(g) = e_H\}$ ist Untergruppe
+	\item $\phi$ ist injektiv $\Leftrightarrow \; ker(\phi) = \{e_G\}$
+\end{enumerate}  
+\subsection{$(\mathbb{Z}, +)$}
+\textbf{Lemma}:\\ $I\subset \mathbb{Z}$ ist Untergruppe, wenn $I = \{0\}$ oder wenn $I = (a) = \{k\cdot a: k \in \mathbb{Z}\}$.
+\textbf{Definition}\\
+Seien $a,b\in\mathbb{Z}$ nicht beide 0. \[ggT(a,b) = \max\{d \in \mathbb{N} \; s.t.\; d|a \text{ und } d|b\}\]
+\textbf{Lemma} (Bézout):\\
+Es gilt $g = xa+by$ für $x,y \in \mathbb{Z}$.\\
+\textbf{Korollar}:
+\[a|bc \text{ und } ggT(a,b) = 1 \Rightarrow a|c\]
+Sei jetzt $n \in \mathbb{N}_{\geq 2}$. Wir definieren eine Äquivalenz $\equiv (mod\; n)$ auf $\mathbb{Z}$ durch \[a\equiv b\; (mod\; n) \Leftrightarrow n|(a-b)\]
+\[\mathbb{Z}/n\mathbb{Z} = \{a \;mod\; n: a\in\mathbb{Z}\}\]
+Diese Gruppe hat eine additive Gruppenstruktur durch \[\overline{a} + \overline{b} = \overline{a+b}\] und eine multiplikative Struktur durch \[\overline{a}\overline{b} = \overline{ab}\]
+\textbf{Theorem}:\\
+($\mathbb{Z}/n\mathbb{Z}, +, \cdot)$ ist ein Ring und es gibt einen surjektiven Homomorphismus durch $\mathbb{Z} \overset{\pi}{\to} \mathbb{Z}/n\mathbb{Z}$ mit $ker(\pi) = n$.\\
+\textbf{Definition}:\\
+\[\mathbb{Z}/n\mathbb{Z}^* = \{\overline{a} \in \mathbb{Z}/n\mathbb{Z}: \exists b \in \mathbb{Z}/n\mathbb{Z}: \; \overline{a}\overline{b} = 1\} \subset \mathbb{Z}/n\mathbb{Z}\]
+\textbf{Lemma}:\\
+Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. Dann \[\overline{a} \in (\mathbb{Z}/n\mathbb{Z})^* \Leftrightarrow ggT(a,n) = 1\]
+\textbf{Lemma}:\\
+$\mathbb{Z}/n\mathbb{Z}$ ist Körper $\Leftrightarrow\; n$ ist prim.
+\end{document}
