@@ -22,13 +22,20 @@
 	\textbf{Definition} ($\mathcal{O}$-Notation):
 	\[\mathcal{O}(f(n)) = \{g: \exists c>0\; \exists n_0 \; \forall n\geq n_0: g(n) \leq c\cdot f(n)\}\]
 	\textbf{Definition} ($\Omega$-Notation):
-	\[\Omega(f(n)) = \{g: \exists c>0\; \exists n_0 \; \forall n\geq n_0: g(n) \geq c\cdot f(n)\}\]
+	\[\Omega(f(n)) = \{g: \exists c>0\; \exists n_0 \; \forall n\geq n_0: f(n) \leq c\cdot g(n)\}\]
 	\textbf{Definition} ($\Theta$-Notation): \[\Theta(f(n)) = \mathcal{O}(f(n)) \cap \Omega(f(n))\]
-	
-	Außerdem: asymptotisch äquivalent, wenn \[f(n) \sim g(n) \Leftrightarrow \lim_{n\to\infty} \frac{f(n)}{g(n)} = 1\]
+
 	\subsection{worst-case und average-case}
 	\textbf{Definition} (worst-case):\\
 	Die worst-case Zeit ist die für eine fixe Länge $n$ des Inputs schlechteste Laufzeit eines Algorithmus $A$. \[wc-time_A(n) := \max_{x: \left|x\right| = n} time_A(x)\]
 	\textbf{Definition} (average-case):\\
 	Bei der average-case Analyse wird angenommen, dass die Eingaben der Länge $n$ gleichverteilt sind. Damit ist die Laufzeit eine Zufallsvariable $T_{A,n}$. \[av-time_{A}(n) := \mathbb{E}[T_{A,n}]\] Mit der Definition des Erwartungswertes der Gleichverteilung also \[av-time_A(n) = \frac{1}{\left|\{x: \left|x\right| = n\}\right|} \cdot \sum_{x: \left|x\right| = n} time_A(n)\]
+	\subsection{Abschätzungen}
+	Die harmonische Reihe der ersten $n$ Glieder lässt sich abschätzen durch \[H_n = \sum_{i=1}^{n} \frac{1}{i} \leq \ln(n)+1\]
+	\textbf{Definition} (Stirling Formel):
+	\[n! \sim \sqrt{2\pi n} (\frac{n}{e})^n\]
+	wobei $f(n) \sim g(n) \Leftrightarrow \lim_{n\to\infty} \frac{f(n)}{g(n)} = 1$. Daraus folgt auch \[\log(n!) \sim n\log(n) - n\log(e) + \log(\sqrt{2\pi n})\]
+	\subsection{Rekursionsgleichungen}
+	Zum Beispiel kann die Fibonacci Folge durch $F(n) = \Omega(2^{n/2})$ von unten abgeschätzt werden, da $F(n) \geq 2F(n-1)$.\\
+	\textbf{Behauptung}: $F(n) \geq ac^n$ für $a,c >0$.\\ Beweis durch Induktion liefert $c \leq \phi = \frac{\sqrt{5}+1}{2}$. Insgesamt folgt $F(n) = \Theta((\frac{\sqrt{5}+1}{2})^n)$.
 \end{document}
