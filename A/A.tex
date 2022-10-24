@@ -105,5 +105,83 @@ Sei $G$ endlich. Die folgenden Aussagen sind äquivalent:\begin{enumerate}
 \textbf{Satz}:\\
 Sei $K$ ein Körper. Dann ist jede endliche Untergruppe von $K^*$ zyklisch. Wenn $K$ endlich ist, ist also $K^*$ endlich.\\
 \textbf{Satz}:\\
-Seien $G_1, ... G_r$ zyklisch. Dann ist $G_1 \times ... \times G_r$ zyklisch genau dann, wenn die Ordnungen paarweise teilerfremd sind. 
+Seien $G_1, ... G_r$ zyklisch. Dann ist $G_1 \times ... \times G_r$ zyklisch genau dann, wenn die Ordnungen paarweise teilerfremd sind.\\
+\underline{Eine Charakterisierung zyklischer Gruppen}\\
+Sei $n\geq 2$, $G\cong \mathbb{Z}/n\mathbb{Z}$ eine zyklische Gruppe der Ordnung $n$, dann \begin{itemize}
+	\item Für $d|n$ hat $G$ eine eindeutige Untergruppe $H$ der Ordnung $d$. 
+	\item $G$ hat $\phi(n)$ Erzeuger 
+\end{itemize}
+\textbf{Satz}
+Ist $G$ eine endliche Gruppe mit \[\forall d|n \text{ gibt es höchstens $d$ Elemente deren Ordnung $d$ teilt}\]
+Dann ist $G$ zyklisch\\
+\textbf{Korollar}:\\
+Sei $K$ ein Körper, $G\subset K^*$ endlich. Dann ist $G$ zyklisch. 
+\subsection{Permutationsgruppen}
+Sei $X$ eine Menge. Man betrachte $Sym(X) = \{f: \; X\to X \text{ bijektiv}\}$. Dann ist $(Sym(X), \circ)$ eine Gruppe. Speziell $S_n = Sym(\{1,...,n\})$.\\
+Für Zykelschreibweise siehe EdA.\\
+\textbf{Lemma}:
+\begin{enumerate}
+	\item Ist $\sigma$ ein $l$-Zyklus, dann ist $ord(\sigma) = l$
+	\item Wenn $\sigma$ Produkt disjunkter Zyklen ist, dann ist $ord(\sigma)$ das kgV der Längen der Zyklen.
+\end{enumerate}
+Sei $\sigma \in S_n$. Für $f \in \mathbb{Q}[x_1,...,x_n]$ definieren wir \[\sigma(f) = f(x_{\sigma(1)},...,x_{\sigma(n)})\]
+Sei \[P = \prod_{1\leq i < j \leq n}(x_i-x_j)\] Dann ist $\sigma(P) = sgn(\sigma)\cdot P = \pm P$.\\
+\textbf{Lemma}:
+\begin{enumerate}
+	\item $sgn(\sigma \tau) = sgn(\sigma) sgn(\tau)$. Also $sgn: S_n \to \{\pm1\}$ ist ein Homomorphismus
+	\item Ist $\sigma$ eine Transposition $(k\;l)$ mit $k\neq l$, dann $sgn(\sigma) = -1$.
+	\item Für einen $l$-Zyklus ist $sgn(\sigma) = (-1)^{l+1}$.
+\end{enumerate}
+\textbf{Lemma}:\\
+$A_n = \{\sigma: sgn(\sigma) = 1\}$ ist eine Untergruppe von $S_n$.
+Allgemein gilt: \begin{itemize}
+	\item $S_n$ wird von seinen Transpositionen erzeugt.
+	\item $A_n$ wird von seinen Dreierzyklen erzeugt.
+\end{itemize}
+\subsection{Gruppenwirkungen}
+Sei $G$ eine Grupp4, $X$ eine Menge. Eine \underline{Wirkung} von $G$ auf $X$ ist eine Abbildung \begin{eqnarray*}
+	&\rho: G\times X \to X\\
+	&(g,x) \mapsto \rho(g,x) = g\cdot x
+\end{eqnarray*}
+mit \[\begin{cases}
+	\forall x \in X: e\cdot x = x\\
+	\forall g,h \in G\; x\in X: \; (g\cdot h)\cdot x = g\cdot (h\cdot x)
+\end{cases}\]
+\textbf{Bemerkung}:\\
+Gegeben $g \in G$ gilt: \begin{eqnarray*}
+	&\sigma_g: X \to X\\
+	&x \mapsto g\cdot x
+\end{eqnarray*} ist eine Bijektion.
+Dann ist die Abbildung \begin{eqnarray*}
+	&\sigma: G \to Sym(X)\\
+	&g \mapsto \sigma_g
+\end{eqnarray*} ein Homomorphismus. Ist $\sigma$ injektiv, so heißt die Wirkung treu (,,faithful'')
+\subsection{Bahn-Stabilisator-Satz}
+Sei $\rho$ gegeben, dann ist \[x\sim_\rho y \;\Leftrightarrow \; \exists g \in G: y=g\cdot x\] eine Äquivalenzrelation. Eine Äquivalenzklasse ist geschrieben als $G\cdot x = \{g\cdot x: g \in G\}$, genannt \underline{Bahn}. Es gilt daher auch \[X = \bigcup_{i \in I} X_i \;\text{ mit } X_i = G\cdot x_i\] Wenn es nur eine Bahn gibt, heißt die Wirkung \underline{transitiv}.\\
+Mit $x \in X$ ist der \underline{Stabilisator} eine Untergruppe $G_x = \{g \in G: g\cdot x = x\}$.\\
+\textbf{Satz}:\\
+Sei $x \in X$. \begin{itemize}
+	\item $G/G_x \to G\cdot x$ ist eine Bijektion mit $gG_x \mapsto g\cdot x$.
+	\item Wenn $G,X$ endlich sind, dann $\left|G\right| = \left|G_x\right|\cdot \left|G\cdot x\right|$
+\end{itemize}
+\textbf{Bemerkung}:\\
+$\left|G_x\right|$ ist nur von der Ordnung von $x$ abhängig. Es gilt \[y \in G_x \Rightarrow \left|G_x\right| = \left|G_y\right|\]
+Es gilt sogar \begin{eqnarray*}
+	G_x \to G_y\\
+	h \mapsto ghg^{-1}
+\end{eqnarray*} ist ein Isomorphismus.\\
+\textbf{Satz} (Cauchy):\\
+Sei $G$ eine endliche Gruppe, $p$ prim, sodass $p | \left|G\right|$. Dann existiert ein $g \in G$ mit $ord(g) = p$.
+\subsection{Konjugation}
+Es gibt eine andere Wirkung einer Gruppe auf sich selbst. \begin{eqnarray*}
+	&G\times G \to G\\
+	&(g,h) \mapsto ghg^{-1}
+\end{eqnarray*}
+Die Bahnen $C(h) = \{ghg^{-1}: g \in G\}$ heißen \underline{Konjugationsklassen} von $G$. Das \underline{Zentralisator} $Z(h) = \{g \in G: ghg^{-1} = h\}$ ist der Stabilisator der Konjugation. Der Bahn-Stabilisator-Satz impliziert eine Bijektion \begin{eqnarray*}
+	&G/Z(h) \to C(h)\\
+	&gZ(h) \mapsto ghg^{-1}
+\end{eqnarray*}
+Wenn $G$ endlich ist, dann $G = C\cup C_1 \cup ... \cup C_r$.\\
+\textbf{Satz}:\\
+Sei $p$ prim und ungerade und $G$ nicht abelsch mit Ordnung $2p$. Dann gilt $G\cong D_{2p}$.
 \end{document}
