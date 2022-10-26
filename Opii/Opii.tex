@@ -57,4 +57,29 @@
 	\textbf{Definition} (NP-completeness):\\
 	A decision problem $P_1 = (X_1, Y_1)$ can be polynomially transformed to a decision problem $P_2 = (X_2,Y_2)$ if $\exists f: X_1 \to X_2$ computable in polynomial time s.t. \[f(x) \in Y_2 \Leftrightarrow x \in Y_1 \; \forall x \in X_1\]
 	A problem $P$ is \textbf{NP-complete} if all problems in \textbf{NP} can be transformed to $P$.
+	\subsection{Boolean Formulas}
+	We focus on formulas in conjunctive form (KNF). $n$-SAT is defined as the problem to find values for each literal s.t. the formula evaluates to true. Each clause has $n$ literals.\\
+	Let $x_1,...,x_n$ be variables, $x_i \in \{0,1\}$. We write $\overline{x_i}$ for a negative literal. For a formula in disjunctive form (DNF) an assignment that evaluates to true can always be found in polynomial time regardless of $n$.\\
+	\textbf{Theorem}:\\
+	\texttt{2-SAT} $\in$ \textbf{P}.\\
+	\underline{Proof}\\
+	Let $f$ be given as CNF. First, we can remove all clauses of length one by assigning the variable true or false so that this clause evaluates to true. Additionally, no subformula of the form $x_i \land \overline{x_i}$ can exist, because these set $f$ to false immediately. We construct a digraph $D$ with vertices $V(D) = \{x_1,...,x_n\} \cup \{\overline{x_1},...,\overline{x_n}\}$. The edges $(\overline{x}, y)$ and $(\overline{y}, x)$ correspond to $\overline{x} \implies y$ and $\overline{y} \implies x$ for a clause $(x\lor y)$. Now, we identify the strong components of $D$, $D_1,...,D_c$ which are the maximal components such that all pairs $(u,v)$ in $D_i$ are connected by a $u-v$-path and a $v-u$-path in $D_i$. Finding $D_1,...,D_c$ can be done in polynomial time. By contracting each $D_i$ to a node $u_i$ we get a new acyclic graph $\overset{\sim}{D}$ with a topological order: If $u_1,...,u_k$ is a topological order, then there is no arc $(u_j,u_i)$ with $j>i$.\\
+	We claim the following: $f$ is satisfiable iff no strong component has a variable $x_i$ and its negation $\overline{x_i}$.\\
+	$\Rightarrow$: if both belong to a strong component, $x$ can't be set to true nor false, the statement follows.\\
+	$\Leftarrow$: Suppose $x_i \in D_r$ and $\overline{x_i} \in D_s$. If $r<s$ in the topological set $x_i = 0$ and vice versa.\\
+	\textbf{Theorem}:\\
+	\texttt{3-SAT} $\in$ \textbf{NPC}\\
+	\underline{Proof}:\\
+	Since we can check any assignement of truth values in polynomial time, it is obvious that \texttt{3-SAT} is in \textbf{NP}. Since we already know that \texttt{Satisfiability} is in \textbf{NPC} we construct a transformation from a formula $f_{SAT}$ to $f_{3SAT}$.\\
+	Let $f_{SAT} = C_1 \land ... \land C_m$. \begin{itemize}
+		\item if $\left|C_i\right| = 3$ we can leave this clause in $f_{3SAT}$.
+		\item if $\left|C_i\right| \geq 4$ we introduce $k-3$ variables $y_1,...,y_{k-3}$ and $k-2$ clauses \[(x_1 \lor x_2 \lor y_1) \land (\overline{y_1} \lor x_3 \lor y_2) \land ... \land (\overline{y_{k-4}} \lor x_{k-2} \lor y_{k-3}) \land (\overline{y_{k-3}} \lor x_{k-1} \lor x_k)\]
+		Note that: \begin{itemize}
+			\item{} If the assignment for $x_i$ makes $(x_1 \lor ... \lor x_n)$ true, then each if the $k-2$ clauses will be true.
+			\item If all $k-2$ clauses are true, then $(x_1 \lor ... \lor x_n)$ will be true.
+		\end{itemize} 
+	\item if the clause is $(x_1\lor x_2)$ then create two clauses $(x_1 \lor x_2 \lor y)$ and $(x_1 \lor x_2 \lor \overline{y})$.
+	\item if $C_i = (x_1)$ then create four clauses with all possible assignments of $y_1$ and $y_2$.
+	\end{itemize}
+	By construction $f_{SAT}$ is satisfiable iff $f_{3SAT}$ is satisfiable and the transformation can be done in polynomial time.
 \end{document}
