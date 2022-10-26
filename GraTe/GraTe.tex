@@ -62,5 +62,53 @@
 	\end{itemize}
 	\textbf{Definition}:\\
 	$G$ is connected, if $\forall u,v \in V(G)$ there is a $u-v$ path.\\
-	The components of $G$ are induced subgraphs on the equivalence classes of $\sim$.
-\end{document}
+	The components of $G$ are induced subgraphs on the equivalence classes of $\sim$.\\
+	\textbf{Definition} (Edge Density):
+	\[\varepsilon(G) = \frac{\left|E(G)\right|}{\left|V(G)\right|}\]
+	\textbf{Proposition}\\
+	Let $G$ be a graph with at least one edge. Then $\exists H \subseteq G$ with \[\delta(H) > \varepsilon(H) \geq \varepsilon(G)\]
+	\textbf{Definition}:\\
+	A graph $G$ is $k$-connected if there is no set (separator) $X\subseteq V(G)$ with $\left|V\right|<k$ s.t. $G-X$ is not connected. To avoid problems (e.g. with complete graphs), $\left|V(G)\right|\geq k+1$ is necessary.
+	\[K(G) = \max_k \text{ s.t. $G$ is $k$-connected}\]
+	\textbf{Theorem} (Mader):\\
+	Let $G$ be a graph with $\varepsilon(G) \geq 2k$. Then there is $H \subseteq G$ s.t. \begin{itemize}
+		\item $H$ is $(k+1)$-connected.
+		\item $\varepsilon(H) > \varepsilon(G)-k$
+	\end{itemize} 
+	It seems that $d(G) \leq 3k$ is the right boundary.\\
+	
+	$X\subseteq V(G)$ is \underline{independent} if $\not\exists u,v \in X$ s.t. $(u,v) \in E(G)$. We aim to construct a graph with $d(G) \approx 3k$ that has no $(k+1)$-connected subgraph. Let $X$ be a set of $k$ independent vertices. Construct $l$ complete graphs $K_k$ (which act as cliques) and connect any vertex $v$ in $X$ with all vertices of each $K_k$. Then we notice the following: \begin{itemize}
+		\item $\left|V(G)\right| = (l+1)k$
+		\item $\left|E(G)\right| = lk^2 + l\begin{pmatrix}
+			k\\2
+		\end{pmatrix}$
+	\end{itemize}
+	Therefore \[d(G) = \frac{2\left|E(G)\right|}{\left|V(G)\right|} = \frac{l}{l+1}(3k-1) \; \to 3k \text{ for } l \to \infty\]
+	Suppose $\exists H \subseteq G$ that is $(k+1)$-connected. \begin{itemize}
+		\item $H$ may intersect at mist one of the cliques
+		\item $H$ has at most one vertex in $X$
+		\item $\left|V(H)\right| \leq k+1$
+	\end{itemize}
+	\subsection{Trees}
+	\textbf{Definition}:\\
+	A connected Graph $T$ with no cycles is a tree.\\
+	\textbf{Proposition}:\\
+	Every tree with $\left|V(T)\right| \geq 2$ has at least 2 leaves.\\
+	\textbf{Theorem}\\
+	Let $T$ be a graph. The following statements are equivalent:\begin{itemize}
+		\item $T$ is a tree
+		\item $T$ is \underline{minimally connected} ($T-e$ is disconnected for any $e$)
+		\item $T$ is \underline{maximally acyclic} ($T+e$ has a cycle for any $e \notin E(T)$)
+		\item Any $u,v \in V(T)$ have a unique path between them
+	\end{itemize}
+	\textbf{Definition} (Spanning tree)\\
+	$T$ is a spanning tree for a graph $G$ if $T\subseteq G$ and $V(T) = V(G)$.\\
+	\textbf{Theorem}:\\
+	Every connected graph has a spanning tree.\\
+	\textbf{Theorem}
+	A tree on $n$ vertices has exactly $n-1$ edges and any connected graph with $n$ vertices and $n-1$ edges is a tree.
+	\subsection{Bipartite Graphs}
+	\textbf{Definition}:\\
+	A graph $G$ is bipartite if $\exists$ partition $(A,B)$ of $V(G)$ s.t. every edge of $G$ has one endvertex in $A$ and one in $B$.\\
+	If $G$ is bipartite, then every subgraph $H$ is bipartite. An example are perfect bipartite graphs.
+	\end{document}
