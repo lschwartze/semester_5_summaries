@@ -37,5 +37,50 @@
 	wobei $f(n) \sim g(n) \Leftrightarrow \lim_{n\to\infty} \frac{f(n)}{g(n)} = 1$. Daraus folgt auch \[\log(n!) \sim n\log(n) - n\log(e) + \log(\sqrt{2\pi n})\]
 	\subsection{Rekursionsgleichungen}
 	Zum Beispiel kann die Fibonacci Folge durch $F(n) = \Omega(2^{n/2})$ von unten abgeschätzt werden, da $F(n) \geq 2F(n-1)$.\\
-	\textbf{Behauptung}: $F(n) \geq ac^n$ für $a,c >0$.\\ Beweis durch Induktion liefert $c \leq \phi = \frac{\sqrt{5}+1}{2}$. Insgesamt folgt $F(n) = \Theta((\frac{\sqrt{5}+1}{2})^n)$.
+	\textbf{Behauptung}: $F(n) \geq ac^n$ für $a,c >0$.\\ Beweis durch Induktion liefert $c \leq \phi = \frac{\sqrt{5}+1}{2}$. Insgesamt folgt $F(n) = \Theta((\frac{\sqrt{5}+1}{2})^n)$.\\
+	\textbf{Beispiel} (Divide and Conquer):\\
+	Das zu lösende Problem wird in zwei Teile mit geringerer Größe geteilt. Die Lösung für ein Problem setzt sich aus der Lösung für alle Teilprobleme zusammen. Die Laufzeit ist durch $\mathcal{O}(n\log(n))$ beschränkt. Beispiele für Divide and Conquer Verfahren sind Quicksort, Mergesort oder Binäre Suche.\\
+	Mergesort: eine Eingabefolge $a_n$ wird in zwei gleich große Teile gespalten und die beiden Hälften rekursiv sortiert. Im Basisfall werden die beiden Hälften kombiniert und sortiert (merging).\newpage
+	\textbf{Algorithmus}\\
+	\texttt{INPUT: $x$\\
+	IF $\left|x\right|\leq 1$:\\
+	\indent Berechne die Lösung $L$ für $x$ direkt\\
+	ELSE: $x = x_1 \cup x_2$:\\
+	\indent $L_1$ = DivideAndConquer($x_1$)\\
+	\indent $L_2$ = DivideAndConquer($x_2$)\\
+	\indent Berechne $L$ aus $L_1$ und $L_2$\\
+	RETURN $L$}\\
+	Für den Aufwand $f$ folgt $f(n) = 2\cdot f(\frac{n}{2}) + c\cdot n + d$.	\\
+	\textbf{Behauptung}: $f(n) = \alpha + \beta n +\delta n \log(n)$\\
+	Der Beweis folgt durch elementares Nachrechnen. Es folgt durch Koeffizientenvergleich $\alpha = -d$ und $\delta = c$. Für den Mergesort erhält man zum Beispiel $f(n) = n\log(n) - n +1$.\\
+	Die Berechnung kann auch durch Iterationsmethode berechnet werden. Dabei wird die Rekursionsgleichung immer wieder in sich selbst eingesetzt. Diese Einsetzung kann $log(n)$ oft geschehen, dann ist der Basisfall 1 erreicht. Mittels der $k$-ten Partialsumme der geometrischen Reihe, kann die Laufzeit bestimmt werden.\\
+	\textbf{Beispiel} (Andere Rekursionen)\\
+	Zum Beispiel für Probleme der Form \[f(n) = 2f(\sqrt{n}) + \log(n)\] hilft Iteration nicht weiter. Aber man kann sich durch Variablensubstitution behelfen. Mit $n = 2^m$ erhält man \[f(2^m) = 2f(2^{m/2}) + m\] Mit $f(2^m) = g(m)$ also \[g(m) = 2g(\frac{m}{2}) + m\]
+	\textbf{Vereinfachung}:\begin{itemize}
+		\item ganzzahlige Rekursionen $f(n) = f(\lfloor n\rfloor) + f(\lceil n \rceil)$ können ignoriert werden und von der Form $f(n) = 2f(\frac{n}{2})$ geschrieben werden.
+		\item Ignorieren der Anfangswertbedingung
+		\item Nur $\Omega$ und $\mathcal{O}$ Notation bestimmen
+		\item Abschätzungen, die nur für große $n$ gelten
+		\item \underline{Vorsicht:} asymptotische Notation in der Rekursiongleichung kann zu Problemen führen. 
+	\end{itemize}
+	\subsection{Master Theorem}
+	\textbf{Satz}:\\
+	Gegeben eine Rekursiongleichung der Form \[T(n) = \sum_{i=1}^m T(\alpha_i\cdot n) + \Theta(n^k)\] wobei $0 \leq \alpha_i \leq 1$, $m\geq 1$ und $k\geq 0$. Dann kann man $T(n)$ abschätzen durch \[T(n) = \begin{cases}
+		\Theta(n^k), & \text{falls } \sum_{i=1}^m \alpha_i^k < 1\\
+		\Theta(n^k \log n), & \text{falls } \sum_{i=1}^m \alpha_i^k = 1\\
+		\Theta(n^c), & \text{sonst}
+	\end{cases}\]
+	$c$ im letzten Fall ergibt sich dabei durch Lösen der folgenden Gleichung: \[\sum_{i=1}^m \alpha_i^c = 1\] Wenn alle $\alpha_i$ gleich sind, ergibt sich der Spezialfall $c = \frac{-\ln m}{\ln \alpha}$\\
+	\textbf{Selektionsalgorithmen}\\
+	Ein Selektionsalgorithmus soll für eine Folge $a_n$ und ein $i$ feststellen, welches das $i$-kleinste Element von $a_n$ ist. Zum Beispiel für $i=n$ das Maximum, $i=1$ das Minimum und $i=\frac{n}{2}$ der Median. Der naive Ansatz, die Liste zuerst zu sortieren, kann aber laufzeittechnisch verbessert werden. Als Komplexitätsmaß wird die Vergleichskomplexität $V(n)$ herangezogen. Im worst-case muss jeder Sortieralgorithmus so viele Vergleiche machen, wie man benötigt, um $n!$ durch halbieren zu einer Zahl $\leq 1$ zu machen. Mit der Stirling Formel ergibt sich, dass jeder vergleichsbasierte Sortieralgorithmus eine worst-case Laufzeit von $\geq n\log n - \Theta(n)$ hat. Die Darstellung eines solches Verfahren kann mit einem Entscheidungsbaum geschehen.\\
+	\textbf{Heap Sort}\\
+	Ein Heap ist ein Binärbaum mit folgenden beiden Eigenschaftem \begin{enumerate}
+		\item der Baum ist soweit es geht vollständig gefüllt, die unterste Stufe ist von links gefüllt.
+		\item Die Knoten haben Zahlen. Die Kindknoten eines beliebigen Knotens haben Werte kleiner oder gleich des Wertes des Elternknotens.
+	\end{enumerate}
+	Der HeapSort läuft in zwei Phasen: \begin{enumerate}
+		\item die Zahlenfolge wird zu einem Heap gebaut
+		\item der Heap wird abgebaut, indem die Wurzel entfernt wird und ein anderer Knoten an ihre Stelle gesetzt wird, sodass die Heap Eigenschaft weiter erfüllt ist.
+	\end{enumerate}
+	HeapSort ist ein Inplace-Sortierverfahren. Die worst-case-Laufzeit beträgt $\mathcal{O}(n\log n)$.
 \end{document}
