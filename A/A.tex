@@ -177,11 +177,45 @@ Es gibt eine andere Wirkung einer Gruppe auf sich selbst. \begin{eqnarray*}
 	&G\times G \to G\\
 	&(g,h) \mapsto ghg^{-1}
 \end{eqnarray*}
-Die Bahnen $C(h) = \{ghg^{-1}: g \in G\}$ heißen \underline{Konjugationsklassen} von $G$. Das \underline{Zentralisator} $Z(h) = \{g \in G: ghg^{-1} = h\}$ ist der Stabilisator der Konjugation. Der Bahn-Stabilisator-Satz impliziert eine Bijektion \begin{eqnarray*}
+Die Bahnen $C(h) = \{ghg^{-1}: g \in G\}$ heißen \underline{Konjugationsklassen} von $G$. Der \underline{Zentralisator} $Z(h) = \{g \in G: ghg^{-1} = h\}$ ist der Stabilisator der Konjugation. Der Bahn-Stabilisator-Satz impliziert eine Bijektion \begin{eqnarray*}
 	&G/Z(h) \to C(h)\\
 	&gZ(h) \mapsto ghg^{-1}
 \end{eqnarray*}
 Wenn $G$ endlich ist, dann $G = C\cup C_1 \cup ... \cup C_r$.\\
+\textbf{Bemerkung}:\\
+$D_n$ enthält $2(\lfloor\frac{n}{2}\rfloor +1)$ Konjugationsklassen.\\
 \textbf{Satz}:\\
-Sei $p$ prim und ungerade und $G$ nicht abelsch mit Ordnung $2p$. Dann gilt $G\cong D_{2p}$.
+Sei $p$ prim und ungerade und $G$ nicht abelsch mit Ordnung $2p$. Dann gilt $G\cong D_{p}$.\\
+\textbf{Theorem}:\\
+Ist $G$ endlich und der Ordnung $p^m$, so gilt $\left|Z(G)\right|>1$.
+\subsection{Quotientengruppen}
+\textbf{Definition}:
+Sei $H<G$. Wir sagen, $H$ ist \underline{normal}, wenn $gHg^{-1} = H, \; \forall g \in G$. Äquivalent: $gH = Hg$, die Linksnebenklassen entsprechen also für alle $g \in G$ den Rechtsnebenklassen. Außerdem ist $H$ normal genau dann, wenn $ghg^{-1} \in H \; \forall g\in G, h \in H$.\\
+\textbf{Bemerkung}:\\
+Sei $H<G$ gegeben. Die Menge aller Linksnebenklassen sei gegeben durch $G/H = \{gH: g \in G\}$. Analog ist die Menge der Rechtsnebenklassen definiert $H\setminus G$.\\
+\textbf{Proposition}:\\
+Wenn $N<G$ normal ist, dann gibt es eine Gruppenverknüpfung \begin{eqnarray*}
+	& \cdot:\; G/N \times G/N \to G/N\\
+	& g_1N \cdot g_2N \mapsto g_1g_2N
+\end{eqnarray*}
+Der kanonische Homomorphismus \begin{eqnarray*}
+	& G \overset{\pi}{\to} G/N\\
+	& g \mapsto gN
+\end{eqnarray*}
+ist surjektiv. $G/N$ heißt Quotientengruppe von $G$ unter $N$.\\
+\textbf{Korollar}:\\
+Sei $H<G$. $H$ ist normal in $G$, genau dann, wenn $H$ Kern eines Gruppenhomomorphismus $\phi: G \to G'$ ist.
+\subsection{Isomorphiesatz}
+Sei $\phi: G\to G'$ ein Gruppenhomomorphismus. Sei $N<G$ normal mit $N\subset ker(\phi)$. Dann $\exists \overline{\phi}$ wohldefiniert mit \begin{eqnarray*}
+	& \overline{\phi}: G/N \to G\\
+	& gN \mapsto \phi(g)
+\end{eqnarray*}
+sodass \begin{enumerate}
+	\item $im(\overline{\phi}) = im(\phi)$
+	\item $\overline{\phi}$ injektiv $\Leftrightarrow \, N = ker(\phi)$
+\end{enumerate}
+\textbf{Korollar}:\\
+Sei $\phi: G\to G'$ ein Gruppenhomomorphismus. Dann gibt es einen Isomorphismus \[\overline{\phi}: G/N \to im(\phi)\] falls $N = ker(\phi)$\\
+\textbf{Korollar}:\\
+Ein surjektiver Gruppenhomomorphismus $\phi: G \to G'$ impliziert einen Isomorphismus \[\overline{\phi}: G/N \to G'\] wenn $N = ker(\phi)$. 
 \end{document}
