@@ -19,58 +19,58 @@
 	\tableofcontents
 	\section{Introduction}
 	\subsection{Graphs}
-	\textbf{Definition} (graph):\\
+	\textbf{Definition} (graph)\\
 	$G = (V,E)$, as usual. Other stuff that's well known.\\
-	\textbf{Definition} (graph isomorphism problems):\\
+	\textbf{Definition} (graph isomorphism problems)\\
 	Input: two graphs $G,H$.\\
 	Output: is $G \cong H$?\\
-	\textbf{Definition} (subgraph):\\
+	\textbf{Definition} (subgraph)\\
 	$H \subseteq G$ is called \underline{induced} if \[\forall uv \in E(G) \text{ with } u,v \in V(H) \Rightarrow uv \in E(H)\]
-	\textbf{Conjecture}:\\
+	\textbf{Conjecture}\\
 	Let $G_1, G_2$ be two finite graphs on at least three vertices. \[\phi: V(G_1) \to V(G_2)\] is a bijection such that \[G_1-v \cong G_2-v \; \forall v\in V(G)\]
 	Then $G_1 \cong G_2$.\\
-	\textbf{Definition} (unfriendly partition conjecture):\\
+	\textbf{Definition} (unfriendly partition conjecture)\\
 	A partition $(A,B)$ of the vertex set $V(G)$ is \underline{unfriendly} if $\forall a \in A:$\[\left|N(a) \cap A \right| \leq \left|N(a) \cap B\right|\] and $\forall b \in B$: \[\left|N(b) \cap B\right| \leq \left|N(b) \cap A\right|\]
-	\textbf{Proposition}:\\
+	\textbf{Proposition}\\
 	Every finite graph has an unfriendly partition.\\
-	\textbf{Definition} (cycle double cover conjecture):\\
+	\textbf{Definition} (cycle double cover conjecture)\\
 	Every graph with only edges that lie in cycles has a cycle double cover, i.e. a family of cycles on the graph s.t. each edge lies on exactly two cycles. Cycles can be repeated.\\
-	\textbf{Theorem}:\\
+	\textbf{Theorem}\\
 	Every complete graph has a cycle double cover.\\
-	\textbf{Definition} (degree of a vertex):\\
+	\textbf{Definition} (degree of a vertex)\\
 	The degree of a node gives the number of edges the node lies on \[d_G(v) = \left|\{uv \in E(G)\}\right|\]
 	Minimum degree of a graph $G$ \[\delta(G) = \min_{v \in V(G)} d(v)\]
 	The maximum degree $\Delta(G)$ and the average degree $d(G)$ are defined similarly.\\
 	The average degree can also e written as \[d(G) = \frac{1}{\left|V(G)\right|} \sum_{v \in V(G)} d_G(v) = \frac{2\left|E(G)\right|}{\left|V(G)\right|}\]
-	\textbf{Lemma} (handshake lemma):\\
+	\textbf{Lemma} (handshake lemma)\\
 	The number of vertices of odd degree is always even.\\
-	\textbf{Theorem} (Mantel's theorem):\\
+	\textbf{Theorem} (Mantel's theorem)\\
 	Every graph on $n$ vertices and more than $\frac{n^2}{4}$ edges has a triangle.\\
-	\textbf{Definition}:\\
+	\textbf{Definition}\\
 	Mantel's theorem creates graphs without any triangles. For any vertex in such a graph the neighborhood doesn't have any edges. A set $X \subseteq V(G)$ with this property is called an \underline{independent set}. \\
 	\section{Paths}
-	\textbf{Proposition}:\\
+	\textbf{Proposition}\\
 	Let $G$ be a graph. Then $G$ has a path of length $\delta(G)$. If $\delta(G) \geq 2$, then there is a cycle of length $\geq \delta(G)+1$.\\
 	
 	Now, let's define a relation on the vertices: \[u\sim v :\Leftrightarrow \exists \text{ a $u-v$ path}\]
-	\textbf{Lemma}:\\
+	\textbf{Lemma}\\
 	$\sim$ is an equivalence relation.
 	\begin{itemize}
 		\item symmetry: if $u-v$ is a path, $v-u$ is a path as well.
 		\item transitivity: if $u-v$ and $v-w$ are paths, $u-w$ is a path.
 		\item reflexivity: $u-u$ is a path.
 	\end{itemize}
-	\textbf{Definition}:\\
+	\textbf{Definition}\\
 	$G$ is connected, if $\forall u,v \in V(G)$ there is a $u-v$ path.\\
 	The components of $G$ are induced subgraphs on the equivalence classes of $\sim$.\\
 	\textbf{Definition} (Edge Density):
 	\[\varepsilon(G) = \frac{\left|E(G)\right|}{\left|V(G)\right|}\]
 	\textbf{Proposition}\\
 	Let $G$ be a graph with at least one edge. Then $\exists H \subseteq G$ with \[\delta(H) > \varepsilon(H) \geq \varepsilon(G)\]
-	\textbf{Definition}:\\
+	\textbf{Definition}\\
 	A graph $G$ is $k$-connected if there is no set (separator) $X\subseteq V(G)$ with $\left|V\right|<k$ s.t. $G-X$ is not connected. To avoid problems (e.g. with complete graphs), $\left|V(G)\right|\geq k+1$ is necessary.
 	\[K(G) = \max_k \text{ s.t. $G$ is $k$-connected}\]
-	\textbf{Theorem} (Mader):\\
+	\textbf{Theorem} (Mader)\\
 	Let $G$ be a graph with $\varepsilon(G) \geq 2k$. Then there is $H \subseteq G$ s.t. \begin{itemize}
 		\item $H$ is $(k+1)$-connected.
 		\item $\varepsilon(H) > \varepsilon(G)-k$
@@ -90,9 +90,9 @@
 		\item $\left|V(H)\right| \leq k+1$
 	\end{itemize}
 	\subsection{Trees}
-	\textbf{Definition}:\\
+	\textbf{Definition}\\
 	A connected Graph $T$ with no cycles is a tree.\\
-	\textbf{Proposition}:\\
+	\textbf{Proposition}\\
 	Every tree with $\left|V(T)\right| \geq 2$ has at least 2 leaves.\\
 	\textbf{Theorem}\\
 	Let $T$ be a graph. The following statements are equivalent:\begin{itemize}
@@ -103,12 +103,31 @@
 	\end{itemize}
 	\textbf{Definition} (Spanning tree)\\
 	$T$ is a spanning tree for a graph $G$ if $T\subseteq G$ and $V(T) = V(G)$.\\
-	\textbf{Theorem}:\\
+	\textbf{Theorem}\\
 	Every connected graph has a spanning tree.\\
 	\textbf{Theorem}
 	A tree on $n$ vertices has exactly $n-1$ edges and any connected graph with $n$ vertices and $n-1$ edges is a tree.
 	\subsection{Bipartite Graphs}
-	\textbf{Definition}:\\
+	\textbf{Definition}\\
 	A graph $G$ is bipartite if $\exists$ partition $(A,B)$ of $V(G)$ s.t. every edge of $G$ has one endvertex in $A$ and one in $B$.\\
 	If $G$ is bipartite, then every subgraph $H$ is bipartite. An example are perfect bipartite graphs.
-	\end{document}
+	\subsection{Eulerpaths}
+	\textbf{Definition} (walks)\\
+	A walks is simply a sequence of nodes that are connected by edges. A \underline{simple} walk doesn't repeat any edge. An Euler tour of a graph $G$ is a simple, closed walk $w$ with $E(w) = E(G)$.\\
+	\textbf{Theorem}\\
+	A graph $G$ has an Euler tour iff $G$ is connected and $d(v)$ is even $\forall v \in V(G)$.
+	\section{Matchings}
+	\textbf{Definition}\\
+	A \underline{matching} is an edge set $M \subseteq E(G)$ s.t. no vertex is incident with two or more edges in $M$. A \underline{maximum} matching is a matching of largest cardinality.\\
+	
+	Given a matching $M$, an \underline{augmenting path} $P$ is a path that \begin{itemize}
+		\item starts and ends in an unmatched vertex
+		\item alternates between $E(P)\setminus M$ and $M$
+	\end{itemize}
+	\textbf{Lemma}\\
+	Given matching $M$. Then $\exists$ augmenting path $\Rightarrow$ $M$ is not maximum.\\
+	
+	A path $P$ is \underline{alternating} if it starts in an unmatched edge and alternates between $E(G)\setminus M$ and $M$.\\
+	\textbf{Theorem} (König)\\
+	Let $G$ be a bipartite graph. Then the cardinality of a maximum matching is equal to the smallest cardinality of the vertex cover.
+\end{document}
