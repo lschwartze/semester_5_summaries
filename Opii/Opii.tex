@@ -7,6 +7,7 @@
 \usepackage[explicit]{titlesec}
 \usepackage{ulem}
 \usepackage[onehalfspacing]{setspace}
+\usepackage{algpseudocode}
 
 \titleformat{\subsection}
 {\small}{\thesubsection}{1em}{\uline{#1}}
@@ -81,5 +82,41 @@
 	\item if the clause is $(x_1\lor x_2)$ then create two clauses $(x_1 \lor x_2 \lor y)$ and $(x_1 \lor x_2 \lor \overline{y})$.
 	\item if $C_i = (x_1)$ then create four clauses with all possible assignments of $y_1$ and $y_2$.
 	\end{itemize}
-	By construction $f_{SAT}$ is satisfiable iff $f_{3SAT}$ is satisfiable and the transformation can be done in polynomial time.
+	By construction $f_{SAT}$ is satisfiable iff $f_{3SAT}$ is satisfiable and the transformation can be done in polynomial time.\\
+	\textbf{Problem} (\texttt{independent set}):\\
+	\underline{Input}: A graph $G$ and an integer $k \leq n(G)$\\
+	\underline{Question}: Does $G$ have an independent set (set of non-neighbouring nodes) of order at least $k$?\\
+	\textbf{Theorem}:\\
+	\texttt{Independent Set} $\in$ \textbf{NPC}.
+	\section{Optimization problems}
+	\subsection{Introduction}
+	\textbf{Definition}:\\
+	An optimization problem $P$ is a 4-tuple $(X, (S_x)_{x\in X}, c, \text{goal})$ where \begin{itemize}
+		\item $X$ is a language over $\{0,1\}$that is decidable in polynomial time\item there is a polynomial $p$ s.t. $\forall x \in X$ \begin{itemize}
+			\item $S_x$ is a subset if $\{0,1\}^*$
+			\item $\left|y\right| \leq p(\left|x\right|)$ for all $y\in S_x$ and 
+			\item the language $\{(x,y)| x \in x \text{ and } y\in S_x\}$ is decidable in polynomial time
+		\end{itemize}
+	\item $c: \{(x,y)|x \in X \text{ and } y \in S_x\} \to \mathbb{Q}$ is computable in polynomial time. $c$ is a measurement of how good the approximated solution is.
+	\item goal $\in \{\min, \max\}$
+	\end{itemize}
+	For $x \in X$ let OPT($x$) = goal$\{c(x,y)|y\in S_x\}$ where $\min \varnothing = \infty$ and $\max \varnothing = -\infty$ and $y \in S_x$ with $c(x,y) =$ OPT($x$) is an \underline{optimal solution} for $x$.\\
+	\textbf{Definition}:\\
+	An algorithm $A$ for an optimization problem $P=(X,S_x,c,\text{goal})$ is a turing machine $\Phi$ with output($\Phi, x$) $\in S_x \; \forall x \in X$ with $S_x \neq \varnothing$. Let $A(x) = c(x,\text{output}(\Phi,x))$. If \[A(x) = \text{OPT}(x) \; \forall x \in X\] with $S_x \neq \varnothing$, then $A$ is an \underline{exact} algorithm. $A$ is an approximation with additive performance guarantee $k$, if \[\left|A(x) - \text{OPT}(x)\right| \leq k \; \forall x \in X \text{ and } S_x \neq \varnothing\] and a $k$-factor approximation algorithm, if \[\frac{1}{k}\cdot \text{OPT}(x) \leq A(x) \leq k\cdot\text{OPT}(x) \; \forall x \in X \text{ and } S_x \neq \varnothing\]
+	\subsection{Examples}
+	\underline{Comment}: For many problems, a \underline{greedy} approach yields a good approximation factor.\\
+	\textbf{Problem} (Minimum Makespan / Job Scheduling with identical machines):\\
+	INSTANCE: positive integers $\underbrace{n}_{\text{jobs}},\underbrace{m}_{\text{machines}},\underbrace{a_1,...,a_n}_{\text{required time for job $i$}}$\\
+
+	\noindent GOAL: Determine a function $f: [n] \to [m]$ minimizing \[\max_{j \in [m]} a(f^{-1}(j)) = \max_{j \in [m]} \sum_{i \in [n] \; | \; f(i) = j} a_i\]
+	\newpage
+	\noindent\underline{Greedy algorithm for job scheduling}:
+	\begin{algorithmic}
+		\For{$i=1 \text{ to } n$}
+			\State $f(i) \gets j, \text{ where $j$ minimizes } \sum_{l \in [i-1] | f(l) = j} a_l$
+		\EndFor
+		\State return $f$
+	\end{algorithmic}
+	We can show, that this is a 2-factor algorithm:\\
+	LEt $l \in [n]$ be the maximum such that $f(l) = k$, where $k \in [m]$ is the machine taking more time. When job $l$ was assigned to $k$ all $m$ machines had completion time at least $t = \sum_{l \in [i-1] | f(l) = k} a(f^{-1}(k))-a_l$ which implies that $a(f^{-1}(k)) = t+a_l \leq 2\cdot\text{OPT}(x)$.
 \end{document}
