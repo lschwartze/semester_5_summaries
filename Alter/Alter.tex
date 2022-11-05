@@ -7,6 +7,7 @@
 \usepackage[explicit]{titlesec}
 \usepackage{ulem}
 \usepackage[onehalfspacing]{setspace}
+\usepackage{algpseudocode}
 
 \titleformat{\subsection}
 {\small}{\thesubsection}{1em}{\uline{#1}}
@@ -19,33 +20,33 @@
 	\tableofcontents
 	\section{Analyse von Algorithmen}
 	\subsection{asymptotische Notation}
-	\textbf{Definition} ($\mathcal{O}$-Notation):
+	\textbf{Definition} ($\mathcal{O}$-Notation)
 	\[\mathcal{O}(f(n)) = \{g: \exists c>0\; \exists n_0 \; \forall n\geq n_0: g(n) \leq c\cdot f(n)\}\]
-	\textbf{Definition} ($\Omega$-Notation):
+	\textbf{Definition} ($\Omega$-Notation)
 	\[\Omega(f(n)) = \{g: \exists c>0\; \exists n_0 \; \forall n\geq n_0: f(n) \leq c\cdot g(n)\}\]
-	\textbf{Definition} ($\Theta$-Notation): \[\Theta(f(n)) = \mathcal{O}(f(n)) \cap \Omega(f(n))\]
+	\textbf{Definition} ($\Theta$-Notation) \[\Theta(f(n)) = \mathcal{O}(f(n)) \cap \Omega(f(n))\]
 
 	\subsection{worst-case und average-case}
-	\textbf{Definition} (worst-case):\\
+	\textbf{Definition} (worst-case)\\
 	Die worst-case Zeit ist die für eine fixe Länge $n$ des Inputs schlechteste Laufzeit eines Algorithmus $A$. \[wc-time_A(n) := \max_{x: \left|x\right| = n} time_A(x)\]
-	\textbf{Definition} (average-case):\\
+	\textbf{Definition} (average-case)\\
 	Bei der average-case Analyse wird angenommen, dass die Eingaben der Länge $n$ gleichverteilt sind. Damit ist die Laufzeit eine Zufallsvariable $T_{A,n}$. \[av-time_{A}(n) := \mathbb{E}[T_{A,n}]\] Mit der Definition des Erwartungswertes der Gleichverteilung also \[av-time_A(n) = \frac{1}{\left|\{x: \left|x\right| = n\}\right|} \cdot \sum_{x: \left|x\right| = n} time_A(n)\]
 	\subsection{Abschätzungen}
 	Die harmonische Reihe der ersten $n$ Glieder lässt sich abschätzen durch \[H_n = \sum_{i=1}^{n} \frac{1}{i} \leq \ln(n)+1\]
-	\textbf{Definition} (Stirling Formel):
+	\textbf{Definition} (Stirling Formel)
 	\[n! \sim \sqrt{2\pi n} (\frac{n}{e})^n\]
 	wobei $f(n) \sim g(n) \Leftrightarrow \lim_{n\to\infty} \frac{f(n)}{g(n)} = 1$. Daraus folgt auch \[\log(n!) \sim n\log(n) - n\log(e) + \log(\sqrt{2\pi n})\]
 	\subsection{Rekursionsgleichungen}
 	Zum Beispiel kann die Fibonacci Folge durch $F(n) = \Omega(2^{n/2})$ von unten abgeschätzt werden, da $F(n) \geq 2F(n-1)$.\\
 	\textbf{Behauptung}: $F(n) \geq ac^n$ für $a,c >0$.\\ Beweis durch Induktion liefert $c \leq \phi = \frac{\sqrt{5}+1}{2}$. Insgesamt folgt $F(n) = \Theta((\frac{\sqrt{5}+1}{2})^n)$.\\
-	\textbf{Beispiel} (Divide and Conquer):\\
+	\textbf{Beispiel} (Divide and Conquer)\\
 	Das zu lösende Problem wird in zwei Teile mit geringerer Größe geteilt. Die Lösung für ein Problem setzt sich aus der Lösung für alle Teilprobleme zusammen. Die Laufzeit ist durch $\mathcal{O}(n\log(n))$ beschränkt. Beispiele für Divide and Conquer Verfahren sind Quicksort, Mergesort oder Binäre Suche.\\
 	Mergesort: eine Eingabefolge $a_n$ wird in zwei gleich große Teile gespalten und die beiden Hälften rekursiv sortiert. Im Basisfall werden die beiden Hälften kombiniert und sortiert (merging).\newpage
 	\textbf{Algorithmus}\\
 	\texttt{INPUT: $x$\\
-	IF $\left|x\right|\leq 1$:\\
+	IF $\left|x\right|\leq 1$\\
 	\indent Berechne die Lösung $L$ für $x$ direkt\\
-	ELSE: $x = x_1 \cup x_2$:\\
+	ELSE: $x = x_1 \cup x_2$\\
 	\indent $L_1$ = DivideAndConquer($x_1$)\\
 	\indent $L_2$ = DivideAndConquer($x_2$)\\
 	\indent Berechne $L$ aus $L_1$ und $L_2$\\
@@ -64,7 +65,7 @@
 		\item \underline{Vorsicht:} asymptotische Notation in der Rekursiongleichung kann zu Problemen führen. 
 	\end{itemize}
 	\subsection{Master Theorem}
-	\textbf{Satz}:\\
+	\textbf{Satz}\\
 	Gegeben eine Rekursiongleichung der Form \[T(n) = \sum_{i=1}^m T(\alpha_i\cdot n) + \Theta(n^k)\] wobei $0 \leq \alpha_i \leq 1$, $m\geq 1$ und $k\geq 0$. Dann kann man $T(n)$ abschätzen durch \[T(n) = \begin{cases}
 		\Theta(n^k), & \text{falls } \sum_{i=1}^m \alpha_i^k < 1\\
 		\Theta(n^k \log n), & \text{falls } \sum_{i=1}^m \alpha_i^k = 1\\
@@ -73,14 +74,45 @@
 	$c$ im letzten Fall ergibt sich dabei durch Lösen der folgenden Gleichung: \[\sum_{i=1}^m \alpha_i^c = 1\] Wenn alle $\alpha_i$ gleich sind, ergibt sich der Spezialfall $c = \frac{-\ln m}{\ln \alpha}$\\
 	\textbf{Selektionsalgorithmen}\\
 	Ein Selektionsalgorithmus soll für eine Folge $a_n$ und ein $i$ feststellen, welches das $i$-kleinste Element von $a_n$ ist. Zum Beispiel für $i=n$ das Maximum, $i=1$ das Minimum und $i=\frac{n}{2}$ der Median. Der naive Ansatz, die Liste zuerst zu sortieren, kann aber laufzeittechnisch verbessert werden. Als Komplexitätsmaß wird die Vergleichskomplexität $V(n)$ herangezogen. Im worst-case muss jeder Sortieralgorithmus so viele Vergleiche machen, wie man benötigt, um $n!$ durch halbieren zu einer Zahl $\leq 1$ zu machen. Mit der Stirling Formel ergibt sich, dass jeder vergleichsbasierte Sortieralgorithmus eine worst-case Laufzeit von $\geq n\log n - \Theta(n)$ hat. Die Darstellung eines solches Verfahren kann mit einem Entscheidungsbaum geschehen.\\
-	\textbf{Heap Sort}\\
-	Ein Heap ist ein Binärbaum mit folgenden beiden Eigenschaftem \begin{enumerate}
+	\underline{\textbf{Heap Sort}}\\
+	Ein Heap ist ein Binärbaum mit folgenden beiden Eigenschaftem \begin{itemize}
 		\item der Baum ist soweit es geht vollständig gefüllt, die unterste Stufe ist von links gefüllt.
 		\item Die Knoten haben Zahlen. Die Kindknoten eines beliebigen Knotens haben Werte kleiner oder gleich des Wertes des Elternknotens.
-	\end{enumerate}
+	\end{itemize}
 	Der HeapSort läuft in zwei Phasen: \begin{enumerate}
 		\item die Zahlenfolge wird zu einem Heap gebaut
 		\item der Heap wird abgebaut, indem die Wurzel entfernt wird und ein anderer Knoten an ihre Stelle gesetzt wird, sodass die Heap Eigenschaft weiter erfüllt ist.
 	\end{enumerate}
-	HeapSort ist ein Inplace-Sortierverfahren. Die worst-case-Laufzeit beträgt $\mathcal{O}(n\log n)$.
+	HeapSort ist ein Inplace-Sortierverfahren. Die worst-case-Laufzeit beträgt $\mathcal{O}(n\log n)$.\\
+	\underline{\textbf{Quicksort}}\\
+	Wir betrachten Quicksort, ein stabiles divide-and-conquer Verfahren.
+	\begin{algorithmic}
+		\State\texttt{PROCEDURE} Quicksort($a_1,...,a_n$)
+		\If{$n=0$}
+			\State RETURN
+		\EndIf
+		\State $x\gets a_1$
+		\State $l \gets$ leere Folge
+		\State $r \gets$ leere Folge
+		\For{$i=2$ TO $n$}
+			{\If{$a_i \leq x$}
+				\State{append $a_i$ to $l$} 
+			\Else
+				\State {append $a_i$ to r}
+			\EndIf}
+		\EndFor
+		\State RETURN (QuickSort(l),$x$,QuickSort(r))
+	\end{algorithmic}
+	\underline{Eigenschaften} \begin{itemize}
+		\item im schlechtesten Fall wird jedes Mal die größte (oder kleinste) Zahl als Pivotelement gewählt
+		\item Dann hat die $i$-te Teilfolge Läge $n-i$
+		\item im schlimmsten Fall also eine Laufzeit von $\Theta(n^2)$
+		\item im best-case ist das Pivotelement der Median
+		\item die $i$-te Teilfolge hat dann Länge $\frac{n}{2^i}$ 
+		\item das bringt eine Laufzeit von $n\log n + \Theta(n)$
+	\end{itemize}
+	\subsection{Average-Case-Analyse von Quicksort}
+	Annahme: die Eingabe Liste ist gleichverteilt und paarweise verschieden.\\
+	Die Eingabefolge sein $a_n$ und die sortierte Folge $s_n$. Wir führen eine Zufallsvariable $X_{ij}$ ein, wobei $X_{ij} = 1$, falls beim Quicksort $s_i$ mit $s_j$ verglichen werden. Daher ist die mittlere Anzahl an Vergleichen gegeben durch \[V(n) = \sum_{i<j}\mathbb{E}[X_{ij}]\]
+	Nun ist $\mathbb{E}[X_{ij}] = p_{ij} + 0\cdot (1-p_{ij}) = p_{ij}$ die Wahrscheinlichkeit, dass $s_i$ und $s_j$ verglichen werden. Man findet, dass $p_{ij} = \frac{2}{j-i+1}$. Insgesamt also \[V(n) = \sum_{i<j} \mathbb{E}[X_{ij}] = \sum_{i<j} \frac{2}{j-i+1}\] Durch elementares Umformen findet man $V(n) \leq 1,3863n \log_2 n$. Die obige Implementierung von Quicksort ist nicht in-place, denn es werden immer neue (Teil-)Folgen generiert. 
 \end{document}
