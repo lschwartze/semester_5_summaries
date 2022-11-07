@@ -17,9 +17,9 @@
 		\thispagestyle{empty}
 	\end{titlepage}
 	\tableofcontents
-	\section{EdA Zeugs}
-	\subsection{Gruppen}
-	\textbf{Definition} (Gruppe):\\ $(G,\cdot)$ mit \begin{enumerate}
+	\section{Gruppen}
+	\subsection{Grundlagen}
+	\textbf{Definition} (Gruppe)\\ $(G,\cdot)$ mit \begin{enumerate}
 		\item $\cdot$ ist assoziativ; $g_1 \cdot (g_2 \cdot g_3) = (g_1 \cdot g_2) \cdot g_3$
 		\item Einselement: $\exists e \in G\; s.t.\; \forall g \in G: e\cdot g = g = g\cdot e$
 		\item $\forall g \in G: \; \exists h \in G: \; g\cdot h = e$
@@ -30,59 +30,59 @@ $G$ heißt abelsch falls die Gruppe kommutativ ist.
 	\item $g_1h = g_2h \Rightarrow g_1 = g_2$
 	\item ein inverses ist eindeutig (Kürzungslemma)
 \end{enumerate}
-\textbf{Definition} (Untergruppe):\\
+\textbf{Definition} (Untergruppe)\\
 Für $(G,\cdot)$ eine Gruppe ist mit $H\subset G$ $(H,\cdot)$ eine Untergruppe, wenn \begin{enumerate}
 	\item $e \in H$
 	\item $h_1, h_2 \in H \; \Rightarrow \; h_1h_2 \in H$
 	\item $h \in H \Rightarrow h^{-1} \in H$
 \end{enumerate}
-\textbf{Definition} (Homomorphismus):\\
+\textbf{Definition} (Homomorphismus)\\
 $(G,\cdot_G)$ und $(H,\cdot_H)$ Gruppen, dann ist ein Homomorphismus $\phi: (G,\cdot_G) \to (H,\cdot_H)$ eine Abbildung mit $\forall g_1, g_2 \in G: \; \phi(g_1 \cdot_G g_2) = \phi(g_1) \cdot_H \phi(g_2)$\\
-\textbf{Proposition} Sei $\phi$ ein Gruppenhomomorphismus dann \begin{enumerate}
+\textbf{Proposition}\\ Sei $\phi$ ein Gruppenhomomorphismus dann \begin{enumerate}
 	\item $\phi(e_G) = e_H$
 	\item $\phi(g^{-1}) = \phi(g)^{-1}$
 	\item $ker(\phi) = \{g \in G: \; \phi(g) = e_H\}$ ist Untergruppe
 	\item $\phi$ ist injektiv $\Leftrightarrow \; ker(\phi) = \{e_G\}$
 \end{enumerate}  
 \subsection{$(\mathbb{Z}, +)$}
-\textbf{Lemma}:\\ $I\subset \mathbb{Z}$ ist Untergruppe, wenn $I = \{0\}$ oder wenn $I = (a) = \{k\cdot a: k \in \mathbb{Z}\}$.
+\textbf{Lemma}\\ $I\subset \mathbb{Z}$ ist Untergruppe, wenn $I = \{0\}$ oder wenn $I = (a) = \{k\cdot a: k \in \mathbb{Z}\}$.
 \textbf{Definition}\\
 Seien $a,b\in\mathbb{Z}$ nicht beide 0. \[ggT(a,b) = \max\{d \in \mathbb{N} \; s.t.\; d|a \text{ und } d|b\}\]
-\textbf{Lemma} (Bézout):\\
+\textbf{Lemma} (Bézout)\\
 Es gilt $g = xa+by$ für $x,y \in \mathbb{Z}$.\\
-\textbf{Korollar}:
+\textbf{Korollar}
 \[a|bc \text{ und } ggT(a,b) = 1 \Rightarrow a|c\]
 Sei jetzt $n \in \mathbb{N}_{\geq 2}$. Wir definieren eine Äquivalenz $\equiv (mod\; n)$ auf $\mathbb{Z}$ durch \[a\equiv b\; (mod\; n) \Leftrightarrow n|(a-b)\]
 \[\mathbb{Z}/n\mathbb{Z} = \{a \;mod\; n: a\in\mathbb{Z}\}\]
 Diese Gruppe hat eine additive Gruppenstruktur durch \[\overline{a} + \overline{b} = \overline{a+b}\] und eine multiplikative Struktur durch \[\overline{a}\overline{b} = \overline{ab}\]
-\textbf{Theorem}:\\
+\textbf{Theorem}\\
 ($\mathbb{Z}/n\mathbb{Z}, +, \cdot)$ ist ein Ring und es gibt einen surjektiven Homomorphismus durch $\mathbb{Z} \overset{\pi}{\to} \mathbb{Z}/n\mathbb{Z}$ mit $ker(\pi) = n$.\\
-\textbf{Definition}:\\
+\textbf{Definition}\\
 \[\mathbb{Z}/n\mathbb{Z}^* = \{\overline{a} \in \mathbb{Z}/n\mathbb{Z}: \exists b \in \mathbb{Z}/n\mathbb{Z}: \; \overline{a}\overline{b} = 1\} \subset \mathbb{Z}/n\mathbb{Z}\]
-\textbf{Lemma}:\\
+\textbf{Lemma}\\
 Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. Dann \[\overline{a} \in (\mathbb{Z}/n\mathbb{Z})^* \Leftrightarrow ggT(a,n) = 1\]
-\textbf{Lemma}:\\
+\textbf{Lemma}\\
 $\mathbb{Z}/n\mathbb{Z}$ ist Körper $\Leftrightarrow\; n$ ist prim.\\
-\textbf{Definition}:\\
+\textbf{Definition}\\
 Für eine Gruppe $G$ und eine Teilmenge $S\subset G$ definiert $\langle S \rangle$ die \underline{kleinste Untergruppe}, die $S$ enthält.\\
-\textbf{Proposition}:
+\textbf{Proposition}
 \[\langle S \rangle = \{s_1^{e_1}, ..., s_N^{e_N}: N \in \mathbb{N}, \; e_i \in \mathbb{Z}, s_i \in S\}\]
-\textbf{Definition}:\\
+\textbf{Definition}\\
 Sei $g\in G$. $g$ hat (un)endliche Ordnung, wenn \[\langle g \rangle = \{g^e: e \in \mathbb{Z}\}\]
 (un)endlich ist. Es gilt $ord(g) = \left|\langle g \rangle \right|$.\\
 Man definiert $\exp_g: \mathbb{Z} \to \langle g \rangle \subseteq G, \; k \mapsto g^k$ ein Homomorphismus.\\
-\textbf{Theorem}:\\
+\textbf{Theorem}\\
 $\exp_g$ ist injektiv $\Leftrightarrow g$ hat unendliche Ordnung. Wenn die Ordnung $n$ endlich ist, erhalten wir einen Gruppenisomorphismus \[exp_g: \mathbb{Z}/ n\mathbb{Z} \to \langle g\rangle \subseteq G\]\[\overline{a} = a+n\mathbb{Z} \mapsto g^a\]
-\textbf{Korollar}:
+\textbf{Korollar}
 \[ord(g) = \min\{k \in \mathbb{N}: g^k = 1\}\]
-\textbf{Korollar}:\\
+\textbf{Korollar}\\
 Sei $g \in G$ mit endlicher Ordnung $n$. Dann $ord(g^k) = \frac{n}{ggT(n,k)}$.\\
-\textbf{Satz} (Lagrange):\\
+\textbf{Satz} (Lagrange)\\
 Wenn $H\leq G$ und $G$ endlich, dann $\left|H\right| | \left| G \right|$.\\
-\textbf{Korollar}:\\
+\textbf{Korollar}\\
 Es gilt $ord(g) | \left|G\right|$.
 \subsection{zyklische Gruppen}
-\textbf{Definition}:\\
+\textbf{Definition}\\
 Eine Gruppe heißt \underline{zyklisch}, wenn sie von nur einem Element generiert wird. Es gibt einen Isomorphismus \[\exp_g: \mathbb{Z} \to G\] wenn $g$ endliche Ordnung hat. $\mathbb{Z}$ hat zwei Generatoren, $\pm1$. Generell hat $G$ zwei Generatoren, $g$ und $g^{-1}$.\\
 Wenn $G$ ist zyklisch und der Ordnung $n$, dann \[\exp_g: \mathbb{Z}/n\mathbb{Z} \to G\]
 Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. \begin{enumerate}
@@ -91,48 +91,48 @@ Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. \begin{enumerate}
 	\item $\overline{a}$ hat (additive) Ordnung $n$ $\Leftrightarrow$ $\overline{a}$ hat ein \underline{multiplikatives} Inverses. 
 \end{enumerate}
 Es folgt $\overline{a}$ generiert $\mathbb{Z}/n\mathbb{Z} \Leftrightarrow \; \overline{a} \in (\mathbb{Z}/n\mathbb{Z})^*$. Eine endliche Gruppe zyklische Gruppe der Ordnung $n$ besitzt genau $\phi(n)$ Erzeuger.\\
-\textbf{Satz}:\\
+\textbf{Satz}\\
 Sei $G$ zyklisch, dann ist jede Untergruppe von $G$ zyklisch.\\
 Wenn $\left|G\right|=n$, und $d|n$, dann existiert genau eine Untergruppe von $G$ der Ordnung $d$.\\
-\textbf{Korollar}:\\
+\textbf{Korollar}\\
 Sei $G$ zyklisch, von der Ordnung $n$. Dann enthält $G$ für alle $d|n$ genau $\phi(d)$ Elemente der Ordnung $d$.\\
 Es gilt außerdem (für alle Gruppen) \[n = \sum_{d|n} \phi(d)\]
-\textbf{Satz}:\\
+\textbf{Satz}\\
 Sei $G$ endlich. Die folgenden Aussagen sind äquivalent:\begin{enumerate}
 	\item $G$ ist zyklisch
 	\item $\forall d$ mit $d|n$ gibt es höchstens $d$ Elemente von $G$ deren Ordnung ein Teiler von $d$ ist. 
 \end{enumerate}
-\textbf{Satz}:\\
+\textbf{Satz}\\
 Sei $K$ ein Körper. Dann ist jede endliche Untergruppe von $K^*$ zyklisch. Wenn $K$ endlich ist, ist also $K^*$ endlich.\\
-\textbf{Satz}:\\
+\textbf{Satz}\\
 Seien $G_1, ... G_r$ zyklisch. Dann ist $G_1 \times ... \times G_r$ zyklisch genau dann, wenn die Ordnungen paarweise teilerfremd sind.\\
 \underline{Eine Charakterisierung zyklischer Gruppen}\\
 Sei $n\geq 2$, $G\cong \mathbb{Z}/n\mathbb{Z}$ eine zyklische Gruppe der Ordnung $n$, dann \begin{itemize}
 	\item Für $d|n$ hat $G$ eine eindeutige Untergruppe $H$ der Ordnung $d$. 
 	\item $G$ hat $\phi(n)$ Erzeuger 
 \end{itemize}
-\textbf{Satz}
+\textbf{Satz}\\
 Ist $G$ eine endliche Gruppe mit \[\forall d|n \text{ gibt es höchstens $d$ Elemente deren Ordnung $d$ teilt}\]
 Dann ist $G$ zyklisch\\
-\textbf{Korollar}:\\
+\textbf{Korollar}\\
 Sei $K$ ein Körper, $G\subset K^*$ endlich. Dann ist $G$ zyklisch. 
 \subsection{Permutationsgruppen}
 Sei $X$ eine Menge. Man betrachte $Sym(X) = \{f: \; X\to X \text{ bijektiv}\}$. Dann ist $(Sym(X), \circ)$ eine Gruppe. Speziell $S_n = Sym(\{1,...,n\})$.\\
 Für Zykelschreibweise siehe EdA.\\
-\textbf{Lemma}:
+\textbf{Lemma}
 \begin{enumerate}
 	\item Ist $\sigma$ ein $l$-Zyklus, dann ist $ord(\sigma) = l$
 	\item Wenn $\sigma$ Produkt disjunkter Zyklen ist, dann ist $ord(\sigma)$ das kgV der Längen der Zyklen.
 \end{enumerate}
 Sei $\sigma \in S_n$. Für $f \in \mathbb{Q}[x_1,...,x_n]$ definieren wir \[\sigma(f) = f(x_{\sigma(1)},...,x_{\sigma(n)})\]
 Sei \[P = \prod_{1\leq i < j \leq n}(x_i-x_j)\] Dann ist $\sigma(P) = sgn(\sigma)\cdot P = \pm P$.\\
-\textbf{Lemma}:
+\textbf{Lemma}
 \begin{enumerate}
 	\item $sgn(\sigma \tau) = sgn(\sigma) sgn(\tau)$. Also $sgn: S_n \to \{\pm1\}$ ist ein Homomorphismus
 	\item Ist $\sigma$ eine Transposition $(k\;l)$ mit $k\neq l$, dann $sgn(\sigma) = -1$.
 	\item Für einen $l$-Zyklus ist $sgn(\sigma) = (-1)^{l+1}$.
 \end{enumerate}
-\textbf{Lemma}:\\
+\textbf{Lemma}\\
 $A_n = \{\sigma: sgn(\sigma) = 1\}$ ist eine Untergruppe von $S_n$.
 Allgemein gilt: \begin{itemize}
 	\item $S_n$ wird von seinen Transpositionen erzeugt.
@@ -147,7 +147,7 @@ mit \[\begin{cases}
 	\forall x \in X: e\cdot x = x\\
 	\forall g,h \in G\; x\in X: \; (g\cdot h)\cdot x = g\cdot (h\cdot x)
 \end{cases}\]
-\textbf{Bemerkung}:\\
+\textbf{Bemerkung}\\
 Gegeben $g \in G$ gilt: \begin{eqnarray*}
 	&\sigma_g: X \to X\\
 	&x \mapsto g\cdot x
@@ -159,18 +159,18 @@ Dann ist die Abbildung \begin{eqnarray*}
 \subsection{Bahn-Stabilisator-Satz}
 Sei $\rho$ gegeben, dann ist \[x\sim_\rho y \;\Leftrightarrow \; \exists g \in G: y=g\cdot x\] eine Äquivalenzrelation. Eine Äquivalenzklasse ist geschrieben als $G\cdot x = \{g\cdot x: g \in G\}$, genannt \underline{Bahn}. Es gilt daher auch \[X = \bigcup_{i \in I} X_i \;\text{ mit } X_i = G\cdot x_i\] Wenn es nur eine Bahn gibt, heißt die Wirkung \underline{transitiv}.\\
 Mit $x \in X$ ist der \underline{Stabilisator} eine Untergruppe $G_x = \{g \in G: g\cdot x = x\}$.\\
-\textbf{Satz}:\\
+\textbf{Satz}\\
 Sei $x \in X$. \begin{itemize}
 	\item $G/G_x \to G\cdot x$ ist eine Bijektion mit $gG_x \mapsto g\cdot x$.
 	\item Wenn $G,X$ endlich sind, dann $\left|G\right| = \left|G_x\right|\cdot \left|G\cdot x\right|$
 \end{itemize}
-\textbf{Bemerkung}:\\
+\textbf{Bemerkung}\\
 $\left|G_x\right|$ ist nur von der Ordnung von $x$ abhängig. Es gilt \[y \in G_x \Rightarrow \left|G_x\right| = \left|G_y\right|\]
 Es gilt sogar \begin{eqnarray*}
 	G_x \to G_y\\
 	h \mapsto ghg^{-1}
 \end{eqnarray*} ist ein Isomorphismus.\\
-\textbf{Satz} (Cauchy):\\
+\textbf{Satz} (Cauchy)\\
 Sei $G$ eine endliche Gruppe, $p$ prim, sodass $p | \left|G\right|$. Dann existiert ein $g \in G$ mit $ord(g) = p$.
 \subsection{Konjugation}
 Es gibt eine andere Wirkung einer Gruppe auf sich selbst. \begin{eqnarray*}
@@ -182,18 +182,18 @@ Die Bahnen $C(h) = \{ghg^{-1}: g \in G\}$ heißen \underline{Konjugationsklassen
 	&gZ(h) \mapsto ghg^{-1}
 \end{eqnarray*}
 Wenn $G$ endlich ist, dann $G = C\cup C_1 \cup ... \cup C_r$.\\
-\textbf{Bemerkung}:\\
+\textbf{Bemerkung}\\
 $D_n$ enthält $2(\lfloor\frac{n}{2}\rfloor +1)$ Konjugationsklassen.\\
-\textbf{Satz}:\\
+\textbf{Satz}\\
 Sei $p$ prim und ungerade und $G$ nicht abelsch mit Ordnung $2p$. Dann gilt $G\cong D_{p}$.\\
-\textbf{Theorem}:\\
+\textbf{Theorem}\\
 Ist $G$ endlich und der Ordnung $p^m$, so gilt $\left|Z(G)\right|>1$.
 \subsection{Quotientengruppen}
-\textbf{Definition}:
+\textbf{Definition}\\
 Sei $H<G$. Wir sagen, $H$ ist \underline{normal}, wenn $gHg^{-1} = H, \; \forall g \in G$. Äquivalent: $gH = Hg$, die Linksnebenklassen entsprechen also für alle $g \in G$ den Rechtsnebenklassen. Außerdem ist $H$ normal genau dann, wenn $ghg^{-1} \in H \; \forall g\in G, h \in H$.\\
-\textbf{Bemerkung}:\\
+\textbf{Bemerkung}\\
 Sei $H<G$ gegeben. Die Menge aller Linksnebenklassen sei gegeben durch $G/H = \{gH: g \in G\}$. Analog ist die Menge der Rechtsnebenklassen definiert $H\setminus G$.\\
-\textbf{Proposition}:\\
+\textbf{Proposition}\\
 Wenn $N<G$ normal ist, dann gibt es eine Gruppenverknüpfung \begin{eqnarray*}
 	& \cdot:\; G/N \times G/N \to G/N\\
 	& g_1N \cdot g_2N \mapsto g_1g_2N
@@ -203,7 +203,7 @@ Der kanonische Homomorphismus \begin{eqnarray*}
 	& g \mapsto gN
 \end{eqnarray*}
 ist surjektiv. $G/N$ heißt Quotientengruppe von $G$ unter $N$.\\
-\textbf{Korollar}:\\
+\textbf{Korollar}\\
 Sei $H<G$. $H$ ist normal in $G$, genau dann, wenn $H$ Kern eines Gruppenhomomorphismus $\phi: G \to G'$ ist.
 \subsection{Isomorphiesatz}
 Sei $\phi: G\to G'$ ein Gruppenhomomorphismus. Sei $N<G$ normal mit $N\subset ker(\phi)$. Dann $\exists \overline{\phi}$ wohldefiniert mit \begin{eqnarray*}
@@ -214,8 +214,63 @@ sodass \begin{enumerate}
 	\item $im(\overline{\phi}) = im(\phi)$
 	\item $\overline{\phi}$ injektiv $\Leftrightarrow \, N = ker(\phi)$
 \end{enumerate}
-\textbf{Korollar}:\\
+\textbf{Korollar}\\
 Sei $\phi: G\to G'$ ein Gruppenhomomorphismus. Dann gibt es einen Isomorphismus \[\overline{\phi}: G/N \to im(\phi)\] falls $N = ker(\phi)$\\
-\textbf{Korollar}:\\
-Ein surjektiver Gruppenhomomorphismus $\phi: G \to G'$ impliziert einen Isomorphismus \[\overline{\phi}: G/N \to G'\] wenn $N = ker(\phi)$. 
+\textbf{Korollar}\\
+Ein surjektiver Gruppenhomomorphismus $\phi: G \to G'$ impliziert einen Isomorphismus \[\overline{\phi}: G/N \to G'\] wenn $N = ker(\phi)$.\\
+\textbf{Theorem}\\
+Sei $G$ Gruppe, $N\triangleleft G$. \begin{itemize}
+	\item Die Abbildungen \[H<G \to \overline{H} = \underbrace{\{\overline{h}: h \in H\}}_{=\pi(H)} < G/N\] und \[\pi^{-1}(K)<G \leftarrow K<G/N\] liefern gegenseitige Isomorphismen zwischen \[H<G \text{ mit } N<H \leftrightarrow \text{ UG von } G/N\]
+	\item $H$ is normal $\Leftrightarrow \pi(H)$ normal für $H<G$ mit $N<H$
+	\item ist $H$ normal mit $N<H$, so gilt $G/H \cong (G/N)/(H/N)$
+\end{itemize}
+\textbf{Proposition}\\
+Sei $G$ eine Gruppe und $H<G$ von Index 2, d.h. $\left|G/H\right| = 2$. Dann ist $H$ normal.
+\section{Ringe}
+\subsection{Grundlagen}
+\textbf{Definition}\\
+Ein Ring ist eine Menge mit zwei Verknüpfungen $(R,+,\cdot)$. \begin{enumerate}
+	\item $(R,+)$ ist eine abelsche Gruppe mit neutralem Element $0\in R$ und Inversem $-a$ für alle $a \in R$.
+	\item $\cdot$ ist assoziativ $(a\cdot b) \cdot c = a \cdot (b\cdot c)$ und hat neutrales Element $1 \in R$
+	\item $\forall a,b,c \in R$ gilt $a(b+c) = ab + ac$ und $(a+b)c = ac + bc$.
+\end{enumerate}
+\textbf{Definition}\\
+Die Menge von Einheiten $R^*$ von $R$ ist definiert durch \[\{a \in R: \; \exists b \in R: \; a\cdot b = 1 = b\cdot a\}\]
+$(R^*, \cdot)$ ist eine Gruppe.\\
+
+Ein Ring heißt \underline{kommutativ}, falls $\forall a,b \in R: \; a\cdot b = b\cdot a$. Zum Beispiel ist $\mathbb{C}$ ein $\mathbb{R}$-Vektorraum der Dimension 2 und ein kommutativer Ring. $\mathbb{C} \times \mathbb{C}$ ist ein $\mathbb{C}$-Vektorraum der Dimension 2 und auch kommutativ.\\
+\textbf{Definition}\\
+Seien $R$, $S$ Ringe. Ein Ringhomomorphismus $\phi: R \to S$ ist eine Abbildung von Mengen $R \to S$ mit \begin{enumerate}
+	\item $\forall a,b \in R: \; \phi(a+b) = \phi(a)+\phi(b)$
+	\item $\forall a,b \in R: \; \phi(a\cdot b) = \phi(a) \cdot \phi(b)$
+	\item $\phi(1_R) = \phi(1_S)$ 
+\end{enumerate}
+\textbf{Proposition}\\
+Sei $a \in R^*$ und sei $\phi: R \to S$ ein Ringhomomorphismus. Dann ist $\phi(a)$ invertierbar und $\phi(a)^{-1} = \phi(a^{-1})$.\\
+\subsection{Teilbarkeit}
+\textbf{Definition}\\
+Sei $a \in R$. $a$ heißt Nullteiler, wenn $\exists b \in R\setminus\{0\}$, sodass $ab = 0$. Wenn $0$ der einzige Nullteiler ist, heißt $R$ Integritätsring.\\
+\textbf{Bemerkung}\\
+Ist $R$ ein Integritätsring und $ab = ac$ mit $a\neq 0$, dann impliziert $a(b-c) = 0$, dass $b=c$.\\
+\textbf{Proposition}\\
+Sei $R$ ein Integritätsring. Es gibt ein Körper $K$ mit folgenden Eigenschaften: \begin{itemize}
+	\item $R$ ist ein Unterring von $K$
+	\item $\forall k \in K$ gilt $k = ab^{-1}$ mit $a,b \in R$ und $b\neq 0$
+\end{itemize}
+So ein Körper heißt \underline{Quotientenkörper} von $R$.
+\subsection{Ideale}
+Ein Ideal $I$ ist eine ein Unterring $I\subseteq R$ mit folgenden Eigenschaften: \begin{enumerate}
+	\item $I$ ist eine Untergruppe von $(R,+)$
+	\item $\forall r \in R, \; a \in I$ gilt $ra \in I$
+\end{enumerate}
+\textbf{Bemerkung}
+\begin{itemize}
+	\item $\{0\}$ und $R$ sind Ideale
+	\item sei $a \in R$. $I = (a) = aR = \{r\cdot a: \; r \in R\}$ ist das Ideal von $a$ generiert.
+	\item $I=R$ $\Leftrightarrow$ $a$ ist eine Einheit.
+\end{itemize}
+\textbf{Definition}\\
+Sie $S = \{a_1,...,a_n\} \subset R$ endlich. Dann ist das Ideal $(S) = \{r_1\cdot a_n+...+r_n\cdot a_n\}$ das kleinste Ideal, das $S$ enthält.\\
+\textbf{Definition}\\
+Ein Hauptidealring ist ein Ring $R$, sodass alle Ideale $I$ der Form $I = (a)$ sind (Hauptideale).
 \end{document}
