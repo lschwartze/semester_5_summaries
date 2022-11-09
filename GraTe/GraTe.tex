@@ -129,5 +129,32 @@
 	
 	A path $P$ is \underline{alternating} if it starts in an unmatched edge and alternates between $E(G)\setminus M$ and $M$.\\
 	\textbf{Theorem} (König)\\
-	Let $G$ be a bipartite graph. Then the cardinality of a maximum matching is equal to the smallest cardinality of the vertex cover.
+	Let $G$ be a bipartite graph. Then the cardinality of a maximum matching is equal to the smallest cardinality of the vertex cover.\\
+	
+	Let $A\cup B = V(G)$ be a partition. If all vertices in $A$ are incident with a matching edge, we have a matching of $A$. But when can we find a matching of $A$? \\
+	\textbf{Theorem} (Hall)\\
+	There is a matching of $A$ iff $\forall S \subseteq A$ it holds $\left|N(S)\right| \geq \left|S\right|$.\\
+	\textbf{Corollary}\\
+	A graph where every vertex has degree $k$ is called $k$-regular. Every $k$-regular graph has a perfect matching.\\
+	\textbf{Definition}\\
+	A subgraph $H$ of $G$ is a $k$-factor if \begin{enumerate}
+		\item $V(H) = V(G)$
+		\item $H$ is $k$-regular 
+	\end{enumerate} 
+	\textbf{Corollary}\\
+	Every $2k$-regular graph has a $2$-factor.\\
+	\textbf{Remark}\\
+	Define $q(G)$ as the number of odd components of $G$. We get a new necessary condition for a perfect matching: \[\forall S \subseteq V(G) \text{ it holds } q(G-S) \leq \left|S\right|\]
+	\textbf{Theorem} (Tuttle)\\
+	$G$ has a perfect matching iff above remark holds.\\
+	\textbf{Definition}\\
+	$G$ is factor critical if $\forall v \in V(G)$ it holds, that $G-v$ has a perfect matching.\\
+	\textbf{Theorem}\\
+	For every $G$ there is a $S^* \subseteq V(G)$ s.t. \begin{itemize}
+		\item all even components of $G-S$ have a perfect matching
+		\item all odds components of $G-S$ are factor-critical
+		\item $\forall \emptyset \neq X \subseteq S^*$ the number of odd components of $G-S$ that intersect $N(X)$ is larger than $\left|X\right|$
+	\end{itemize}
+	\textbf{Lemma}\\
+	For every $G$ there is a $S \subseteq V(G)$ and a maximum matching $M$ s.t. $M$ covers all but at most $q(G-S) - \left|S\right|$.
 \end{document}
