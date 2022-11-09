@@ -20,7 +20,7 @@
 	\tableofcontents
 	\section{Introduction}
 	\subsection{Turing Machine}
-	\textbf{Definition} (alphabet):\\
+	\textbf{Definition} (alphabet)\\
 	An alphabet $A$ is a set containing at least two symbols excluding $\sqcup$. $A^n$ is the set of all words with length $n$ over $A$. By convention $A^0 = \{\sqcup\}$. Additionally \[A^* = \bigcup_{n \in \mathbb{N}_0} A^n\] A language $L$ is a subset of $A^*$. A word is an element of $L$.\\
 	\textbf{Definition} (Turing machine)\\
 	Let $\overline{A} = A \cup \{\sqcup\}$. A Turing machine is a function \[\phi : \underbrace{\{0,...,N\}}_{\text{state}} \times \underbrace{\overline{A}}_{\text{symbol}} \to \underbrace{\{-1, 0, ..., N\}}_{\text{new state}} \times \underbrace{\overline{A}}_{\text{new symbol}} \times \underbrace{\{-1, 0, 1\}}_{\text{left, stay, right}}\]
@@ -40,37 +40,37 @@
 		\item $\pi^0 = 1$
 	\end{itemize} 
 	if $n^{(i)} = -1$, the computation ends. We set $time(\phi, x) := i$ and $output(\phi, x) := (s_1^{(i)}, ..., s_k^{(i)})$ where $k = \min\{j \in \mathbb{N}_0 : s_j^{(i)} = \sqcup\} -1$.\\
-	\textbf{Definition} (computational problem):\\
+	\textbf{Definition} (computational problem)\\
 	A pair $(X, R)$ where $X\subset A^*$ is a language and $R\subset X \times A^*$ is a relation such that $\forall x \in X: \; \exists y \in A^*$ with $(x,y) \in R$ is called a computational problem. $\phi$ solves a problem if $time(\phi, x) < \infty$ and $(x, output(\phi, x)) \in R$. If $time(\phi, x) < p(length(x))$ for a $p \in \mathbb{P}_n$ then $\phi$ is a polynomial turing machine.\\
 	\section{Complexity and NP-completeness}
-	\textbf{Definition} (Decision problem, class P):\\
+	\textbf{Definition} (Decision problem, class P)\\
 	A decision problem $P$ is a pair $(X,Y)$ where $X$ is a language that is decidable in polynomial time and $Y\subseteq X$. The elements of $Y$ are \underline{yes-instances} of $P$ and the elements of $X\setminus Y$ are \underline{no-instances} of $P$. An algorithm for $P$ (a Turing machine) computes the function $f: X\to \{0,1\}$ where $f(x) = 1$ iff $x \in Y$. If there is an algorithm for $P$ that works in polynomial time, $P$ belongs to the class \textbf{P}.\\
-	\textbf{Definition} (NP and CO-NP classes):\\
+	\textbf{Definition} (NP and CO-NP classes)\\
 	A problem $P = (X,Y)$ belongs to \textbf{NP} if there is a polynomial $p$ and a decision problem $P' = (X',Y')$ in \textbf{P} where \[X' = \{x\# c \;|\; x \in X \text{ and } c \in \{0,1\}^{\lfloor p(size(x))\rfloor}\}\]
 	such that \[Y = \{x \in X \; |\; \exists c \in \{0,1\}^{\lfloor p(size(x))\rfloor} \text{ s.t. } x\#c \in Y'\}\]
 	The string $c$ is a certificate for $x$. An algorithm for $P'$ checks the certificate. A problem belongs to \textbf{co-NP} iff $(X, X\setminus Y)$ is in \textbf{P}.\\
-	\textbf{Theorem}:
+	\textbf{Theorem}
 	\begin{itemize}
 		\item $P \subseteq NP \;\cap\; co-NP$
 		\item \texttt{Hamiltonian cycle} is in $NP$.
 		\item \texttt{Integer linear inequalities} is in $NP$.
 	\end{itemize}
-	\textbf{Definition} (NP-completeness):\\
+	\textbf{Definition} (NP-completeness)\\
 	A decision problem $P_1 = (X_1, Y_1)$ can be polynomially transformed to a decision problem $P_2 = (X_2,Y_2)$ if $\exists f: X_1 \to X_2$ computable in polynomial time s.t. \[f(x) \in Y_2 \Leftrightarrow x \in Y_1 \; \forall x \in X_1\]
 	A problem $P$ is \textbf{NP-complete} if all problems in \textbf{NP} can be transformed to $P$.
 	\subsection{Boolean Formulas}
 	We focus on formulas in conjunctive form (KNF). $n$-SAT is defined as the problem to find values for each literal s.t. the formula evaluates to true. Each clause has $n$ literals.\\
 	Let $x_1,...,x_n$ be variables, $x_i \in \{0,1\}$. We write $\overline{x_i}$ for a negative literal. For a formula in disjunctive form (DNF) an assignment that evaluates to true can always be found in polynomial time regardless of $n$.\\
-	\textbf{Theorem}:\\
+	\textbf{Theorem}\\
 	\texttt{2-SAT} $\in$ \textbf{P}.\\
 	\underline{Proof}\\
 	Let $f$ be given as CNF. First, we can remove all clauses of length one by assigning the variable true or false so that this clause evaluates to true. Additionally, no subformula of the form $x_i \land \overline{x_i}$ can exist, because these set $f$ to false immediately. We construct a digraph $D$ with vertices $V(D) = \{x_1,...,x_n\} \cup \{\overline{x_1},...,\overline{x_n}\}$. The edges $(\overline{x}, y)$ and $(\overline{y}, x)$ correspond to $\overline{x} \implies y$ and $\overline{y} \implies x$ for a clause $(x\lor y)$. Now, we identify the strong components of $D$, $D_1,...,D_c$ which are the maximal components such that all pairs $(u,v)$ in $D_i$ are connected by a $u-v$-path and a $v-u$-path in $D_i$. Finding $D_1,...,D_c$ can be done in polynomial time. By contracting each $D_i$ to a node $u_i$ we get a new acyclic graph $\overset{\sim}{D}$ with a topological order: If $u_1,...,u_k$ is a topological order, then there is no arc $(u_j,u_i)$ with $j>i$.\\
 	We claim the following: $f$ is satisfiable iff no strong component has a variable $x_i$ and its negation $\overline{x_i}$.\\
 	$\Rightarrow$: if both belong to a strong component, $x$ can't be set to true nor false, the statement follows.\\
 	$\Leftarrow$: Suppose $x_i \in D_r$ and $\overline{x_i} \in D_s$. If $r<s$ in the topological set $x_i = 0$ and vice versa.\\
-	\textbf{Theorem}:\\
+	\textbf{Theorem}\\
 	\texttt{3-SAT} $\in$ \textbf{NPC}\\
-	\underline{Proof}:\\
+	\underline{Proof}\\
 	Since we can check any assignement of truth values in polynomial time, it is obvious that \texttt{3-SAT} is in \textbf{NP}. Since we already know that \texttt{Satisfiability} is in \textbf{NPC} we construct a transformation from a formula $f_{SAT}$ to $f_{3SAT}$.\\
 	Let $f_{SAT} = C_1 \land ... \land C_m$. \begin{itemize}
 		\item if $\left|C_i\right| = 3$ we can leave this clause in $f_{3SAT}$.
@@ -83,14 +83,14 @@
 	\item if $C_i = (x_1)$ then create four clauses with all possible assignments of $y_1$ and $y_2$.
 	\end{itemize}
 	By construction $f_{SAT}$ is satisfiable iff $f_{3SAT}$ is satisfiable and the transformation can be done in polynomial time.\\
-	\textbf{Problem} (\texttt{independent set}):\\
+	\textbf{Problem} (\texttt{independent set})\\
 	\underline{Input}: A graph $G$ and an integer $k \leq n(G)$\\
 	\underline{Question}: Does $G$ have an independent set (set of non-neighbouring nodes) of order at least $k$?\\
-	\textbf{Theorem}:\\
+	\textbf{Theorem}\\
 	\texttt{Independent Set} $\in$ \textbf{NPC}.
 	\section{Optimization problems}
 	\subsection{Introduction}
-	\textbf{Definition}:\\
+	\textbf{Definition}\\
 	An optimization problem $P$ is a 4-tuple $(X, (S_x)_{x\in X}, c, \text{goal})$ where \begin{itemize}
 		\item $X$ is a language over $\{0,1\}$that is decidable in polynomial time\item there is a polynomial $p$ s.t. $\forall x \in X$ \begin{itemize}
 			\item $S_x$ is a subset if $\{0,1\}^*$
@@ -101,15 +101,16 @@
 	\item goal $\in \{\min, \max\}$
 	\end{itemize}
 	For $x \in X$ let OPT($x$) = goal$\{c(x,y)|y\in S_x\}$ where $\min \varnothing = \infty$ and $\max \varnothing = -\infty$ and $y \in S_x$ with $c(x,y) =$ OPT($x$) is an \underline{optimal solution} for $x$.\\
-	\textbf{Definition}:\\
+	\textbf{Definition}\\
 	An algorithm $A$ for an optimization problem $P=(X,S_x,c,\text{goal})$ is a turing machine $\Phi$ with output($\Phi, x$) $\in S_x \; \forall x \in X$ with $S_x \neq \varnothing$. Let $A(x) = c(x,\text{output}(\Phi,x))$. If \[A(x) = \text{OPT}(x) \; \forall x \in X\] with $S_x \neq \varnothing$, then $A$ is an \underline{exact} algorithm. $A$ is an approximation with additive performance guarantee $k$, if \[\left|A(x) - \text{OPT}(x)\right| \leq k \; \forall x \in X \text{ and } S_x \neq \varnothing\] and a $k$-factor approximation algorithm, if \[\frac{1}{k}\cdot \text{OPT}(x) \leq A(x) \leq k\cdot\text{OPT}(x) \; \forall x \in X \text{ and } S_x \neq \varnothing\]
 	\subsection{Examples}
 	\underline{Comment}: For many problems, a \underline{greedy} approach yields a good approximation factor.\\
-	\textbf{Problem} (Minimum Makespan / Job Scheduling with identical machines):\\
+	\textbf{Problem} (Minimum Makespan / Job Scheduling with identical machines)\\
 	INSTANCE: positive integers $\underbrace{n}_{\text{jobs}},\underbrace{m}_{\text{machines}},\underbrace{a_1,...,a_n}_{\text{required time for job $i$}}$\\
 
 	\noindent GOAL: Determine a function $f: [n] \to [m]$ minimizing \[\max_{j \in [m]} a(f^{-1}(j)) = \max_{j \in [m]} \sum_{i \in [n] \; | \; f(i) = j} a_i\]
 	\newpage
+	\par\noindent\rule{\textwidth}{0.4pt}
 	\noindent\underline{Greedy algorithm for job scheduling}:
 	\begin{algorithmic}
 		\For{$i=1 \text{ to } n$}
@@ -117,6 +118,43 @@
 		\EndFor
 		\State return $f$
 	\end{algorithmic}
-	We can show, that this is a 2-factor algorithm:\\
-	LEt $l \in [n]$ be the maximum such that $f(l) = k$, where $k \in [m]$ is the machine taking more time. When job $l$ was assigned to $k$ all $m$ machines had completion time at least $t = \sum_{l \in [i-1] | f(l) = k} a(f^{-1}(k))-a_l$ which implies that $a(f^{-1}(k)) = t+a_l \leq 2\cdot\text{OPT}(x)$.
+\par\noindent\rule{\textwidth}{0.4pt}
+	We can show, that this is a 2-factor algorithm\\
+	Let $l \in [n]$ be the maximum such that $f(l) = k$, where $k \in [m]$ is the machine taking more time. When job $l$ was assigned to $k$ all $m$ machines had completion time at least $t = \sum_{l \in [i-1] | f(l) = k} a()f^{-1}(k))-a_l$ which implies that $a()f^{-1}(k)) = t+a_l \leq 2\cdot\text{OPT}(x)$.
+	
+	\subsection{Online and Offline Algorithms}
+	\textbf{Definition}\\
+	An algorithm is called \underline{online} if the input in only partially known before making decisions. I.e. a sequence $a_1,...,a_n$ is given and the decision for $a_{i-1}$ is made before knowing $a_i$. An example is Graham's algorithm for job scheduling.\\
+	
+	Consider the bin packing problem which is the dual problem of job scheduling. We will give an \underline{offline} algorithm for this optimization problem.\\
+	\textbf{Problem} (bin packing)\\
+	INSTANCE: $n \in \mathbb{N}$ and $a_1,...,a_n \in \mathbb{Q} \cap [0,1]$\\
+	GOAL: Determine the minimal $k \in \mathbb{N}$ and a function \[f: [n] \to [k] \text{ s.t. } a(f^{-1}(j)) = \sum_{i \in [n], f(i) = j} a_i \leq 1 \; \forall j \in [k]\]
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\underline{First Fit decreasing algorithm}
+	\begin{algorithmic}
+		\State INPUT $I = (a_1,...,a_n)$
+		\State $I \gets I'$ where $I'$ is sorted in a non-increasing way
+		\For{$i=1$ to $n$}
+			\State $f(j) \gets \min_j ((\sum_{l \in [i-1], f(l) = j} a_l) + a_i \leq 1)$
+		\EndFor
+		\State return $k,f$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}
+	
+	This algorithm puts any given element in the first bin, where the item fits. Therefore, the minimum $j$ is chosen, such that the sum if all items in the $j$-th bin is smaller than one.\\
+	\textbf{Theorem}\\
+	For a given instance $I$, we have $k \leq \lfloor \frac{3}{2} OPT(I) \rfloor$.\\
+	\textbf{Proof}\\
+	Let $j = \lceil \frac{2k}{3} \rceil$. Lets call an item $i$ with $a_i > \frac{1}{2}$ big and small otherwise. If bin $m$ has a big item, obviously all bins before $m$ will have a big item as well. Therefore \[OPT(I) \geq j = \lceil \frac{2k}{3} \rceil\] since no two big items can fit in the same bin. Now consider the first bin $l$ with no big items. That is to say, all bins before $l$ have a big item. It follows that bins $l$ to $k$ have only small items and $l$ to $k-1$ pack at least two items. So, $l < \frac{2k+2}{3}$ and then $l-1 \leq 2(k-l)+1$. It follows $OPT(I) \geq a_1 + \dots + a_n > l-1 = \lfloor \frac{2k}{3} + 1\rfloor$.\\
+	
+	\noindent\textbf{Problem} (3 dimensional matching)\\
+	This problem is \textbf{NPC}.\\
+	INSTANCE: three disjoint sets $U, V$ and $W$ of equal cardinality and a subset $T \subseteq U\times V \times W$ with $\left|T\right| \geq \left|U\right|$.\\
+	GOAL: Decide whether there is a subset $S\subseteq T$ of order $\left|U\right|$ s.t. the elements of $S$ are pairwise different in all components.\\
+	\textbf{Theorem}\\
+	\texttt{3 Dimensional Matching} is \textbf{NP complete}.
+	\section{Complexity and NP-completeness}
+	\textbf{Theorem}\\
+	The \texttt{Subset Sum problem} is \textbf{NPC}.
 \end{document}
