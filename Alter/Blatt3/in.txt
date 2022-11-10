@@ -1,0 +1,19 @@
+2
+9
+Anton 1800
+Josef 1500
+Sieglinde -1400
+Erwin 1900
+Florian -1600
+Christina -2000
+Peter -1600
+Hans 1300
+Xaver 1500
+7
+Leela 1300
+Amy 3000
+Fry -1400
+Professor -1700
+Hermes -1600
+Bender -3000
+Zoidberg 1200

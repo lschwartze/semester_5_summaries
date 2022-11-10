@@ -1,0 +1,6 @@
+Josef,Florian,1500
+Anton,Christina,1800
+Hans,Peter,1300
+Leela,Fry,1300
+Amy,Bender,3000
+Zoidberg,Professor,1200
