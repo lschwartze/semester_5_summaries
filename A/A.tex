@@ -273,4 +273,69 @@ Ein Ideal $I$ ist eine ein Unterring $I\subseteq R$ mit folgenden Eigenschaften:
 Sie $S = \{a_1,...,a_n\} \subset R$ endlich. Dann ist das Ideal $(S) = \{r_1\cdot a_n+...+r_n\cdot a_n\}$ das kleinste Ideal, das $S$ enthält.\\
 \textbf{Definition}\\
 Ein Hauptidealring ist ein Ring $R$, sodass alle Ideale $I$ der Form $I = (a)$ sind (Hauptideale).
+\subsection{Quotientenringe}
+\textbf{Definition} (Quotientenringe)\\
+Sei $R$ ein Ring, $(a) \subseteq R$ ein Ideal. Wir definieren $R/(a) = \{\overline{r} = r+a = \{r+s : s \in (a)\}\}$. Ist $\phi: R \to S$ ein Homomorphismus mit $(a) \subseteq ker(\phi)$, so existiert $\overline{\phi}: R/(a) \to S$ mit $\overline{r} \mapsto \phi(r)$.\\
+
+Für einen Körper $K$ ist $K[x]$ ein Ring und für $f \in K[x]$ mit $deg(f) = n$ ist $K[x]/(f) = \{\overline{r}: deg(r) < n\}$. Das folgt aus Division mit Rest und da $g = f\cdot q + r$ mit $deg(r) < deg(f)$ und $r$ ist eindeutig bestimmt.\\
+
+\noindent\textbf{Bemerkung}\\
+$a \subseteq R$ ist Ideal $\Leftrightarrow$ $(a)$ ist Kern eines Homomorphismus.\\
+\textbf{Proposition}\\
+Es gibt für $(a) \subseteq R$ gegenseitig inverse Abbildungen zwischen der Menge der Ideale, die $(a)$ enthalten und der Menge der Ideale von $R/(a)$.\\
+\textbf{Definition}\\
+$(a) \subseteq R$ heißt \begin{itemize}
+	\item \underline{Primideal}, falls $rs \in (a) \Rightarrow r \in (a) \lor s \in (a)$
+	\item \underline{maximales Ideal}, falls $(a) \neq R$ und $\not \exists\; I \text{ s.t. } (a) \subsetneq I \subsetneq R$.
+\end{itemize} 
+\textbf{Satz}\begin{itemize}
+	\item $(a)$ prim $\Leftrightarrow$ $R/(a)$ ist Integritätsring
+	\item $(a)$ maximale $\Leftrightarrow$ $R/(a)$ ist Körper
+\end{itemize}
+\textbf{Definition}\\
+$a \in R$ heißt \underline{irreduzibel}, falls $a \neq 0, \; a \notin R^*$ und $a = r\cdot s \Rightarrow \; r \in R^* \lor s \in R^*$.\\
+$a \in R$ heißt \underline{Primelement}, falls $a \neq 0 \; a \notin R^*$ und $(a)$ ist ein Primideal.\\
+\textbf{Satz}\\
+Sei $a \in R \setminus \{0\}$ und $R$ ein Hauptidealring. Dann sind äquivalent \begin{enumerate}
+	\item $a$ ist irreduzibel
+	\item $(a)$ ist prim ($\Leftrightarrow a$ ist prim)
+	\item $(a)$ ist maximal
+\end{enumerate}
+\subsection{Sun Zi}
+\textbf{Definition}\\
+Seien $I, J$ $R$-Ideale. \begin{itemize}
+	\item $I+J = \{r+s, r \in I, s \in J\}$
+	\item $I\cdot J = \{\sum_{i=1}^{n} r_is_i\; n \in \mathbb{N}, r \in I, s \in J\}$
+\end{itemize}
+\textbf{Definition}\\
+$I$ und $J$ sind teilerfremd, wenn $I+J = R$.\\
+\textbf{Satz}\\
+Sei $I+J=R$, dann \begin{enumerate}
+	\item $I\cdot J = I\cap J$
+	\item Es gilt der Isomorphismus $R/(I\cdot J) \cong R/I \times R/J$
+\end{enumerate}
+\subsection{Faktorringe}
+\textbf{Definition}\\
+Seien $a,b \in R$.  \begin{enumerate}
+	\item Wir sagen $a \sim b$, wenn $a|b$ und $b|a$ $\Leftrightarrow a = rb$ für $r \in R^*$ $\Leftrightarrow \; (a) = (b)$
+	\item Wir sagen $a$ ist prim, wenn $(a)$ ein Primideal ist
+\end{enumerate}
+\textbf{Satz}\\
+Sei $R$ ein Integritätsring, dann ist jedes Primelement von $R$ irreduzibel.\\
+\textbf{Proposition}\\
+Für $a \in \mathbb{Z}[\sqrt{-5}]$ gilt $a \in R^* \Leftrightarrow \left|\left|a\right|\right| = 1$.\\
+\textbf{Definition}\\
+Ein Faktorring ist ein Integritätsring mit folgenden Eigenschaften \begin{enumerate}
+	\item $a \in R$ mit $a\neq 0$ und $a \notin R^*$, dann $a = \pi_1\cdot ... \cdot \pi_k$ für irreduzible $\pi_i$
+	\item Wenn $a = q_1 \cdot ... \cdot q_l$, dann $k = l$ und $\pi_i \sim \alpha q_i$
+\end{enumerate}
+\textbf{Satz}\\
+Sei $R$ ein Integritätsring, sodass 1 gilt. Dann sind äquivalent \begin{itemize}
+	\item $R$ ist ein Faktorring
+	\item jedes irreduzible Element von $R$ ist prim.
+\end{itemize}
+\textbf{Satz}\\
+Ein Integritätsring ist ein Faktorring.\\
+\textbf{Korollar}\\
+Seien $a,b \in R\setminus\{0\}$ in einem Faktorring. Es gibt einen größten gemeinsamen Teiler $ggT(a,b) = d$ mit $d | a$, $d | b$ und $e | a, \; e | b \Rightarrow e | d$. $d$ ist eindeutig bis auf Assoziiertheit.
 \end{document}
