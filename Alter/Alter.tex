@@ -86,6 +86,7 @@
 	HeapSort ist ein Inplace-Sortierverfahren. Die worst-case-Laufzeit beträgt $\mathcal{O}(n\log n)$.\\
 	\underline{\textbf{Quicksort}}\\
 	Wir betrachten Quicksort, ein stabiles divide-and-conquer Verfahren.
+	\par\noindent\rule{\textwidth}{0.4pt}
 	\begin{algorithmic}
 		\State\texttt{PROCEDURE} Quicksort($a_1,...,a_n$)
 		\If{$n=0$}
@@ -103,6 +104,7 @@
 		\EndFor
 		\State RETURN (QuickSort(l),$x$,QuickSort(r))
 	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}
 	\underline{Eigenschaften} \begin{itemize}
 		\item im schlechtesten Fall wird jedes Mal die größte (oder kleinste) Zahl als Pivotelement gewählt
 		\item Dann hat die $i$-te Teilfolge Läge $n-i$
@@ -114,5 +116,42 @@
 	\subsection{Average-Case-Analyse von Quicksort}
 	Annahme: die Eingabe Liste ist gleichverteilt und paarweise verschieden.\\
 	Die Eingabefolge sein $a_n$ und die sortierte Folge $s_n$. Wir führen eine Zufallsvariable $X_{ij}$ ein, wobei $X_{ij} = 1$, falls beim Quicksort $s_i$ mit $s_j$ verglichen werden. Daher ist die mittlere Anzahl an Vergleichen gegeben durch \[V(n) = \sum_{i<j}\mathbb{E}[X_{ij}]\]
-	Nun ist $\mathbb{E}[X_{ij}] = p_{ij} + 0\cdot (1-p_{ij}) = p_{ij}$ die Wahrscheinlichkeit, dass $s_i$ und $s_j$ verglichen werden. Man findet, dass $p_{ij} = \frac{2}{j-i+1}$. Insgesamt also \[V(n) = \sum_{i<j} \mathbb{E}[X_{ij}] = \sum_{i<j} \frac{2}{j-i+1}\] Durch elementares Umformen findet man $V(n) \leq 1,3863n \log_2 n$. Die obige Implementierung von Quicksort ist nicht in-place, denn es werden immer neue (Teil-)Folgen generiert. 
+	Nun ist $\mathbb{E}[X_{ij}] = p_{ij} + 0\cdot (1-p_{ij}) = p_{ij}$ die Wahrscheinlichkeit, dass $s_i$ und $s_j$ verglichen werden. Man findet, dass $p_{ij} = \frac{2}{j-i+1}$. Insgesamt also \[V(n) = \sum_{i<j} \mathbb{E}[X_{ij}] = \sum_{i<j} \frac{2}{j-i+1}\] Durch elementares Umformen findet man $V(n) \leq 1,3863n \log_2 n$. Die obige Implementierung von Quicksort ist nicht in-place, denn es werden immer neue (Teil-)Folgen generiert.
+	\section{Selektionsalgorithmen}
+	Gegeben sei eine Folge von Zahlen. Es soll das $i$-kleinste Element gefunden werden für $i \in [n]$. Bei $i=1$ das Minimum, bei $i=n$ das Maximum, bei $i = \frac{n}{2}$ den Median.\\
+	\subsection{Spezialfall Extrema (z.B. Maximum)} 
+	Die naive Implementierung braucht lineare Zeit und genauer $V(n) = n-1$ Vergleiche. Diese Implementierung ist optimal, denn bei weniger als $n-1$ Vergleichen gibt es ein Element, das nie überprüft wurde.
+	\subsection{Maximum und Minimum}
+	Die naive Implementierung bestimmt die Extrema separat und benötigt daher $2n-2$ Vergleiche. Dieser Wert lässt sich verbessern:\\ Es wird immer ein Element mit seinem Nachfolger verglichen. Dabei gibt es $\frac{n}{2}$ größere und $\frac{n}{2}$ kleinere Elemente. Für diese Partition braucht man daher $\frac{n}{2}$ Vergleiche. Unter den kleineren kann das Minimum und unter den größeren das Maximum in jeweils $\frac{n}{2}-1$ Vergleichen bestimmt werden. Insgesamt folgt also $V(n) = \frac{3}{2}n-2$. Man kann zeigen, dass dieses Vorgehen optimal ist.
+	\subsection{Selektion des $k$-kleinsten Elementes}
+	Die Vorgehenweise ist angelegt an Quicksort. Folgende Prozedur löst das Problem:\\
+	Select($a,l,r,i$) bestimmt das $i$-kleinste Element in der Teilfolge $a[l,r]$.\\
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\begin{algorithmic}
+		\If{$i+l-1\notin \{l,...,r\}$} 
+		\State return fail
+		\EndIf
+		\State Bestimmte Pivotelement $x$ aus $a[l,...,r]$
+		\State Sei $m$ der Rang von $x$ in $a[l,...,r]$
+		\State sortiere $a$ so um, dass $a[l+m-1]=x \land \begin{cases}
+			a[j] < a[m+l-1] & \text{ für } l\leq j<m+l-1\\
+			a[j] > a[m+l-1] & \text{ für } r \geq j >m+l-1 
+		\end{cases}$
+	\If{$i=m+l-1$}
+	\State return $x$
+	\EndIf
+	\If{$i<m+l-1$}
+	\State return Select($a,l,l+m-2,i$)
+	\EndIf
+	\If{$i>m+l-1$}
+	\State return Select($a,l+m,r,i-m$)
+	\EndIf
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\textbf{Worst-Case-Komplexität}\\
+	Analog zum Quicksort tritt der schlechteste Fall ein, wenn das Pivotelement am Rand liegt. Dann ist die Komplexität $\mathcal{O}(n^2)$.\\
+	\textbf{Random Select}\\
+	Angenommen das Pivotelement wird zufällig gemäß einer Gleichverteilung gewählt. Ist $x$ das $j$-kleinste Element so hat das linke Teilarray die Größe $j-1$ und das rechte $n-j$. Im schlimmsten Fall wird Select rekursiv mit dem größeren Teilarray aufgerufen. die Aufteilung benötigt $n-1$ Vergleiche. D.h. die mittlere Anzahl von Vergleichen ist rekursiv beschränkt durch $V(n) \leq (n-1) + \frac{2}{n} \sum_{j = n/2}^{n-1} V(j)$. Durch Einsetzen kann man diese Rekursionsungleichung lösen und findet, dass der average case linear ist.\\
+	\textbf{Pivotelement geschickt wählen}\\
+	Man organisiert die Liste in Fünfergruppen und sortiert diese (jeweils konstant mit genau 7 Vergleichen). In jeder Fünfergruppe wird der Median bestimmt und anschließend der Median dieser Mediane. Dieser wird als Pivotelement gesetzt. Damit hat sich die Anzahl der zu vergleichenden Elemente auf $\frac{4}{10}n$. Es ergibt sich die Rekursionsgleichung \[V(n) = \frac{7n}{5} + V(\frac{n}{5} + \frac{4n}{10}) + V(\frac{7n}{10})\] Mittels Mastertheorem lässt sich diese Gleichung lösen und man findet, dass die Prozedur mit dieser Pivotwahl linearen Aufwand hat.
 \end{document}
