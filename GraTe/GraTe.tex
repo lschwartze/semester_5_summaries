@@ -117,6 +117,7 @@
 	\textbf{Theorem}\\
 	A graph $G$ has an Euler tour iff $G$ is connected and $d(v)$ is even $\forall v \in V(G)$.
 	\section{Matchings}
+	\subsection{Foundations}
 	\textbf{Definition}\\
 	A \underline{matching} is an edge set $M \subseteq E(G)$ s.t. no vertex is incident with two or more edges in $M$. A \underline{maximum} matching is a matching of largest cardinality.\\
 	
@@ -151,10 +152,32 @@
 	$G$ is factor critical if $\forall v \in V(G)$ it holds, that $G-v$ has a perfect matching.\\
 	\textbf{Theorem}\\
 	For every $G$ there is a $S^* \subseteq V(G)$ s.t. \begin{itemize}
-		\item all even components of $G-S$ have a perfect matching
-		\item all odds components of $G-S$ are factor-critical
-		\item $\forall \emptyset \neq X \subseteq S^*$ the number of odd components of $G-S$ that intersect $N(X)$ is larger than $\left|X\right|$
+		\item all even components of $G-S^*$ have a perfect matching
+		\item all odds components of $G-S^*$ are factor-critical
+		\item $\forall \emptyset \neq X \subseteq S^*$ the number of odd components of $G-S^*$ that intersect $N(X)$ is larger than $\left|X\right|$
 	\end{itemize}
 	\textbf{Lemma}\\
 	For every $G$ there is a $S \subseteq V(G)$ and a maximum matching $M$ s.t. $M$ covers all but at most $q(G-S) - \left|S\right|$.
+	\subsection{Cubic Graphs and perfect matchings}
+	\textbf{Definition}\\
+	A graph is $k$-edge-connected if $\forall F \subseteq E(G)$ with $\left|F\right| \leq k-1$ it holds that $G-F$ is connected. $k$-connectivity implies $k$-edge-connectivity.\\
+	\textbf{Corollary}\\
+	Every $2$-edge-connected cubic graph has a perfect matching.
+	\section{Connectivity}
+	\subsection{How do $2$-connected graphs look like?}
+	\textbf{Definition}\\
+	Let $G$ be a graph. $A \subseteq V(G)$ is called an $A$-path in $G$ if $A$ is a path and only the start and end vertices of $A$ lie in $V(G)$. An ear decomposition is a sequence $G_0 \subsetneqq G_1 \subsetneqq ... \subsetneqq G_k = G$ s.t. \begin{itemize}
+		\item $G_0$ is a cycle
+		\item $G_{i+1}$ arises form $G_i$ by adding a $G_i$-path to $G_i$.
+	\end{itemize}  
+	\textbf{Theorem}\\
+	A graph $G$ is 2-connected iff it has an ear-decomposition. Moreover, each $G_i$ is 2-connected.\\
+	\textbf{Definition}\\
+	A \underline{cut vertex} of a graph $G$ is a vertex $v \in V(G)$ s.t. $G-v$ has more components than $G$. A \underline{block} of $G$ is a maximum connected subgraph $B$ of $G$ that doesn't contain a cut vertex of $B$.\\
+	\textbf{Lemma}\\
+	Let $G$ be a graph \begin{enumerate}
+		\item every cycle of $G$ is contained in a single block
+		\item two blocks intersect only in a single vertex, that is a cut vertex of $G$
+		\item $\overset{.}{\bigcup}_{B \text{ block }} E(B) = E(G)$.
+	\end{enumerate}
 \end{document}
