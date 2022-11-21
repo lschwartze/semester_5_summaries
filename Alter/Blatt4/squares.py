@@ -29,3 +29,5 @@ if __name__ == '__main__':
             
         a,b = squares(x, y)
         sys.stdout.write(f'{int(a)} {int(b)}')
+        if i != tests-1:
+            sys.stdout.write("\n")

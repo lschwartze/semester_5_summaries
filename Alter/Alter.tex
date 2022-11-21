@@ -154,4 +154,53 @@
 	Angenommen das Pivotelement wird zufällig gemäß einer Gleichverteilung gewählt. Ist $x$ das $j$-kleinste Element so hat das linke Teilarray die Größe $j-1$ und das rechte $n-j$. Im schlimmsten Fall wird Select rekursiv mit dem größeren Teilarray aufgerufen. die Aufteilung benötigt $n-1$ Vergleiche. D.h. die mittlere Anzahl von Vergleichen ist rekursiv beschränkt durch $V(n) \leq (n-1) + \frac{2}{n} \sum_{j = n/2}^{n-1} V(j)$. Durch Einsetzen kann man diese Rekursionsungleichung lösen und findet, dass der average case linear ist.\\
 	\textbf{Pivotelement geschickt wählen}\\
 	Man organisiert die Liste in Fünfergruppen und sortiert diese (jeweils konstant mit genau 7 Vergleichen). In jeder Fünfergruppe wird der Median bestimmt und anschließend der Median dieser Mediane. Dieser wird als Pivotelement gesetzt. Damit hat sich die Anzahl der zu vergleichenden Elemente auf $\frac{4}{10}n$. Es ergibt sich die Rekursionsgleichung \[V(n) = \frac{7n}{5} + V(\frac{n}{5} + \frac{4n}{10}) + V(\frac{7n}{10})\] Mittels Mastertheorem lässt sich diese Gleichung lösen und man findet, dass die Prozedur mit dieser Pivotwahl linearen Aufwand hat.
+	\section{Hashing}
+	Hashing ist ein System zur dynamischen Verwaltung von Daten, die über einen eindeutigen Schlüssel angesprochen werden. Das Speicherverfahren bietet einige Vorteile:\begin{itemize}
+		\item Die Daten können in Bäumen verwaltet werden, wodurch die Dictionary Operations Aufwand von $\mathcal{O}(\log n)$ erhalten. Beim Hashing beschränkt sich dieser Aufwand auf $\mathcal{O}(1)$.
+		\item Hilfreich, wenn es viele potentielle Schlüssel $U$ gibt und
+		\item die Menge $S$ der Schlüssel aber klein im Vergleich zu $U$ ist.
+		\item Außerdem, wenn $S$ im Vorhinein nicht bekannt ist.
+	\end{itemize}	
+	\textbf{Definition}\\
+	Eine Hashtabelle ist ein Array von Zeigern auf die eigentlichen Datensätze. \\
+	\textbf{Definition}\\
+	Eine Hashfunktion $h$ bildet die Schlüssel auf natürliche Zahlen ab.\\
+	
+	Wenn die Hashfunktion injektiv ist, können die Dictionary Operations Suchen, Einfügen, Entfernen direkt implementiert werden. Gilt für $s,s' \in S$, dass $h(s) = h(s')$, so spricht man von einer Kollision.
+	\subsection{Hashfunktionen}
+	\subsubsection{Divisions-/Kongruenzmethode}
+	$h(s) = s \mod m$, im besten Fall sollte $m$ prim sein.
+	\subsubsection{Multiplikationsmethode}
+	$h(s) = \lfloor m \cdot ((s\cdot \alpha) \mod 1)\rfloor$ für eine reelle Zahl $\alpha \in [0,1]$. $\mod 1$ soll den ganzzahligen Anteil streichen und $m = 2^p$ für eine natürliche Zahl $p$.\\
+	
+	Kollisionen lassen sich meist nicht verhindern. Das kann als Analogie zum Geburtstagsparadoxon gesehen werden. Für eine Hashtabelle der Größe $m$ und $n$ Schlüssel können wir die Anzahl der Kollisionen mit folgender Zufallsvariablen abschätzen: \[X_{i,j} = \begin{cases}
+		1, & h(s_i) = h(s_j)\\
+		0, & \text{ sonst}
+	\end{cases}\]
+	Für $i\neq j$ gilt dann $\mathbb{E}[X_{i,j}] = \frac{1}{m}$. Sei $X = \sum_{i<j} X_{i,j}$, dann gilt $\mathbb{E}[X] = \binom{n}{2} \frac{1}{m}$. 
+	\subsection{Belegungsfaktor}
+	Der Quotient $\beta = \frac{n}{m}$ heißt der Belegungsfaktor einer Hashtabelle der Größe $m$, wobei $n$ die Anzahl der gespeicherten Elemente ist. Der Suchaufwand lässt sich als Funktion in $\beta$ abschätzen.
+	\subsection{Hashing mit Verkettung}
+	Jedes Element der der Hashtabelle ist Ausgangspunkt einer Überlaufliste. In dieser Liste werden wiederum linked lists gespeichert, deren Schlüssel den selben Hashwert erzeugen. In diesem Fall sind die Dictionary Operations Initialisierung, Suchen, Einfügen und Löschen leicht realisierbar. Für die Komplexitätsanalyse der Suche unterscheiden wir zwei Komplexitätsfunktionen: \begin{enumerate}
+		\item $A(n,m)$, die mittlere Anzahl der Sondierschritte, vorausgesetzt der Schlüssel ist in der Tabelle eingetragen.
+		\item $A'(n,m)$, vorausgesetzt der Schlüssel ist nicht in der Tabelle eingetragen. 
+	\end{enumerate}
+	Man kann zeigen, dass der Aufwand bei erfolgloser Suche $A' = 1+\beta$ beträgt und bei erfolgreicher Suche durch $A \leq 1+\frac{\beta}{2}$ abgeschätzt werden kann.
+	\subsection{Open Hashing}
+	Hierbei können maximal $n=m$ Elemente verwaltet werden, d.h. $\beta \leq 1$. Das Löschen fällt in dieser Form schwerer, da die Sondierreihenfolge durch eine gelöschte Stelle unterbrochen werden kann. Eine Möglichkeit besteht darin, zwischen freien und gelöschten Stellen zu unterscheiden. Der Suchaufwand beim linearen Sondieren beträgt $A \approx \frac{1}{2} \left(1+ \frac{1}{1-\beta} \right)$ bzw. $A' = \frac{1}{2} \left(1+\frac{1}{(1-\beta)^2}\right)$. 
+	\subsection{Double Hashing}
+	Zur Vermeidung von Clusterbildung legt eine zweite Hashfunktion $h'$ die Schrittweite für die Sondierung fest. Zunächst wird $h(s)$ sondiert und dann iterativ die Adressen $(h(s) + i\cdot h'(s)) \mod m$ für $i \in \mathbb{N}$ nach einem freien Platz abgesucht. Lineares Sondieren ist hier also der Spezialfall $h' \equiv 1$. $h$ und $h'$ sollten sich möglichst stark voneinander unterscheiden. Eigenschaften beim Double Hashing \begin{itemize}
+		\item Es ist wichtig, dass $m$ eine Primzahl ist
+		\item Wenn $m$ und $h'(s)$ nicht teilerfremd sind, so wird beim Sondieren nicht die gesamte Tabelle durchlaufen
+		\item $A' = \frac{1}{1-\beta}$
+		\item $A = -\frac{1}{\beta} \cdot \ln(1-\beta)$
+	\end{itemize}
+	\subsection{Bloomfilter}
+	Das ist eine Datenstruktur, mit der effizient festgestellt werden kann, ob ein Element bereits gespeichert wurde oder nicht. Er besteht aus einem Bitarray der Größe $m$ das mit Nullen initialisiert wird und $k$ unterschiedlichen Hashfunktionen mit $h_i: U \to \{0,...,m-1\}$.\\
+	Soll nun $x$ gespeichert werden, so werden zunächst die $k$ Hashwerte $h_i(x)$ bestimmt. Jede dieser Positionen im Bitarray $A$ wird auf 1 gesetzt.\\
+	Nun soll überprüft werden, ob ein Wert $w$ gespeichert ist. \begin{enumerate}
+		\item Zuerst werden wieder die $k$ Hashwerte bestimmt.
+		\item Enthält eine der Positionen eine 0, so ist $w$ nicht gespeichert worden.
+		\item Enthalten alle eine 1, so ist es wahrscheinlich, dass $w$ gespeichert wurde, aber nicht sicher (falsch positive möglich). 
+	\end{enumerate} 
 \end{document}
