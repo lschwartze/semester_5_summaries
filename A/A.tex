@@ -290,7 +290,7 @@ $(a) \subseteq R$ heißt \begin{itemize}
 \end{itemize} 
 \textbf{Satz}\begin{itemize}
 	\item $(a)$ prim $\Leftrightarrow$ $R/(a)$ ist Integritätsring
-	\item $(a)$ maximale $\Leftrightarrow$ $R/(a)$ ist Körper
+	\item $(a)$ maximal $\Leftrightarrow$ $R/(a)$ ist Körper
 \end{itemize}
 \textbf{Definition}\\
 $a \in R$ heißt \underline{irreduzibel}, falls $a \neq 0, \; a \notin R^*$ und $a = r\cdot s \Rightarrow \; r \in R^* \lor s \in R^*$.\\
@@ -330,12 +330,57 @@ Ein Faktorring ist ein Integritätsring mit folgenden Eigenschaften \begin{enume
 	\item Wenn $a = q_1 \cdot ... \cdot q_l$, dann $k = l$ und $\pi_i \sim \alpha q_i$
 \end{enumerate}
 \textbf{Satz}\\
-Sei $R$ ein Integritätsring, sodass 1 gilt. Dann sind äquivalent \begin{itemize}
+Sei $R$ ein Integritätsring, sodass (1) gilt. Dann sind äquivalent
+\begin{itemize}
 	\item $R$ ist ein Faktorring
 	\item jedes irreduzible Element von $R$ ist prim.
 \end{itemize}
 \textbf{Satz}\\
-Ein Integritätsring ist ein Faktorring.\\
+Ein Hauptidealring ist ein Faktorring.\\
 \textbf{Korollar}\\
 Seien $a,b \in R\setminus\{0\}$ in einem Faktorring. Es gibt einen größten gemeinsamen Teiler $ggT(a,b) = d$ mit $d | a$, $d | b$ und $e | a, \; e | b \Rightarrow e | d$. $d$ ist eindeutig bis auf Assoziiertheit.
+\subsection{Gauß' Lemma}
+Sei $R$ ein Faktorring und $\mathbb{P}$ eine Menge irreduzibler Elemente in $R$. sodass \begin{itemize}
+	\item $\pi, \pi' \in \mathbb{P}$, dann $\pi \sim \pi'$
+	\item $q \in R$ irreduzibel, dann $q \sim \pi$ für ein $\pi \in \mathbb{P}$
+\end{itemize}
+Sei $a = q_1 ... q_s = u \pi_1 ... \pi_s = u\prod_{\pi \in \mathbb{P}} \pi^{e_\pi}$. Dann ist die Faktorisierung eindeutig nach der Wahl von $\mathbb{P}$ und $e_\pi$ ist 0 für eine endliche Anzahl an $\pi$.\\
+
+\noindent\textbf{Bemerkung}\\
+Zwei Elemente sind nicht teilerfremd, genau dann, wenn die Exponenten aller Faktoren es erlauben. Mit der Faktorisierung lässt sich das kgV charakterisieren.\\
+
+Seien $a \in R$ und $\pi \in \mathbb{P}$ gegeben. Wir definieren \[v_\pi(a) = \max\{k \in \mathbb{N}: \pi^k | \pi\} \]
+\textbf{Lemma}\\
+$v_\pi$ kann auf $v_\pi: R \to \mathbb{Z} \cup \infty $ erweitert werden und \begin{enumerate}
+	\item $v_\pi(a+b) \geq \min\{v_\pi(a), v_\pi(b)\}$
+	\item $v_\pi(a+b) = \min\{v_\pi(a), v_\pi(b)\}$, wenn $v_\pi(a) \neq v_\pi(b)$
+	\item $v_\pi(ab) = v_\pi(a) + v_\pi(b)$
+\end{enumerate} 
+\textbf{Definition}\\
+Sei $f \in K[x]$, $K = Q(R)$. Wir definieren $v_\pi(f) = \min_i v_\pi(a_i)$ wobei die $a_i$ die Koeffizienten von $f$ seien. Wir definieren den Inhalt $cont$ von $f$ als \[cont(f) = \prod_{\pi \in \mathbb{P}} \pi^{v_\pi(f)}\]
+Ist $cont(f) = 1$, dann ist $f$ primitiv.\\
+\textbf{Lemma}\\
+Seien $f,g \in K[x]$, $\pi \in \mathbb{P}$. Dann \begin{itemize}
+	\item $v_\pi(fg) = v_\pi(f) + v_\pi(g)$
+	\item $cont(fg) = cont(f)cont(g)$
+	\item sind $f,g$ primitiv, so auch $fg$
+\end{itemize}
+\textbf{Lemma}\\
+Seien $f,g \in R[x]$ und $f$ primitiv. Wenn $f$ $g$ in $K[x]$ teilt, dann auch in $R[x]$.\\
+\textbf{Satz}\\
+Sei $R$ ein Faktorring und $K$ ein Quotientenkörper von $R$. Dann ist $R[x]$ wieder ein Faktorring. Die Primelemente sind \begin{itemize}
+	\item die irreduziblen Elemente von $R$
+	\item die primitiven Polynome in $R[x]$, die irreduzibel in $K[x]$ sind.
+\end{itemize}
+\textbf{Korollar}\\
+Für einen Faktorring $R$, Quotientenkörper $K$ und $f \in R[x]$ primitiv, dann $f$ in $R[x]$ irreduzibel genau dann, wenn $f$ in $K[x]$ irreduzibel ist.\\
+\textbf{Satz}\\
+Sei $R$ ein Faktorring und $f \in R[x]$. Sei $\pi \in R$ prim. Dann ist $f$ irreduzibel in $K[x]$ genau dann, wenn die Reduktion $\overline{f}$ modulo $\pi$ irreduzibel in $K[x]$ ist.\\
+\textbf{Satz}\\
+Sei $R$ ein Faktorring und $\pi \in R$ prim, sodass \begin{enumerate}
+	\item $\pi \not | a_n$
+	\item $\pi | a_i$ für $i \in \{0,...,n-1\}$
+	\item $\pi^2 \not | a_0$
+\end{enumerate}
+Dann ist $f$ irreduzibel in $K[x]$.
 \end{document}
