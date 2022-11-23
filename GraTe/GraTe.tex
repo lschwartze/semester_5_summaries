@@ -180,4 +180,52 @@
 		\item two blocks intersect only in a single vertex, that is a cut vertex of $G$
 		\item $\overset{.}{\bigcup}_{B \text{ block }} E(B) = E(G)$.
 	\end{enumerate}
+	\textbf{Definition} (block graph)\\
+	The block graph of a graph $G$ is defined as \[V(G') = \{x, B\; |\; x \text{ cut vertex in $G$ and } B \text{ block in $G$}\}, \; E(G') = \{xB: xB \in E(G)\}\].\\
+	\textbf{Proposition}\\
+	The block graph of a connected graph is a  tree.
+	\subsection{3-connected graphs}
+	\textbf{Definition}\\
+	Let $G$ be a graph with an edge $xy$. We define the process of contracting an edge by the graph $G' = G/xy$ with \begin{itemize}
+		\item $V(G') = (V(G)\setminus \{x,y\})\cup \{v_{xy}\}$
+		\item $E(G') = \{uv \; | \; u,v \notin \{x,y\}\} \cup \{uv_{xy}: \; ux \in E(G) \lor uy \in E(G), \; u \notin \{x,y\}\}$
+	\end{itemize}
+	\textbf{Lemma}\\
+	Let $G$ be a $3$-connected graph on at least 5 vertices. Than there is an edge $e$ s.t. $G/e$ is a $3$-connected graph.\\
+	\textbf{Theorem}\\
+	A graph $G$ is $3$-connected iff there is a sequence \[K_4 = G_0, G_1,...,G_k = G\] 
+	where $x_iy_i \in E(G_i)$ s.t. $G_{i-1} = G_i/x_iy_i$ and $d_{G_i}(x_i) \geq 3, \; d_{G_i}(y_i) \geq 3$.\\
+	\textbf{Definition}\\
+	Let $A,B$ be vertex sets. $X \subseteq V(G)$ separates $A$ from $B$ if there is no $A-B$-path in $G-X$.\\
+	\textbf{Theorem} (Menger)\\
+	For every $A,B \subseteq V(G)$, $k \in \mathbb{N}$ there are $k$ disjoint $A-B$-paths iff there is no $A-B$ separator of cardinality $\leq k-1$.\\
+	\textbf{Definition}\\
+	A set of $\{a\}-B$-paths s.t. every two paths only meet in $a$ is called an $a-B$-fan.\\
+	\textbf{Corollary}\\
+	For every $a \in V(G)$, $B\subseteq V(G)$ there is an $a-B$-fan iff there is no $a-B$-separator $X \subseteq V(G)\setminus \{a\}$ of cardinality $\left|X\right|<k$.\\
+	\textbf{Corollary}\\
+	For $a,b \in V(G)$ and $ab \notin E(G)$ there are $k$ internally disjoint $a-b$-paths iff there is no $a-b$-separator of cardinality $\left|X\right|<k$.\\
+	\textbf{Corollary}\\
+	A graph is $k$-connected iff $\forall a,b \in V(G), a\neq b$ there are $k$ internally disjoint paths between them.\\
+	\textbf{Definition}\\
+	For $F \subseteq E(G)$ we say that $F$ separates $a$ from $b$ if there is no $a-b$-path in $G-F$.\\
+	\textbf{Theorem}\\
+	For $a,b \in V(G), \; a \neq b$ a graph $G$ has $k$ edge-disjoint $a-b$-paths iff there is no $a-b$-separator $F \subseteq E(G)$ with $\left|F\right|\leq k-1$.\\
+	\textbf{Definition}\\
+	Let $G$ be a graph. We define the \underline{line graph} $L(G)$ as \begin{itemize}
+		\item $V(L(G)) = E(G)$
+		\item $E(L(G)) = \{ef: \; e,f \in E(G), \; e \neq f, \; e,f \text{ have an endvertex in common}\}$
+	\end{itemize}
+	\textbf{Definition}\\
+	$H$ is called a \underline{minor} of $G$ if $H$ is obtained from $G$ by performing a sequence of the following operations \begin{itemize}
+		\item edge contractions
+		\item edge deletions
+		\item vertex deletions
+	\end{itemize}
+	Alternatively: $H$ is a minor of $G$ if $\exists H' \subseteq G$ and $H$ is contained from $H'$ by edge contractions.\\
+	Equivalently: $H$ is a minor of $G$ if for every $h \in V(H)$ there is a $V_h \subseteq V(G)$ s.t. \begin{itemize}
+		\item all $V_h, V_{h'}$ for $h \neq h'$ are disjoint
+		\item $G[V_h]$ is connected
+		\item $\forall hh' \in E(H)$ there is an edge betwenn $V_h$ and $V_{h'}$.
+	\end{itemize}
 \end{document}
