@@ -41,7 +41,8 @@
 	\end{itemize} 
 	if $n^{(i)} = -1$, the computation ends. We set $time(\phi, x) := i$ and $output(\phi, x) := (s_1^{(i)}, ..., s_k^{(i)})$ where $k = \min\{j \in \mathbb{N}_0 : s_j^{(i)} = \sqcup\} -1$.\\
 	\textbf{Definition} (computational problem)\\
-	A pair $(X, R)$ where $X\subset A^*$ is a language and $R\subset X \times A^*$ is a relation such that $\forall x \in X: \; \exists y \in A^*$ with $(x,y) \in R$ is called a computational problem. $\phi$ solves a problem if $time(\phi, x) < \infty$ and $(x, output(\phi, x)) \in R$. If $time(\phi, x) < p(length(x))$ for a $p \in \mathbb{P}_n$ then $\phi$ is a polynomial turing machine.\\
+	A pair $(X, R)$ where $X\subset A^*$ is a language and $R\subset X \times A^*$ is a relation such that $\forall x \in X: \; \exists y \in A^*$ with $(x,y) \in R$ is called a computational problem. $\phi$ solves a problem if $time(\phi, x) < \infty$ and $(x, output(\phi, x)) \in R$. If $time(\phi, x) < p(length(x))$ for a $p \in \mathbb{P}_n$ then $\phi$ is a polynomial turing machine.
+	
 	\section{Complexity and NP-completeness}
 	\textbf{Definition} (Decision problem, class P)\\
 	A decision problem $P$ is a pair $(X,Y)$ where $X$ is a language that is decidable in polynomial time and $Y\subseteq X$. The elements of $Y$ are \underline{yes-instances} of $P$ and the elements of $X\setminus Y$ are \underline{no-instances} of $P$. An algorithm for $P$ (a Turing machine) computes the function $f: X\to \{0,1\}$ where $f(x) = 1$ iff $x \in Y$. If there is an algorithm for $P$ that works in polynomial time, $P$ belongs to the class \textbf{P}.\\
@@ -88,6 +89,7 @@
 	\underline{Question}: Does $G$ have an independent set (set of non-neighbouring nodes) of order at least $k$?\\
 	\textbf{Theorem}\\
 	\texttt{Independent Set} $\in$ \textbf{NPC}.
+
 	\section{Optimization problems}
 	\subsection{Introduction}
 	\textbf{Definition}\\
@@ -112,13 +114,13 @@
 	
 	\par\noindent\rule{\textwidth}{0.4pt}
 	\noindent\underline{Greedy algorithm for job scheduling}:
-	\begin{algorithmic}
+	\begin{algorithmic}[1]
 		\For{$i=1 \text{ to } n$}
 			\State $f(i) \gets j, \text{ where $j$ minimizes } \sum_{l \in [i-1] | f(l) = j} a_l$
 		\EndFor
 		\State return $f$
 	\end{algorithmic}
-\par\noindent\rule{\textwidth}{0.4pt}
+	\par\noindent\rule{\textwidth}{0.4pt}
 	We can show, that this is a 2-factor algorithm\\
 	Let $l \in [n]$ be the maximum such that $f(l) = k$, where $k \in [m]$ is the machine taking more time. When job $l$ was assigned to $k$ all $m$ machines had completion time at least $t = \sum_{l \in [i-1] | f(l) = k} a()f^{-1}(k))-a_l$ which implies that $a()f^{-1}(k)) = t+a_l \leq 2\cdot\text{OPT}(x)$.
 	
@@ -131,9 +133,9 @@
 	INSTANCE: $n \in \mathbb{N}$ and $a_1,...,a_n \in \mathbb{Q} \cap [0,1]$\\
 	GOAL: Determine the minimal $k \in \mathbb{N}$ and a function \[f: [n] \to [k] \text{ s.t. } a(f^{-1}(j)) = \sum_{i \in [n], f(i) = j} a_i \leq 1 \; \forall j \in [k]\]
 	\par\noindent\rule{\textwidth}{0.4pt}
-	\underline{First Fit decreasing algorithm}
-	\begin{algorithmic}
-		\State INPUT $I = (a_1,...,a_n)$
+	\underline{First Fit decreasing algorithm}\\
+	INPUT $I = (a_1,...,a_n)$
+	\begin{algorithmic}[1]
 		\State $I \gets I'$ where $I'$ is sorted in a non-increasing way
 		\For{$i=1$ to $n$}
 			\State $f(j) \gets \min_j ((\sum_{l \in [i-1], f(l) = j} a_l) + a_i \leq 1)$
@@ -156,6 +158,7 @@
 	\texttt{3 Dimensional Matching} is \textbf{NP complete}.
 	\textbf{Theorem}\\
 	The \texttt{Subset Sum problem} is \textbf{NPC}.
+
 	\section{Greedy Algorithms and Covering Problems}
 	\subsection{Feedback Vertex Set}
 	INPUT: a graph $G$ and a cost function $c: V(G) \to \mathbb{Q}_{>0}$\\
@@ -174,20 +177,21 @@
 	\textbf{Lemma}\\
 	If $F$ is a minimal feedback vertex set of some $G$, then \[\sum_{u \in F} \delta_{\mu_G}(u) \leq 2\cdot \mu(G)\]
 	\par\noindent\rule{\textwidth}{0.4pt}
-	\underline{Algorithm}
-	\begin{algorithmic}
-		\State INPUT: An instance $(G,c)$ of \texttt{Feedback Vertex Set} 
-		\State OUTPUT: A feedback vertex set $F$
+	\underline{Algorithm}\\
+	INPUT: An instance $(G,c)$ of \texttt{Feedback Vertex Set}\\
+	OUTPUT: A feedback vertex set $F$
+	\begin{algorithmic}[1]
 		\State $G_0 \gets G; c' \gets c; i \gets 0$
 		\While{$\mu(G_i) > 0$}
 		\State $\varepsilon \gets \min\{\frac{c'(u)}{\delta_{\mu_{G_i}}(u)}: u \in V(G_i)$ and $\delta_{\mu_{G_i}}(u) > 0\}$
-		\State $c_i(u) \gets \begin{cases}
-			\varepsilon \cdot \delta_{\mu_{G_i}}(u) & \text{if } u \in V(G_i)\\
-			0 & \text{if } u \in V(G) \setminus V(G_i)
-		\end{cases}$
-	\State $c' \gets c' - c_i; G_{i+1} \gets G_i[\{u \in V(G_i): c'(u) > 0\}]; i \gets i+1$
+		\If{$u \in V(G_i)$}
+		\State $c_i(u) \gets \varepsilon \cdot \delta_{\mu_{G_i}}(u)$
+		\Else
+		\State $c_i(u) \gets 0$
+		\EndIf
+	\State $c' \gets c' - c_i;\; G_{i+1} \gets G_i[\{u \in V(G_i): c'(u) > 0\}];\; i \gets i+1$
 	\EndWhile
-	\State $k \gets i; c_k \gets c'; F_k \gets \emptyset$
+	\State $k \gets i;\; c_k \gets c';\; F_k \gets \emptyset$
 	\For{$i$ \textbf{from} $k$ \textbf{down to} $1$}
 	\State Extend the feedback vertex set $F_i$ of $G_i$ to a feedback vertex set $F_{i-1}$ of $G_{i-1}$ by \indent adding a minimal set of vertices from $V(G_{i-1})\setminus V(G_i)$
 	\EndFor
@@ -197,4 +201,103 @@
 	
 	\noindent\textbf{Theorem}\\
 	Above algorithm is a polynomial time 2-factor approximation for \texttt{Feedback Vertex Set}.
+	\subsection{Maximum Satisfiability}
+	\textbf{Definition} (\texttt{Maximum Satisfiability})\\
+	INSTANCE: A set $X$ of variables, a set $\mathcal{C}$ of clauses over $X$ and a function $c: \mathcal{C} \to \mathbb{Q}_{>0}$\\
+	GOAL: Find a truth assignment $t$ maximizing the total weight  \[\sum_{C \in \mathcal{C}: C \text{ true under } t} c(C)\]
+	of satisfied clauses. \texttt{Maximum Satisfiability} is \textbf{NP hard}. $\mathcal{C}$ is a yes-instance of SAT iff the optimum value of \texttt{Maximum Satisfiability} for $\mathcal{C}$ equals the total weight of all clauses.\\
+	\textbf{Comment} (Method of conditional expectation)\\
+	Let $(X,\mathcal{C},c)$ be an instance of \texttt{Maximum Satisfiability}. if $t$ is a random truth assignment for $X$, we get the expected value by \[\mathbb{E}[T] = \sum_{j \in [m]} c(C_j)\cdot \mathbb{P}(C_j \text{ true under } t)\]
+	where $T$ is the random variable that describes the true assignments of $t$. In order to obtain a deterministic approximation algorithm, we apply the \underline{method of conditional expectation}.\\
+	For $p_1,...,p_n \in [0,1]$ let \[c(t(x_1),...,t(x_i),r(p_{i+1}),...,r(p_n)) = \mathbb{E}[\text{total weight of satisfied clauses}\]
+	where \begin{itemize}
+		\item the truth values $t(x_1),...,t(x_i)$ are fixed and 
+		\item the remaining $n-i$ truth assignments are chosen randomly. 
+	\end{itemize}
+	Note that \[c(t(x_1),...,t(x_i),r(p_{i+1}),...,r(p_n)\]
+	equals \begin{align*}
+		p_i &\cdot c(t(x_1),...,t(x_{i-1}), true,r(p_{i+1}),...,r(p_n))\\ + (1-p_i)&\cdot c(t(x_1),...,t(x_{i-1}),false,r(p_{i+1}),...,r(p_n))\\
+		&\leq \max \{c(t(x_1),...,t(x_{i-1}), true,r(p_{i+1}),...,r(p_n)),\\ &c(t(x_1),...,t(x_{i-1}),false,r(p_{i+1}),...,r(p_n))\}
+	\end{align*}
+
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\underline{Johnson's algorithm}\\
+	INPUT: An instance $(x,\mathcal{C}, c)$ of \texttt{maximum satisfiability}\\
+	OUTPUT: $t: X \to \{\text{true, false}\}$
+	\begin{algorithmic}[1]
+		\For{$i=1$ to $n$}
+		\If{$c(t(x_1),...,t(x_{i-1}), true,r(p_{i+1}),...,r(p_n)) \geq c(t(x_1),...,t(x_{i-1}),false,r(p_{i+1}),...,r(p_n))$}
+		\State $t(x_i) \gets$ true
+		\Else
+		\State $t(x_i) \gets$ false
+		\EndIf
+		\EndFor
+		\State \textbf{return} $t$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Theorem}\\
+	For a given instance of \texttt{Maximum Satisfiability} the above algorithm determines a truth assignment $t$ with \[\sum_{C \in \mathcal{C}: C \text{ true under } t} c(C) \geq \frac{1}{2} OPT(X,\mathcal{C},c)\]
+	\textbf{Comment} (integer linear program for \texttt{Maximum Satisfiability})\\
+	The problem can also be solved using an integer linear program. This yields another algorithm which we analyse in the following. 
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\underline{Goemans-Williamson's algorithm}\\
+	INPUT: An instance $(x,\mathcal{C}, c)$ of \texttt{maximum satisfiability}\\
+	OUTPUT: $t: X \to \{\text{true, false}\}$
+	\begin{algorithmic}[1]
+		\State Let $(t_1,...,t_n) \in [0,1]^n$ be the value from an optimal solution of (P).
+		\For{$i=1$ to $n$}
+		\If{$c(t(x_1),...,t(x_{i-1}), true,r(t_{i+1}),...,r(t_n)) \geq c(t(x_1),...,t(x_{i-1}),false,r(t_{i+1}),...,r(t_n))$}
+		\State $t(x_i) \gets$ true
+		\Else
+		\State $t(x_i) \gets$ false
+		\EndIf
+		\EndFor
+		\State \textbf{return} $t$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Theorem}\\
+	For a given instance of \texttt{Maximum Satisfiability} the above algorithm determines a truth assignment $t$ with \[\sum_{C \in \mathcal{C}: C \text{ true under } t} c(C) \geq (1-\frac{1}{\varepsilon})\cdot OPT(X,\mathcal{C},c)\]
+	where $1-\frac{1}{\varepsilon} \geq 0.63$.\\
+	\textbf{Theorem}\\
+	If one combines both algorithm for a given instance, a $\frac{4}{3}$ factor approximation can always be achieved by choosing the better result.
+	\subsection{Knapsack}
+	\textbf{Definition}\\
+	INSTANCE: positive integers $n, c_1,...,c_,.w_1,...,w_n,W$ with $\sum_{j \in [n]} w_j > W$ and $w_j \leq W$.\\
+	GOAL: Determine a set $S \subset [n]$ with $\sum_{i \in S} w_i \leq W$ such that $\sum_{i \in S} c_i$ is maximized.\\
+	
+	This problem can be easily described as an integer linear program: \begin{align*}
+		\max &\sum_{i\in [n]} c_i x_i\\
+		\text{s.t. } &\sum_{i\in [n]} w_i x_i \leq W\\
+		&x_i \in \{0,1\}
+	\end{align*}
+	Relaxing this by replacing $x_i \in \{0,1\}$ with $x_i \in [0,1]$ yields a simpler linear program $(P)$.\\
+	\textbf{Claim}: If \[\frac{c_1}{w_1} \geq ... \geq \frac{c_n}{w_n}\]
+	and \[i^* = \min \{i \in [n]: \sum_{j \in [i]} w_j \geq W\}\]
+	then we can set \[x_i = \begin{cases}
+		1, & 1 \leq i \leq i^*-1\\
+		(W-\sum_{j \in [i^*-1]}w_j)/w_{i^*}, & i = i^*\\
+		0, & i^*+1 \leq i \leq n
+	\end{cases}\]
+	and achieve an optimal solution to $(P)$. Note that \[x' = (\underbrace{1,...1}_{i^*-1},0,...,0) \text{ and } x'' = (\underbrace{0,...,0}_{i^*-1},1,0,...,0)\]
+	are both feasible solutions for $(P_I)$ with $c^Tx \leq c^T(x'+x'')$, hence \[\max\{c^Tx',\; c^Tx''\} \geq \frac{1}{2} OPT(P) \geq \frac{1}{2} OPT(P_I)\] Therefore returning the better of the two solutions achieves a $2$-factor approximation algorithm. The problem is \textbf{NP}-hard.\\
+	\textbf{Theorem}\\
+	There is an exact algorithm for \texttt{Knapsack} with running time $\mathcal{O}(size(I)\cdot C)$ for an instance $I$ and an integer $C \geq OPT(I)$. Note that $\sum_{i\in [n]}c_i$ is a possible choice for $C$.\\
+	\textbf{Comment}\\
+	The following algorithm is an online algorithm that decides for each element based only on \begin{itemize}
+		\item the values $c_i$ and $w_i$ of the current $i$-th item
+		\item the currently available space
+		\item the following global parameters of any instance $I$ \begin{itemize}
+			\item[$\rightarrow$] $U = \max\{\frac{c_i}{w_i}: \; i \in [n]\}$
+			\item[$\rightarrow$] $L = \min\{\frac{c_i}{w_i}: \; i \in [n]\}$ and 
+			\item[$\rightarrow$] $\varepsilon = \max\{\frac{w_i}{W}: \; i \in [n]\}$.
+		\end{itemize}
+	\end{itemize}
+
+	The decision is based on the function $\psi: [0,1] \to [0,U]$ that has the following attributes: \begin{itemize}
+		\item $\psi(0) = \frac{L}{e}$
+		\item $\psi(z_L) = L$
+		\item $\psi(1) = U$
+	\end{itemize}  
+	The \underline{competitive ratio} of this algorithm is \[(\frac{Ue}{L})^{2\varepsilon}(1+\ln(\frac{U}{L}))\]
+	which is basically the best possible. The competitive ratio is a measurement that describes how good the performance of an algorithm is compared to an optimal offline algorithm. The trivial online algorithm has a competitive ratio of \[\frac{U}{(1-\varepsilon)L}\] because any solution from this algorithm yields a value of at least $L(1-\varepsilon)$.   
 \end{document}
