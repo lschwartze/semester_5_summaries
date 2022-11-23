@@ -12,7 +12,7 @@ def hashing(m,keys,s):
     for key in keys:
         val = key % m
         while values[val] != 0:
-            val += 1
+            val = (val+1) % m
         values[val] = 1
         if key == s:
             return val
@@ -23,8 +23,7 @@ def double_hashing(m,keys,s):
         val = key % m
         i = 1
         while values[val] != 0:
-            step = (key+i*(1+(key % (m-1))) % m)
-            val = (val+step) % m
+            val = ((key+i*(1+(key % (m-1)))) % m)
             i += 1
         values[val] = 1
         if key == s:
