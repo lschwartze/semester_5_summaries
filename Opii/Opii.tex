@@ -256,7 +256,7 @@
 	\end{algorithmic}
 	\par\noindent\rule{\textwidth}{0.4pt}\\
 	\textbf{Theorem}\\
-	For a given instance of \texttt{Maximum Satisfiability} the above algorithm determines a truth assignment $t$ with \[\sum_{C \in \mathcal{C}: C \text{ true under } t} c(C) \geq (1-\frac{1}{\varepsilon})\cdot OPT(X,\mathcal{C},c)\]
+	For a given instance of \texttt{Maximum Satisfiability} the above algorithm determines a truth assignment $t$ with \[\sum_{C \in \mathcal{C}: C \text{ true under } t} c(C) \geq \left(1-\frac{1}{\varepsilon}\right)\cdot OPT(X,\mathcal{C},c)\]
 	where $1-\frac{1}{\varepsilon} \geq 0.63$.\\
 	\textbf{Theorem}\\
 	If one combines both algorithm for a given instance, a $\frac{4}{3}$ factor approximation can always be achieved by choosing the better result.
@@ -298,6 +298,73 @@
 		\item $\psi(z_L) = L$
 		\item $\psi(1) = U$
 	\end{itemize}  
-	The \underline{competitive ratio} of this algorithm is \[(\frac{Ue}{L})^{2\varepsilon}(1+\ln(\frac{U}{L}))\]
-	which is basically the best possible. The competitive ratio is a measurement that describes how good the performance of an algorithm is compared to an optimal offline algorithm. The trivial online algorithm has a competitive ratio of \[\frac{U}{(1-\varepsilon)L}\] because any solution from this algorithm yields a value of at least $L(1-\varepsilon)$.   
+	The \underline{competitive ratio} of this algorithm is \[\left(\frac{Ue}{L}\right)^{2\varepsilon}\left(1+\ln\left(\frac{U}{L}\right)\right)\]
+	which is basically the best possible. The competitive ratio is a measurement that describes how good the performance of an algorithm is compared to an optimal offline algorithm. The trivial online algorithm has a competitive ratio of \[\frac{U}{(1-\varepsilon)L}\] because any solution from this algorithm yields a value of at least $L(1-\varepsilon)$.
+	\par\noindent\rule{\textwidth}{0.4pt}
+	INPUT: An instance $(n,c_1,...,c_n, w_1,...,w_n,W)$ of \texttt{knapsack}\\
+	Let $U,L,\varepsilon$ as above and $z_L = \frac{1}{1+\ln (\frac{U}{L})}$ and $\psi(z) = \begin{cases}
+		L, & 0\leq z \leq z_L\\
+		\frac{L}{e}(\frac{Ue}{L})^z, & z_L < z \leq 1
+	\end{cases}$\\
+	OUTPUT: A feasible solution $S \subseteq [n]$.
+	\begin{algorithmic}[1]
+		\State $S \gets \emptyset$
+		\State $z_1 \gets 0$
+		\For{$i=1$ to $n$}
+		\If{$\frac{c_i}{w_i} \geq \psi(z_i)$ and $z_i + \frac{w_i}{W} \leq 1$}
+		\State $S \gets S \cup \{i\}$
+		\State $z_{i+1} \gets z_i + \frac{w_i}{W}$
+		\Else
+		\State $z_{i+1} \gets z_i$
+		\EndIf
+		\EndFor
+		\State \textbf{return} $S$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Theorem}\\
+	Above algorithm returns a feasible solution $S$ with \[OPT(I) \leq \left(\frac{Ue}{L}\right)^{2\varepsilon}\left(1+\ln \left(\frac{U}{L}\right)\right)c(S)\]
+	\subsection{Facility Location Problem}
+	\textbf{Definition}\\
+	INSTANCE: two positive integers $m$ and $n$ and non-negative rationals $f_i$ and $a_{i,j}$ for $i \in [n]$ and $j \in [m]$.\\
+	GOAL: determine a subset $X$ of $[n]$ and a function $\sigma: [m] \to X$ minimizing \[\sum_{i \in X} f_i + \sum_{j \in [m]} c_{\sigma(j),j}\]
+	\begin{itemize}
+		\item the term $\sum_{i \in X} f_i$ simulates the \underline{opening costs}
+		\item the term $\sum_{j \in [m]} c_{\sigma(j),j}$ simulates the \underline{service costs}
+	\end{itemize}
+	Notice that for a given set $X$ which fixes the opening cost, it is easy to find a $\sigma$ that minimizes the service cost.\\
+	\textbf{Theorem}\\
+	\texttt{Dominating Set} can be reduced to \texttt{Facility Location}.
+	\begin{itemize}
+		\item $G$ has a \texttt{Dominating Set} of size at most $k$ iff 
+		\item the optimal value for the instance of \texttt{Facility Location} with $m = n$, $f_i = 1$ for $i \in [n]$ and 
+	\end{itemize}
+	\[c_{i,j} = \begin{cases}
+		0, & i = j\\
+		0, & i	j \in E(G)\\
+		k+1, & \text{else}
+	\end{cases}\] for $i,j \in [n]$ is at most $k$.
+	The problem can also be modelled as an integer linear program: \begin{align*}
+		\min \sum f_i y_i + \sum_{i\in [n]}\sum_{j \in [m]} c_{i,j} x_{i,j}\\
+		\text{s.t.} \sum_{i\in [n]}x_{i,j} \geq 1 \;\forall j \in [m]\\
+		y_i - x_{i,j} \geq 0 \;\forall j \in [m]\\
+		y_i, x_{i,j} \in \{0,1\} \;\forall i \in [n], j \in [m]
+	\end{align*}
+	\par\noindent\rule{\textwidth}{0.4pt}
+	INPUT: An instance $I = (n,m,(f_i)_{i \in [n]}, (e_{i,j})_{i \in [n], j \in [m]})$ of \texttt{Metric Facility Location}.
+	OUTPUT: A feasible solution $(X, \sigma)$.
+	\begin{algorithmic}[1]
+		\State Determine optimal solutions $(x^*, y^*)$ of the program $P$ and $(v^*, w^*)$ of its dual $D$
+		\State $k \gets 0$, $X \gets \emptyset$, $R \gets [m]$
+		\While{$R \neq \emptyset$}
+		\State $k \gets k+1$
+		\State Let $j_k \in R$ such that $v_{j_k}^*$ is minimum
+		\State Let $i_k \in [n]$ with $x_{i_k,j_k}^* > 0$ be such that $f_{i_k}$ is minimum
+		\State $X \gets X \cup \{i_k\}$
+		\State $N_k \gets \{j \in R | \exists i \in [n] | x_{i,j_k}^* > 0 \text{ and } x_{i,j}^* > 0\}$
+		\State $\sigma(j) \gets i_k \; \forall j \in N_k$
+		\State $R \gets R \setminus N_k$
+		\EndWhile
+		\State return $(X, \sigma)$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
 \end{document}
