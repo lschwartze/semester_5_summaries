@@ -37,12 +37,12 @@ Für $(G,\cdot)$ eine Gruppe ist mit $H\subset G$ $(H,\cdot)$ eine Untergruppe, 
 	\item $h \in H \Rightarrow h^{-1} \in H$
 \end{enumerate}
 \textbf{Definition} (Homomorphismus)\\
-$(G,\cdot_G)$ und $(H,\cdot_H)$ Gruppen, dann ist ein Homomorphismus $\phi: (G,\cdot_G) \to (H,\cdot_H)$ eine Abbildung mit $\forall g_1, g_2 \in G: \; \phi(g_1 \cdot_G g_2) = \phi(g_1) \cdot_H \phi(g_2)$\\
-\textbf{Proposition}\\ Sei $\phi$ ein Gruppenhomomorphismus dann \begin{enumerate}
-	\item $\phi(e_G) = e_H$
-	\item $\phi(g^{-1}) = \phi(g)^{-1}$
-	\item $ker(\phi) = \{g \in G: \; \phi(g) = e_H\}$ ist Untergruppe
-	\item $\phi$ ist injektiv $\Leftrightarrow \; ker(\phi) = \{e_G\}$
+$(G,\cdot_G)$ und $(H,\cdot_H)$ Gruppen, dann ist ein Homomorphismus $\varphi: (G,\cdot_G) \to (H,\cdot_H)$ eine Abbildung mit $\forall g_1, g_2 \in G: \; \varphi(g_1 \cdot_G g_2) = \varphi(g_1) \cdot_H \varphi(g_2)$\\
+\textbf{Proposition}\\ Sei $\varphi$ ein Gruppenhomomorphismus dann \begin{enumerate}
+	\item $\varphi(e_G) = e_H$
+	\item $\varphi(g^{-1}) = \varphi(g)^{-1}$
+	\item $ker(\varphi) = \{g \in G: \; \varphi(g) = e_H\}$ ist Untergruppe
+	\item $\varphi$ ist injektiv $\Leftrightarrow \; ker(\varphi) = \{e_G\}$
 \end{enumerate}  
 \subsection{$(\mathbb{Z}, +)$}
 \textbf{Lemma}\\ $I\subset \mathbb{Z}$ ist Untergruppe, wenn $I = \{0\}$ oder wenn $I = (a) = \{k\cdot a: k \in \mathbb{Z}\}$.
@@ -90,13 +90,13 @@ Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. \begin{enumerate}
 	\item $\overline{a}$ hat (additive) Ordnung $n$ genau dann, wenn $ggT(a,n)=1$.
 	\item $\overline{a}$ hat (additive) Ordnung $n$ $\Leftrightarrow$ $\overline{a}$ hat ein \underline{multiplikatives} Inverses. 
 \end{enumerate}
-Es folgt $\overline{a}$ generiert $\mathbb{Z}/n\mathbb{Z} \Leftrightarrow \; \overline{a} \in (\mathbb{Z}/n\mathbb{Z})^*$. Eine endliche Gruppe zyklische Gruppe der Ordnung $n$ besitzt genau $\phi(n)$ Erzeuger.\\
+Es folgt $\overline{a}$ generiert $\mathbb{Z}/n\mathbb{Z} \Leftrightarrow \; \overline{a} \in (\mathbb{Z}/n\mathbb{Z})^*$. Eine endliche Gruppe zyklische Gruppe der Ordnung $n$ besitzt genau $\varphi(n)$ Erzeuger.\\
 \textbf{Satz}\\
 Sei $G$ zyklisch, dann ist jede Untergruppe von $G$ zyklisch.\\
 Wenn $\left|G\right|=n$, und $d|n$, dann existiert genau eine Untergruppe von $G$ der Ordnung $d$.\\
 \textbf{Korollar}\\
-Sei $G$ zyklisch, von der Ordnung $n$. Dann enthält $G$ für alle $d|n$ genau $\phi(d)$ Elemente der Ordnung $d$.\\
-Es gilt außerdem (für alle Gruppen) \[n = \sum_{d|n} \phi(d)\]
+Sei $G$ zyklisch, von der Ordnung $n$. Dann enthält $G$ für alle $d|n$ genau $\varphi(d)$ Elemente der Ordnung $d$.\\
+Es gilt außerdem (für alle Gruppen) \[n = \sum_{d|n} \varphi(d)\]
 \textbf{Satz}\\
 Sei $G$ endlich. Die folgenden Aussagen sind äquivalent:\begin{enumerate}
 	\item $G$ ist zyklisch
@@ -109,7 +109,7 @@ Seien $G_1, ... G_r$ zyklisch. Dann ist $G_1 \times ... \times G_r$ zyklisch gen
 \underline{Eine Charakterisierung zyklischer Gruppen}\\
 Sei $n\geq 2$, $G\cong \mathbb{Z}/n\mathbb{Z}$ eine zyklische Gruppe der Ordnung $n$, dann \begin{itemize}
 	\item Für $d|n$ hat $G$ eine eindeutige Untergruppe $H$ der Ordnung $d$. 
-	\item $G$ hat $\phi(n)$ Erzeuger 
+	\item $G$ hat $\varphi(n)$ Erzeuger 
 \end{itemize}
 \textbf{Satz}\\
 Ist $G$ eine endliche Gruppe mit \[\forall d|n \text{ gibt es höchstens $d$ Elemente deren Ordnung $d$ teilt}\]
@@ -204,20 +204,20 @@ Der kanonische Homomorphismus \begin{eqnarray*}
 \end{eqnarray*}
 ist surjektiv. $G/N$ heißt Quotientengruppe von $G$ unter $N$.\\
 \textbf{Korollar}\\
-Sei $H<G$. $H$ ist normal in $G$, genau dann, wenn $H$ Kern eines Gruppenhomomorphismus $\phi: G \to G'$ ist.
+Sei $H<G$. $H$ ist normal in $G$, genau dann, wenn $H$ Kern eines Gruppenhomomorphismus $\varphi: G \to G'$ ist.
 \subsection{Isomorphiesatz}
-Sei $\phi: G\to G'$ ein Gruppenhomomorphismus. Sei $N<G$ normal mit $N\subset ker(\phi)$. Dann $\exists \overline{\phi}$ wohldefiniert mit \begin{eqnarray*}
-	& \overline{\phi}: G/N \to G\\
-	& gN \mapsto \phi(g)
+Sei $\varphi: G\to G'$ ein Gruppenhomomorphismus. Sei $N<G$ normal mit $N\subset ker(\varphi)$. Dann $\exists \overline{\varphi}$ wohldefiniert mit \begin{eqnarray*}
+	& \overline{\varphi}: G/N \to G\\
+	& gN \mapsto \varphi(g)
 \end{eqnarray*}
 sodass \begin{enumerate}
-	\item $im(\overline{\phi}) = im(\phi)$
-	\item $\overline{\phi}$ injektiv $\Leftrightarrow \, N = ker(\phi)$
+	\item $im(\overline{\varphi}) = im(\varphi)$
+	\item $\overline{\varphi}$ injektiv $\Leftrightarrow \, N = ker(\varphi)$
 \end{enumerate}
 \textbf{Korollar}\\
-Sei $\phi: G\to G'$ ein Gruppenhomomorphismus. Dann gibt es einen Isomorphismus \[\overline{\phi}: G/N \to im(\phi)\] falls $N = ker(\phi)$\\
+Sei $\varphi: G\to G'$ ein Gruppenhomomorphismus. Dann gibt es einen Isomorphismus \[\overline{\varphi}: G/N \to im(\varphi)\] falls $N = ker(\varphi)$\\
 \textbf{Korollar}\\
-Ein surjektiver Gruppenhomomorphismus $\phi: G \to G'$ impliziert einen Isomorphismus \[\overline{\phi}: G/N \to G'\] wenn $N = ker(\phi)$.\\
+Ein surjektiver Gruppenhomomorphismus $\varphi: G \to G'$ impliziert einen Isomorphismus \[\overline{\varphi}: G/N \to G'\] wenn $N = ker(\varphi)$.\\
 \textbf{Theorem}\\
 Sei $G$ Gruppe, $N\triangleleft G$. \begin{itemize}
 	\item Die Abbildungen \[H<G \to \overline{H} = \underbrace{\{\overline{h}: h \in H\}}_{=\pi(H)} < G/N\] und \[\pi^{-1}(K)<G \leftarrow K<G/N\] liefern gegenseitige Isomorphismen zwischen \[H<G \text{ mit } N<H \leftrightarrow \text{ UG von } G/N\]
@@ -240,13 +240,13 @@ $(R^*, \cdot)$ ist eine Gruppe.\\
 
 Ein Ring heißt \underline{kommutativ}, falls $\forall a,b \in R: \; a\cdot b = b\cdot a$. Zum Beispiel ist $\mathbb{C}$ ein $\mathbb{R}$-Vektorraum der Dimension 2 und ein kommutativer Ring. $\mathbb{C} \times \mathbb{C}$ ist ein $\mathbb{C}$-Vektorraum der Dimension 2 und auch kommutativ.\\
 \textbf{Definition}\\
-Seien $R$, $S$ Ringe. Ein Ringhomomorphismus $\phi: R \to S$ ist eine Abbildung von Mengen $R \to S$ mit \begin{enumerate}
-	\item $\forall a,b \in R: \; \phi(a+b) = \phi(a)+\phi(b)$
-	\item $\forall a,b \in R: \; \phi(a\cdot b) = \phi(a) \cdot \phi(b)$
-	\item $\phi(1_R) = \phi(1_S)$ 
+Seien $R$, $S$ Ringe. Ein Ringhomomorphismus $\varphi: R \to S$ ist eine Abbildung von Mengen $R \to S$ mit \begin{enumerate}
+	\item $\forall a,b \in R: \; \varphi(a+b) = \varphi(a)+\varphi(b)$
+	\item $\forall a,b \in R: \; \varphi(a\cdot b) = \varphi(a) \cdot \varphi(b)$
+	\item $\varphi(1_R) = \varphi(1_S)$ 
 \end{enumerate}
 \textbf{Proposition}\\
-Sei $a \in R^*$ und sei $\phi: R \to S$ ein Ringhomomorphismus. Dann ist $\phi(a)$ invertierbar und $\phi(a)^{-1} = \phi(a^{-1})$.\\
+Sei $a \in R^*$ und sei $\varphi: R \to S$ ein Ringhomomorphismus. Dann ist $\varphi(a)$ invertierbar und $\varphi(a)^{-1} = \varphi(a^{-1})$.\\
 \subsection{Teilbarkeit}
 \textbf{Definition}\\
 Sei $a \in R$. $a$ heißt Nullteiler, wenn $\exists b \in R\setminus\{0\}$, sodass $ab = 0$. Wenn $0$ der einzige Nullteiler ist, heißt $R$ Integritätsring.\\
@@ -275,7 +275,7 @@ Sie $S = \{a_1,...,a_n\} \subset R$ endlich. Dann ist das Ideal $(S) = \{r_1\cdo
 Ein Hauptidealring ist ein Ring $R$, sodass alle Ideale $I$ der Form $I = (a)$ sind (Hauptideale).
 \subsection{Quotientenringe}
 \textbf{Definition} (Quotientenringe)\\
-Sei $R$ ein Ring, $(a) \subseteq R$ ein Ideal. Wir definieren $R/(a) = \{\overline{r} = r+a = \{r+s : s \in (a)\}\}$. Ist $\phi: R \to S$ ein Homomorphismus mit $(a) \subseteq ker(\phi)$, so existiert $\overline{\phi}: R/(a) \to S$ mit $\overline{r} \mapsto \phi(r)$.\\
+Sei $R$ ein Ring, $(a) \subseteq R$ ein Ideal. Wir definieren $R/(a) = \{\overline{r} = r+a = \{r+s : s \in (a)\}\}$. Ist $\varphi: R \to S$ ein Homomorphismus mit $(a) \subseteq ker(\varphi)$, so existiert $\overline{\varphi}: R/(a) \to S$ mit $\overline{r} \mapsto \varphi(r)$.\\
 
 Für einen Körper $K$ ist $K[x]$ ein Ring und für $f \in K[x]$ mit $deg(f) = n$ ist $K[x]/(f) = \{\overline{r}: deg(r) < n\}$. Das folgt aus Division mit Rest und da $g = f\cdot q + r$ mit $deg(r) < deg(f)$ und $r$ ist eindeutig bestimmt.\\
 
@@ -375,12 +375,28 @@ Sei $R$ ein Faktorring und $K$ ein Quotientenkörper von $R$. Dann ist $R[x]$ wi
 \textbf{Korollar}\\
 Für einen Faktorring $R$, Quotientenkörper $K$ und $f \in R[x]$ primitiv, dann $f$ in $R[x]$ irreduzibel genau dann, wenn $f$ in $K[x]$ irreduzibel ist.\\
 \textbf{Satz}\\
-Sei $R$ ein Faktorring und $f \in R[x]$. Sei $\pi \in R$ prim. Dann ist $f$ irreduzibel in $K[x]$ genau dann, wenn die Reduktion $\overline{f}$ modulo $\pi$ irreduzibel in $K[x]$ ist.\\
+Sei $R$ ein Faktorring und $f \in R[x]$. Sei $\pi \in R$ prim, sodass der Leitkoeffizient von $f$ nicht durch $\pi$ teilbar ist. Dann ist $f$ irreduzibel in $K[x]$ genau dann, wenn die Reduktion $\overline{f}$ modulo $\pi$ irreduzibel in $K[x]$ ist.\\
 \textbf{Satz}\\
 Sei $R$ ein Faktorring und $\pi \in R$ prim, sodass \begin{enumerate}
 	\item $\pi \not | a_n$
 	\item $\pi | a_i$ für $i \in \{0,...,n-1\}$
 	\item $\pi^2 \not | a_0$
 \end{enumerate}
-Dann ist $f$ irreduzibel in $K[x]$.
+Dann ist $f$ irreduzibel in $K[x]$.\\
+\textbf{Proposition}\\
+Sei $f = a_nx^n + ... + a_0 \in R[x]$. Ist $g = x-\alpha$ ein Faktor von $f$ in $K[x]$ mit $\alpha = \frac{r}{s}$ und $r,s$ teilerfremd, dann gilt $s|a_n$ und $r|a_0$.
+\section{Körpererweiterungen}
+\subsection{Endliche Körpererweiterungen}
+Seien $K,L$ Körper und $\varphi: K \to L$ ein Homomorphismus. Dann ist $\varphi$ injektiv.\\
+\textbf{Definition}\\
+Eine Körpererweiterung $L | K$ ist eine Inklusion von Körpern $K \subset L$.\\
+Sind $L_1$, $L_2$ Erweiterungen von einem Körper $K$, so heißt ein Homomorphismus $\varphi: L_1 \to L_2$ ein $k-$Homomorphismus, falls $\varphi |_K = id |_K$.\\
+\textbf{Definition}\\
+Ist $L|K$ eine Körpererweiterung und ist $S \subseteq L$ so bezeichnen wir mit $K[S]$ den kleinsten Teilring von $L$ der $S$ enthält. und mit $K(S)$ den kleinsten Teilkörper, der $S$ enthält.\\
+\textbf{Definition}\\
+Man sagt, dass $L|K$ \underline{endlich} ist, wenn $L$ ein endlich dimensionaler Vektorraum über $K$ ist. Der \underline{Grad} $[L:K]$ ist definiert als $\dim_K(L)$. Der Grad ist multiplikativ: \[[M:K] = [M:L][L:K]\]\\
+\textbf{Definition}\\
+Sei $\alpha \in L$. Wir sagen, dass $\alpha$ \underline{algebraisch} über $K$ ist, falls ein $f \in K[x]\setminus \{0\}$ mit $f(\alpha) = 0$ existiert. $L|K$ heißt algebraisch, falls jedes Element von $L$ algebraisch über $K$ ist.\\
+\textbf{Satz}\\
+Sei $L|K$ eine Erweiterung und $\alpha \in L|K$ algebraisch. dann gibt es ein eindeutig bestimmtes normiertes, irreduzibles Polynom mit $f(\alpha) = 0$, das Minimalpolynom von $\alpha$. Es gibt außerdem einen Isomorphismus $K(\alpha) \cong K[x]/(f)$. Es gilt $[K(\alpha):K] = \deg(f)$.
 \end{document}
