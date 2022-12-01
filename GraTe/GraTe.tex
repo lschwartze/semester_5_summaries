@@ -228,4 +228,47 @@
 		\item $G[V_h]$ is connected
 		\item $\forall hh' \in E(H)$ there is an edge betwenn $V_h$ and $V_{h'}$.
 	\end{itemize}
+	\section{Planarity}
+	\textbf{Definition}\\
+	Every edge either needs to be a straight line segment or a polygonal arcs which are concatenations of straight line segments. A plane graph is a pair $(V,E)$ s.t. \begin{itemize}
+		\item $V$ is finite
+		\item $E$ is a finite set of polygonal arcs
+		\item no two edges share both endpoints
+		\item every endpoint of an edge is a vertex
+		\item the interior of any edge contains no vertex and not point of another edge.
+	\end{itemize}
+	\textbf{Definition} (faces)\\
+	Faces are defined via an equivalence relation on $\mathbb{R}^2 \setminus G$ the plane where $G$ has been removed. A face $f$ is defined by $f = \{x,y \in \mathbb{R}^2 \setminus G \text{ s.t. } x\sim y\}$ where $x \sim y$ iff there is a polygonal arc in $\mathbb{R}^2 \setminus G$ that links $x$ to $y$. $F(G)$ is the set of all equivalence classes (or faces) of $G$.\\
+	There is exactly one unbounded face, called the outer face.\\
+	For a face $f$ we define the face boundary \[G[f] = \{x \in \mathbb{R}^2 \text{ s.t. every neighbourhood of $x$ meets $f$ and } \mathbb{R}^2 \setminus G\}\]
+	Notice the following remarks \begin{itemize}
+		\item two points $x,y \in f \cup G[f]$ can be linked via a polygonal arc $A \subseteq f \cup \{x,y\}$
+		\item a boundary $G[f]$ separates $f$ from the rest 
+		\item a plane forest has exactly one face
+		\item every cycle has exactly two faces
+		\item if there is some cycle then every face boundary contains a cycle
+		\item every edge of $G$ lies on the face boundary of at most two faces
+		\item every edge on a cycle lies on the face boundary of exactly two faces
+		\item if $G$ is 2-connected then every face boundary is a cycle 
+		\item $G[f]$ is always a subgraph 
+	\end{itemize}
+	\subsection{Euler's formula}
+	\textbf{Theorem}\\
+	Let $G$ be a 2-connected plane graph. Then \[2 = \left|V(G)\right| - \left|E(G)\right| + \left|F(G)\right|\]
+	\subsection{Triangulation}
+	A plane triangulation is a plane graph such that all face boundaries are triangles. Similarly, a plane quadrangulation is a plane graph such that all faces boundaries are on 4-cycles.\\
+	\textbf{Theorem}\\
+	Let $G$ be a plane graph with $n$ vertices and $m$ edges. \begin{enumerate}
+		\item if $G$ is a plane triangulation, then $m = 3n-6$
+		\item if $n \geq 3$, then $m \leq 3n -6$
+		\item if $G$ is a plane quadrangulation, then $m = 2n-4$
+		\item if $G$ is bipartite, then $m \leq 2n-4$
+	\end{enumerate}
+	\subsection{$K_5$ and $K_{3,3}$}
+	\textbf{Definition}\\
+	A graph is \underline{planar} if it is isomorphic to a plane graph.\\
+	\textbf{Theorem}\\
+	Neither $K_5$ nor $K_{3,3}$ are planar.\\
+	\textbf{Theorem}\\
+	Every graph with $\delta(G) \geq 3$ contains a subdivision of $K_4$.
 \end{document}
