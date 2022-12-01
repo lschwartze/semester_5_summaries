@@ -42,15 +42,20 @@
 	\textbf{Beispiel} (Divide and Conquer)\\
 	Das zu lösende Problem wird in zwei Teile mit geringerer Größe geteilt. Die Lösung für ein Problem setzt sich aus der Lösung für alle Teilprobleme zusammen. Die Laufzeit ist durch $\mathcal{O}(n\log(n))$ beschränkt. Beispiele für Divide and Conquer Verfahren sind Quicksort, Mergesort oder Binäre Suche.\\
 	Mergesort: eine Eingabefolge $a_n$ wird in zwei gleich große Teile gespalten und die beiden Hälften rekursiv sortiert. Im Basisfall werden die beiden Hälften kombiniert und sortiert (merging).\newpage
-	\textbf{Algorithmus}\\
-	\texttt{INPUT: $x$\\
-	IF $\left|x\right|\leq 1$\\
-	\indent Berechne die Lösung $L$ für $x$ direkt\\
-	ELSE: $x = x_1 \cup x_2$\\
-	\indent $L_1$ = DivideAndConquer($x_1$)\\
-	\indent $L_2$ = DivideAndConquer($x_2$)\\
-	\indent Berechne $L$ aus $L_1$ und $L_2$\\
-	RETURN $L$}\\
+	\textbf{Algorithmus}
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\begin{algorithmic}
+		\State\texttt{INPUT: $x$
+			\If{$\left|x\right|\leq 1$}
+			\State Berechne die Lösung $L$ für $x$ direkt
+			\Else $x = x_1 \cup x_2$
+			\State $L_1$ = DivideAndConquer($x_1$)
+			\State $L_2$ = DivideAndConquer($x_2$)
+			\State Berechne $L$ aus $L_1$ und $L_2$
+			\EndIf
+			\State RETURN $L$}
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}
 	Für den Aufwand $f$ folgt $f(n) = 2\cdot f(\frac{n}{2}) + c\cdot n + d$.	\\
 	\textbf{Behauptung}: $f(n) = \alpha + \beta n +\delta n \log(n)$\\
 	Der Beweis folgt durch elementares Nachrechnen. Es folgt durch Koeffizientenvergleich $\alpha = -d$ und $\delta = c$. Für den Mergesort erhält man zum Beispiel $f(n) = n\log(n) - n +1$.\\
@@ -203,4 +208,27 @@
 		\item Enthält eine der Positionen eine 0, so ist $w$ nicht gespeichert worden.
 		\item Enthalten alle eine 1, so ist es wahrscheinlich, dass $w$ gespeichert wurde, aber nicht sicher (falsch positive möglich). 
 	\end{enumerate} 
+	\section{Funktionale Programmierung}
+	\textbf{Beispiel}\\
+	Der Binomialkoeffizient lässt sich rekursiv wie folgt berechnen: \[\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}\]
+	Setzt man $b(n,k) = \binom{n}{k}$ erhält man folgende Rekursionsvorschrift \[b(n,k) = \begin{cases}
+		1,& \text{falls } k=0 \lor n=k\\
+		b(n-1, k-1) + b(n-1, k),& \text{sonst}
+	\end{cases}\] 
+	Mittels dieses Verfahrens erhält man einen Aufwand von $\Theta(\frac{2^n}{\sqrt{n}})$. Der Aufwand kann reduziert werden, wenn die schon berechneten Werte in einer Tabelle $t[n,k]$ gespeichert werden. Wir können die Anzahl der Additionen auf $n*k$ reduzieren.\\
+	
+	Im Gegensatz zu den rekursiven top-down Ansätzen wird beim dynamischen Programmieren die Lösung in bottom-up berechnet. Begonnen wird bei den Randwerten, die späteren Lösungen werden rekursiv aus den kleineren Teillösungen berechnet. Im Beispiel des Binomialkoeffizienten erhält man das Pascal'sche Dreieck. Allgemein ist der Aufwand bei dynamischer Programmierung beschränkt durch (Größe der Tabelle)(Aufwand zur Berechnung eines Eintrages). Eingesetzt wird dieses Prinzip meist zur Lösung von Optimierungsproblemen. Dafür ist es wichtig, dass ein Problem dem Bellmanschen Optimalitätsprinzip folgt: \begin{quote}
+		Die optimale Lösung für Probleme setzt der Größe n setzt sich aus optimalen Lösungen für kleinere Teilprobleme zusammen.
+	\end{quote}
+	Die Entwicklung eines Algorithmus erfolgt in mehreren Schritten \begin{enumerate}
+		\item Charakterisiere den Lösungsraum und die Struktur einer optimalen Lösung
+		\item Definiere rekursiv, wie sich eine optimale Lösung aus optimalen Teillösungen ermitteln lässt.
+		\item Konzipiere eine Algorithmus, der einer Tabelle verwendet.
+	\end{enumerate}
+	\textbf{Definition}\\
+	Die Editierdistanz $d(S_1, S_2)$ ist die minimale Anzahl an Buchstabenoperationen, die nötig sind, um den String $S_1$ in $S_2$ umzuwandeln. Man kann Buchstaben einsetzen, löschen und ersetzen. Mit der naiven Strategie stellt man fest, dass der Aufwand exponentiell wächst, während man mittels dynamischer Programmierung eine Komplexität von $\mathcal{O}(n^3)$ erreicht.\\
+	\subsection{Traveling Salesman Problem}
+	Das Problem ist \textbf{NP}-vollständig. Der naive Ansatz hat eine Komplexität von $\Omega(n!)$. Wir betrachten im Folgenden das Problem in einem gerichteten Graphen, d.h. die Entfernungsmatrix ist i.A. nicht symmetrisch und die Dreiecksungleichung muss nicht erfüllt sein. Wir betrachten das Problem rekursiv: Wir beginnen bei Stadt $1$, finden eine Rundreise in $\{2,...,k-1\}$ reisen zu $k$ und dann zurück zu $1$. Durch dieses Verfahren wird der Aufwand beschränkt durch $\mathcal{O}(n^22^n)$.
+	\subsection{Knapsack Problem}
+	Auch dieses Problem ist \textbf{NP}-vollständig. Sei $I$ die Menge der Indizes, sodass die Lösung, die $I$ entspricht optimal sei. Für $i \in I$ ist das Problem mit Größe $G-g_i$ und Indexmenge $I\setminus\{i\}$ optimal gefüllt. Mittels dynamischer Programmierung kann man eine Komplexität von $\mathcal{O}(n2^k)$ erreichen.  
 \end{document}
