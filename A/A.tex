@@ -398,5 +398,52 @@ Man sagt, dass $L|K$ \underline{endlich} ist, wenn $L$ ein endlich dimensionaler
 \textbf{Definition}\\
 Sei $\alpha \in L$. Wir sagen, dass $\alpha$ \underline{algebraisch} über $K$ ist, falls ein $f \in K[x]\setminus \{0\}$ mit $f(\alpha) = 0$ existiert. $L|K$ heißt algebraisch, falls jedes Element von $L$ algebraisch über $K$ ist.\\
 \textbf{Satz}\\
-Sei $L|K$ eine Erweiterung und $\alpha \in L|K$ algebraisch. dann gibt es ein eindeutig bestimmtes normiertes, irreduzibles Polynom mit $f(\alpha) = 0$, das Minimalpolynom von $\alpha$. Es gibt außerdem einen Isomorphismus $K(\alpha) \cong K[x]/(f)$. Es gilt $[K(\alpha):K] = \deg(f)$.
+Sei $L|K$ eine Erweiterung und $\alpha \in L|K$ algebraisch. dann gibt es ein eindeutig bestimmtes normiertes, irreduzibles Polynom mit $f(\alpha) = 0$, das Minimalpolynom von $\alpha$. Es gibt außerdem einen Isomorphismus $K(\alpha) \cong K[x]/(f)$. Es gilt $[K(\alpha):K] = \deg(f)$.\\
+\textbf{Satz}\\
+Folgende Aussagen sind äquivalent: \begin{itemize}
+	\item $L|K$ ist endlich
+	\item $L|K$ ist endlich erzeugt und algebraisch
+\end{itemize}
+\textbf{Proposition}\\
+Sei $K\subset L \subset M$ mit $L|K$ algebraisch. Ist $\alpha \in M$ algebraisch über $L$, so ist $\alpha$ algebraisch über $K$.\\
+\textbf{Satz}\\
+Ist $f \in K[x]$ irreduzibel von Grad $n$, so existiert eine einfache Körpererweiterung von Grad $n$, die eine Nullstelle von $f$ enthält und die $L = K(\alpha)$ erfüllt. Zwei solche Erweiterungen sind $K$-isomorph. 
+\subsection{Zerfällungskörper}
+\textbf{Korollar}\\
+Ist $f \in K[x]\setminus\{0\}$, so existiert eine endliche Erweiterung $L$ von $K$ mit folgenden Eigenschaften: \begin{enumerate}
+	\item Es gilt $f = c(x-\alpha_1)\dots (x-\alpha_n)$ in $L$
+	\item $L = K(\alpha_1,\dots \alpha_n)$
+\end{enumerate}
+Ein solcher Körper heißt \underline{Zerfällungskörper} von $F$ über $K$. Er ist bis auf Isomorphie eindeutig.\\
+\textbf{Lemma}\\
+Sei $\sigma: K_1 \to K_2$ ein Körperisomorphismus. \begin{enumerate}
+	\item ist $f_1$ in $K_1[x]$ irreduzibel, so auch $f_2$ in $K_2[x]$.
+	\item Ist $L_i = K_i[x]/(f_i)$, der zu $fi$ gehörige Körper und sind $\alpha_i$ Nullstellen von $f_i$ in $L_i$ so gibt es einen eindeutigen Isomorphismus $\tau: L_1 \to L_2$.
+\end{enumerate} 
+\textbf{Lemma}\\
+Sei $f \in K[x]$ und seien $L_1, L_2$ Zerfällungskörper von $f$. Seien Zeischenkörper $M_i$ mit K $\subset M_i \subset L_i$ gegeben und sei $\sigma: M_1 \to M_2$ ein $K$-Isomorphismus. Dann existiert ein Isomorphismus $\tau: L_1 \to L_2$ der $\sigma$ fortsetzt.
+\subsection{Separierbarkeit}
+\textbf{Definition}\\
+Sei $K$ ein Körper und $f \in K[x]$ nicht konstant. \begin{itemize}
+	\item $f$ heißt \underline{square-free} wenn $\not \exists g \in K[x]$ sodass $g^2 | f$
+	\item $f$ heißt separierbar, wenn $f$ in jeder Körpererweiterung von $K$ square-free ist. 
+\end{itemize}
+\textbf{Definition}\\
+Sei $K$ ein Körper. Dann ist die Charakteristik $char(K)$ definiert als das kleinste $n$ sodass $\underbrace{1+...+1}_{n} = 0$.\\
+\textbf{Lemma}\\
+In einem Körper der Charakteristik $p$ gilt \[(a+b)^p = a^p + b^p\]
+\textbf{Lemma}\\
+Sei $f \in K[x]$, dann ist $f$ separierbar genau dann, wenn \[\gcd(f,f') = 1\]
+\textbf{Definition}\\
+Sei $L|K$ eine algebraische Erweiterung. \begin{enumerate}
+	\item $\alpha \in L$ heißt separierbar über $K$ wenn das Minimalpolynom separierbar über $K$ ist.
+	\item Die Erweiterung ist separierbar, wenn jedes Element von $L$ separierbar ist.
+\end{enumerate}
+\textbf{Theorem}\\
+Sei $K$ ein Körper mit Charakteristik 0. Dann gilt \begin{itemize}
+	\item Jedes irreduzible Polynom in $K[x]$ ist separierbar.
+	\item Jede algebraische Erweiterung ist separierbar.
+\end{itemize}
+\textbf{Theorem}\\
+Sei $L|K$ eine endliche separierbare Erweiterung. Dann existiert ein $\alpha \in L$ sodass $L = K(\alpha)$. 
 \end{document}
