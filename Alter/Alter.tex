@@ -230,5 +230,45 @@
 	\subsection{Traveling Salesman Problem}
 	Das Problem ist \textbf{NP}-vollständig. Der naive Ansatz hat eine Komplexität von $\Omega(n!)$. Wir betrachten im Folgenden das Problem in einem gerichteten Graphen, d.h. die Entfernungsmatrix ist i.A. nicht symmetrisch und die Dreiecksungleichung muss nicht erfüllt sein. Wir betrachten das Problem rekursiv: Wir beginnen bei Stadt $1$, finden eine Rundreise in $\{2,...,k-1\}$ reisen zu $k$ und dann zurück zu $1$. Durch dieses Verfahren wird der Aufwand beschränkt durch $\mathcal{O}(n^22^n)$.
 	\subsection{Knapsack Problem}
-	Auch dieses Problem ist \textbf{NP}-vollständig. Sei $I$ die Menge der Indizes, sodass die Lösung, die $I$ entspricht optimal sei. Für $i \in I$ ist das Problem mit Größe $G-g_i$ und Indexmenge $I\setminus\{i\}$ optimal gefüllt. Mittels dynamischer Programmierung kann man eine Komplexität von $\mathcal{O}(n2^k)$ erreichen.  
+	Auch dieses Problem ist \textbf{NP}-vollständig. Sei $I$ die Menge der Indizes, sodass die Lösung, die $I$ entspricht optimal sei. Für $i \in I$ ist das Problem mit Größe $G-g_i$ und Indexmenge $I\setminus\{i\}$ optimal gefüllt. Mittels dynamischer Programmierung kann man eine Komplexität von $\mathcal{O}(n2^k)$ erreichen.
+	\section{Greedy Algorithmen}
+	\textbf{Definition}\\
+	Solche Algorithmen sind charakterisiert durch \begin{itemize}
+		\item die Menge der möglichen Eingaben
+		\item zulässige Lösungen
+		\item eine Bewertungsfunktion
+	\end{itemize}  
+	Eine optimale Teillösung wird durch lokal verfügbare Informationen erweitert. Es wird jeweils die lokal beste Erweiterung gewählt.\\
+	
+	Eine mögliche Anwendung eines Greedy Algorithmus ist das Bruchteil Rucksack Problem. Sortiert man die Objekte der Größe nach, wählt der Greedy Algorithmus immer das beste noch nicht gewählt Element.\\
+	Eine weitere Anwendung von Greedy Algorithmen ist Kruskal für Minimum Spanning Trees.
+	\subsection{Union-Find-Datenstruktur}
+	\textbf{Definition}
+	\begin{itemize}
+		\item jeder Menge wird ein kanonisches Element zugeordnet
+		\item \texttt{Union}($x,y$) vereinigt die Mengen, die $x$ und $y$ enthalten. Als kanonisches Element kann kann jedes Element der neu entstandenen Menge gewählt werden.
+		\item \texttt{Union}($x$) findet das kanonische Element der Menge zu de r$x$ gehört.
+		\item \texttt{Make}($x$) erzeugt eine einelementige Menge $\{x\}$ mit kanonischem Element $x$.
+	\end{itemize}
+	Der Kruskal Algorithmus kann mittels der Union Find Datenstruktur leicht implementiert werden. Sei $f(n)$ die Komplexität der \texttt{Find}-Funktion und $u(n)$ die der \texttt{Union}-Funktion. Dann ist die Komplexität des Kruskal Algorithmus beschränkt durch $\mathcal{O}(m(\log m + f(n) + u(n))$. \begin{itemize}
+		\item Die disjunkten Mengen kann man als Baum implementieren
+		\item Die Knoten entsprechen den Elementen
+		\item Die Wurzel ist das kanonische Element
+	\end{itemize}
+	Die Operationen kann man sich anhand von Bäumen überlegen:\begin{itemize}
+		\item \texttt{Make}($v$) erzeugt einen Baum mit lediglich einer Wurzel
+		\item \texttt{Union}($u,v$) vereinigt zwei Bäume indem die Wurzel eines Baums als Kind an einen anderen Baum angehängt wird.
+		\item \texttt{Find}($v$) wandert vom Knoten $v$ bis zur Wurzel.
+	\end{itemize}
+	Für eine effiziente Implementierung werden die Bäume als Arrays gespeichert. Die Komponenten werden in einem Array $A$ und die Größe jeder Komponenten in einem anderen Arrays $S$ gespeichert. \begin{itemize}
+		\item Setze $A[i] = i$ und $S[i] = 1$ für $1 \leq i \leq n$
+		\item Um \texttt{Find}($i$) zu berechnen, wird $A[i]$ mit $i$ verglichen. Falls $A[i]=i$, so ist das Ergebnis $i$, sonst ist es \texttt{Find}$(A[i])$.
+		\item \texttt{Union}($i,j$) wird durch eine Fallunterscheidung der Größen $S[i]$ und $S[j]$ implementiert. Der kleinere Baum wird unter den größeren angehängt.
+	\end{itemize}
+	Durch diese Implementierung hat ein Baum nach $n$ \texttt{Union}-Operationen genau $n+1$ Knoten und ist nicht tiefer als $\log_2(n+1)$. Die Komplexität der \texttt{Find}-Operation hat nun Komplexität $\mathcal{O}(\log n)$ und \texttt{Union} $\mathcal{O}(1)$. Daher können wir Kruskal durch $\mathcal{O}(m\log m)$ beschränken.\\
+	
+	Die \texttt{Find}-Operation kann mittels Pfadoptimierung verbessert werden. Die Einträge des Arrays, die bis zur Wurzel durchlaufen wurden, werden mit dem Wert des Wurzelknotens überschrieben. Dadurch entsteht also ein Baum mit der Tiefe 1.
+	\subsection{Kürzeste Wege in Graphen}
+	Gegeben sei ein gewichteter Graph $G$ der von einem Startknoten $v$ durchquert werden soll. Gesucht sind die kürzesten Wege von $v$ zu allen anderen Knoten.\\
+	Dijksttra's Algorithmus ist ein Greedy-Löser.
 \end{document}
