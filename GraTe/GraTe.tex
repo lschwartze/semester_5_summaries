@@ -268,7 +268,24 @@
 	\textbf{Definition}\\
 	A graph is \underline{planar} if it is isomorphic to a plane graph.\\
 	\textbf{Theorem}\\
-	Neither $K_5$ nor $K_{3,3}$ are planar.\\
+	Neither $K_5$ nor $K_{3,3}$ are planar. A graph $G$ is planar iff neither $K_3$ nor $K_{3,3}$ are (topological) minors of $G$. This is equivalent to the case that neither is a subdivision of $G$.\\
 	\textbf{Theorem}\\
 	Every graph with $\delta(G) \geq 3$ contains a subdivision of $K_4$.
+	\section{Colouring}
+	\textbf{Definition}\\
+	A vertex colouring is defined by an assignment $c: V(G) \to C$ for any set $C$ such that $uv \in E(G) \Rightarrow c(u) \neq c(v)$.\\
+	The chromatic number $\chi(G)$ is the smallest number of colours (i.e. $\left|C\right|$) such that $c$ exists.\\
+	Laslty, we define the clique number $\omega(G)$ as the size of the largest clique in $G$. Obviously $\chi(G) \geq \omega(G)$.\\
+	\textbf{Definition} (Greedy Colouring)\\
+	Define $C$ to be a set of the first $\left|C\right|$ integers. Enumerate the vertices of $G$ and define $G_i = G[v_1,...,v_i]$. Colour $v_i$ with the least available integer in $C$.\\
+	In the graph $G_i$ we need at most $d_{G_i}(v_i) + 1$ colours. By this remark, it is obvious that this algorithm can be optimized by sorting the $v_i$ descending by their degree.\\
+	Thus we can find a new lower bound for the chromatic number: \[\chi(G) \leq max_i\{\delta(G_i)+1\} \leq \max \{\delta(H): H\leq G\}+1\]
+	Thus, every graph $G$ contains a sugraph $H$ with $\delta(H) \geq \chi(G)$. We also have the obvious upper bound $\chi(G) \leq \Delta(G)+1$. This inequality is tight for any complete graph and odd cycles.\\
+	\textbf{Theorem}\\
+	Every planar graph $G$ can be coloured with at most 4 colours.\\
+	The proof for this theorem relies heavily on computer work, but there is an easy proof for the 5-colour theorem.\\
+	\textbf{Theorem}\\
+	A planar graph $G$ that has no triangle subgraph satisfies $\chi(G)\leq 3$.\\
+	\textbf{Theorem}\\
+	If $G$ is connected and neither complete nor an odd cycle, then $\chi(G) \leq \Delta(G)$.
 \end{document}
