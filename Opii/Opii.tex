@@ -367,4 +367,61 @@
 		\State return $(X, \sigma)$
 	\end{algorithmic}
 	\par\noindent\rule{\textwidth}{0.4pt}\\
+	An instance of \texttt{Facility Location} is \texttt{Metric} if $c_{i,j}$ satisfies an inequality that corresponds to distances. \[c_{i,j} - c_{i',j} \leq c_{i,j'} + c_{i',j'}\]
+	\textbf{Theorem}\\
+	Above algorithm yields a $4$-factor approximation.\\
+	\textbf{Comment} (\texttt{Set Cover})\\
+	INSTANCE: A set system $(U,S)$ with $U = \bigcup_{s \in S} s$ and a weight function $c:S \to \mathbb{Q}_{>0}$.\\
+	GOAL: Determine a subset $R \subseteq S$ with \[U = \bigcup_{s \in R} \text{ such that } c(R) = \sum_{s\in R} c(s) \text{ is minimum}\]
+	A set $R$ with $U = \bigcup_{s \in R} s$ is a \underline{set cover}.\\
+	
+	\texttt{Set Cover} is \textbf{NP}-hard. One proof uses the fact that \begin{itemize}
+		\item a graph $G$ has an independent set of order at least $k$
+		\item iff $G$ has a \texttt{Vertex Cover} of order at most $n(G)-k$
+		\item iff the \texttt{Set Cover} instance \[\left(E(G), \{\{uv: v \in N_G(u)\}: u \in V(G)\}, 1\right)\]
+		has a \texttt{Set Cover} of order at most $n(G)-k$.
+	\end{itemize} 
+	\par\noindent\rule{\textwidth}{0.4pt}
+	INPUT: An instance $(U,S,c)$ of \texttt{Set Cover}
+	OUTPUT: A \texttt{Set Cover} $R$
+	\begin{algorithmic}[1]
+		\State $R \gets \emptyset$
+		\State $W \gets \emptyset$
+		\While{$W\neq U$}
+		\State Choose $r \in S\setminus R$ minimizing $\frac{c(r)}{\left|r\setminus W\right|}$
+		\State $R \gets R \cup \{r\}$
+		\State $W \gets W \cup r$
+		\EndWhile
+		\State return $R$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Theorem}\\
+	For a given instance $(U,S,c)$ of \texttt{Set Cover} can achieve a \[c(R) \leq H(r)\cdot OPT(U,S,c)\] approximation factor with \[r = \max\{\left|s\right|: s \in S\}\] and $H(r)$ the geometric sum \[H(r) = \sum_{i = 1}^{r} \frac{1}{i} \approx \ln(r)\]
+	\subsection{Network Design}
+	\textbf{Comment} (\texttt{Survivable Network Design})\\
+	INSTANCE: A graph $G$, a function $c: E(G) \to \mathbb{Q}_{>0}$ and a function $r: \binom{V(G)}{2} \to \mathbb{Z}_{\geq 0}$.\\
+	GOAL: Determine a spanning subgraph $H$ such that for every two distinct vertices $u$ and $v$ of $G$ the graph $H$ contains $r(u,v)$ edge-disjoint paths between $u$ and $v$ minimizing the cost $c(E(H))$ = $\sum_{e \in E(H)} c(e)$. If $r \equiv 1$, then a minimum spanning tree solves the problem.\\
+	If $S \subseteq V(G)$ and \[r(u,v) = \begin{cases}
+		1,& uv \in \binom{S}{2}\\
+		0, & \text{otherwise}
+	\end{cases}\]
+	we obtain the following special case:\\
+	\textbf{Comment} (\texttt{Steiner Tree})\\
+	INSTANCE: Graph $G$, $c: E(G) \to \mathbb{Q}_{\geq 0}$ and a set $S \subseteq V(G)$.\\
+	GOAL: Determine a connected subgraph $T$ of $G$ with $S \subseteq V(T)$ that minimizes $c(E(T))$ or proof that such a subgraph does not exist.\\
+	
+	Since $c \geq 0$, \texttt{Steiner Tree} always has an optimal solution that is a tree. \begin{itemize}
+		\item any subgraph $T$ that is a tree with $S \subseteq V(T)$ is a \texttt{Steiner Tree}
+		\item $S$ is also called a set of terminals
+		\item $V(T)\setminus S$ are called the Steiner points.
+	\end{itemize}
+	Note that for $\left|S\right| = 2$ the problem is equivalent to the \texttt{Shortest Path} problem.\\
+	\textbf{Theorem}\\
+	\texttt{Steiner Tree} is \textbf{NP}-hard for instances $(G,c,S)$ with $c \equiv 1$.\\
+	\textbf{Theorem}\\
+	Let $G$ be a graph and $c: E(G) \to \mathbb{Q}_{\geq 0}$. For $U \subseteq V(G)$ and $x \in V(G) \setminus U$ let \begin{align*}
+		p(U) &= \min \{c(E(T)): T \text{ is a \texttt{Steiner Tree} for $U$ in $G$}\}\\
+		q(U\cup \{x\}, x) &= \min_{\emptyset \neq U' \neq U}\{p(U'\cup \{x\}) + p((U\setminus U')\cup \{x\})\}
+	\end{align*}
+	For $\left|U\right| \geq 2$, the term $p(U\cup \{x\})$ equals \[\min\{\min_{y \in U}\{p(U) + dist_{G,c}(x,y)\}, \min_{y \in V(G) \setminus U}\{q(U\cup \{y\}, y)\} + dist_{G,c}(x,y)\}\]
 \end{document}
