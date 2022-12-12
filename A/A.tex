@@ -426,7 +426,7 @@ Sei $f \in K[x]$ und seien $L_1, L_2$ Zerfällungskörper von $f$. Seien Zeische
 \textbf{Definition}\\
 Sei $K$ ein Körper und $f \in K[x]$ nicht konstant. \begin{itemize}
 	\item $f$ heißt \underline{square-free} wenn $\not \exists g \in K[x]$ sodass $g^2 | f$
-	\item $f$ heißt separierbar, wenn $f$ in jeder Körpererweiterung von $K$ square-free ist. 
+	\item $f$ heißt \underline{separierbar}, wenn $f$ in jeder Körpererweiterung von $K$ square-free ist. 
 \end{itemize}
 \textbf{Definition}\\
 Sei $K$ ein Körper. Dann ist die Charakteristik $char(K)$ definiert als das kleinste $n$ sodass $\underbrace{1+...+1}_{n} = 0$.\\
@@ -445,5 +445,85 @@ Sei $K$ ein Körper mit Charakteristik 0. Dann gilt \begin{itemize}
 	\item Jede algebraische Erweiterung ist separierbar.
 \end{itemize}
 \textbf{Theorem}\\
-Sei $L|K$ eine endliche separierbare Erweiterung. Dann existiert ein $\alpha \in L$ sodass $L = K(\alpha)$. 
+Sei $L|K$ eine endliche separierbare Erweiterung. Dann existiert ein $\alpha \in L$ sodass $L = K(\alpha)$.\\
+\textbf{Theorem}\\
+Sei $L|K$ endlich erzeugt. Ist $L|K$ algebraisch, so ist sie endlich.
+\subsection{Algebraischer Abschluss}
+\textbf{Definition}\\
+Ein Körper $K$ heißt algebraisch abgeschlossen, wenn jedes Polynom $f \in K[x]$ eine Nullstelle in $K$ annimmt.\\
+\textbf{Lemma}\\
+Sei $L|K$ eine Körpererweiterung. Dann gilt \begin{enumerate}
+	\item $M = \{a \in L | a\text{ ist algebraisch über } K\}$ ist eine Körpererweiterung von $K$.
+	\item Wenn $L$ algebraisch abgeschlossen ist, dann ist $M$ ein algebraischer Abschluss von $K$.
+\end{enumerate}
+\textbf{Lemma}\\
+Sei $I$ ein Ideal eines Ringes $R$. Dann ist $I$ Teilring eines maximalen Ideals.\\
+\textbf{Satz}\\
+Jeder Körper besitzt einen algebraischen Abschluss.
+\subsection{Endlich erzeuge Erweiterungen}
+\textbf{Definition}\\
+Ein $\alpha \in L$ heißt transzendent über $K$, wenn $\forall f\neq 0 \in K[x]$ gilt $f(\alpha) \neq 0$.\\
+\textbf{Definition}\\
+Sei $L|K$ gegeben und $S\subset L$.
+\begin{itemize}
+	\item $S$ ist algebraisch unabhängig über $K$, wenn für eine beliebige Reihenfolge $a_1,...,a_n$ von den Elementen von $S$ gilt, dass der Isomorphismus \begin{align*}
+		K[x_1,...,x_n] \to L\\
+		f \mapsto f(a_1,...,a_n)
+	\end{align*}
+	injektiv ist.
+	\item Eine Transzendenzbasis von $L|K$ ist eine algebraisch unabhängige Teilmenge $S\subset L$, sodass $L|K(S)$ algebraisch ist.
+	\item Eine Körpererweiterung ist rein transzendent, wenn $L=K(S)$ für eine algebraisch unabhängige Menge $S$. 
+\end{itemize}
+\textbf{Lemma}\\
+Sei $L|K$ eine Körpererweiterung und $S \subset $L endlich, sodass $L|K(S)$ algebraisch ist. Dann existiert eine Teilmenge $S'$ von $S$, sodass $S'$ eine Transzendenzbasis von $L$ über $K$ ist.\\
+
+Im Allgemeinen gibt es eine \underline{Transzendenzbasis} $T \subset L$, sodass $K \subset K(T) \subset L$. Hierbei ist $K(T)$ rein transzendent und $L$ algebraisch.\\
+\textbf{Bemerkung}\\
+Sei als Beispiel $K = \mathbb{R}$ und $L = Q(\mathbb{R}[x,y]/(y^2-(x^3+x+1)))$. Dann sind $\{x\}$ und $\{y\}$ Transzendenzbasen. Es gibt die Abbildung \begin{align*}
+	\mathbb{R}[x] & \overset{\phi}{\to} L\\
+	x & \mapsto x
+\end{align*} 
+$\phi$ ist injektiv, dann $y^2-(x^3+x+1)) \cap \mathbb{R}[x] = 0$. D.h. $x$ (und $y$) ist transzendent.\\
+Da $L|K$ die transzendenten Elemente $x$, $y$ enthält, ist sie nicht algebraisch. $\{x,y\}$ ist algebraisch abhängig, denn $y^2-(x^3+x+1)= 0$. Daraus folgt, $K\subset K(x)$ (bzw. $K(y)$) sind transzendent aber $K(x) \subset K(x,y)$ sind algebraisch. Die Aussage folgt daraus.\\
+\textbf{Lemma}\\
+Sei $L|K$ gegeben und $A = \{a_1,...,a_n\}$ eine endliche Teilmenge von $L$, sodass $L|K(A)$ algebraisch ist. Sei $B = \{b_1,...,b_m\}$ eine algebraisch unabhängige Teilmenge von $L$. Dann ist $m \leq n$ und nach Umnummerieren ist \[A' = \{b_1,...,b_m,a_{m+1},...,a_n\}\]
+eine Menge, sodass $L|K(A')$ ist algebraisch.\\
+\textbf{Satz}\\
+Für eine endliche Körpererweiterung gilt \begin{enumerate}
+	\item Es gibt eine endliche Transzendenzbasis $S$ von $L|K$
+	\item $L|K(S)$ ist endlich
+	\item Verschiedene Transzendenzbasen haben die selbe Kardinalität.
+\end{enumerate}
+\textbf{Definition}\\
+Wir definieren den Transzendenzgrad einer Erweiterung als \[tr\deg = \left|S\right|\] für eine Transzendenzbasis $S$.
+\section{Endliche Körper}
+\textbf{Theorem}\\
+Sei eine Primzahlpotenz $p^n$ gegeben. Dann existiert ein endlicher Körper $K$ der Kardinalität $p^n$. Man nehme den Zerfällungskörper von $x^{p^n}-x$ über $F_p$.\\
+\textbf{Satz}\\
+Seien $K_1$ und $K_2$ zwei Körper mit $\left|K_1\right| = \left|K_2\right| = p^n$. Dann $K_1 \cong K_2$.\\
+\textbf{Theorem}\\
+Ist $K$ endlich, so ist $K^*$ zyklisch.\\
+\textbf{Theorem}\\
+Seien $K_1, K_2$ Körper mit $\left|K_i\right| = p^{n_i}$. Dann gilt $K_1 \subset K_2 \Leftrightarrow n_1|n_2$.\\
+\section{Module}
+\subsection{Definitionen}
+Sei $R$ ein Ring. Ein $R$-Modul ist eine abelsche Gruppe $(M,+)$ mit skalarer Multiplikation \begin{align*}
+	R\times M &\to M\\
+	(a,m) &\mapsto a\cdot m
+\end{align*}
+mit folgenden Eigenschaften: \begin{itemize}
+	\item $1\cdot m = m$
+	\item $(ab)\cdot m = a(b\cdot m)$
+	\item $(a+b) \cdot m = a\cdot m + b \cdot m$
+	\item $a(m+m') = a\cdot m + a \cdot m'$ 
+\end{itemize}
+Ein $R$-Teilmodul ist eine Untergruppe $N$ die abgeschlossen bezüglich skalarer Multiplikation ist, d.h. $r\cdot n \in N$ für alle $n \in N$.\\
+Ein Homomorphismus von $R$-Modulen ist ein Gruppenhomomorphismus $\phi$ der $\phi(a\cdot m) = a\cdot \phi(m)$ erfüllt.\\
+\textbf{Theorem}\\
+Sei $M$ ein $R$-Modul und seien $M_1,...,M_n$ Teilmodule. Dann sind folgende Aussagen äquivalent: \begin{itemize}
+	\item Die Abbildung $\phi: M_1 \times ... \times M_n \to M_1+...+M_n$ ist ein Isomorphismus von $R$-Modulen.
+	\item Es gilt \[M_i \cap (M_1+...+M_{i-1} + M_{i+1} + ... M_n)\]
+	für alle $i \in [n]$.
+	\item Jedes $x \in M$ hat eine eindeutige Darstellung $m = x_1+...+x_n$ für $x_i \in M_i$.
+\end{itemize} 
 \end{document}
