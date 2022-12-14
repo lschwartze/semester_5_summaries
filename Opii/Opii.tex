@@ -122,7 +122,7 @@
 	\end{algorithmic}
 	\par\noindent\rule{\textwidth}{0.4pt}
 	We can show, that this is a 2-factor algorithm\\
-	Let $l \in [n]$ be the maximum such that $f(l) = k$, where $k \in [m]$ is the machine taking more time. When job $l$ was assigned to $k$ all $m$ machines had completion time at least $t = \sum_{l \in [i-1] | f(l) = k} a()f^{-1}(k))-a_l$ which implies that $a()f^{-1}(k)) = t+a_l \leq 2\cdot\text{OPT}(x)$.
+	Let $l \in [n]$ be the maximum such that $f(l) = k$, where $k \in [m]$ is the machine taking more time. When job $l$ was assigned to $k$ all $m$ machines had completion time at least $t = \sum_{l \in [i-1] | f(l) = k} a(f^{-1}(k))-a_l$ which implies that $a(f^{-1}(k)) = t+a_l \leq 2\cdot\text{OPT}(x)$.
 	
 	\subsection{Online and Offline Algorithms}
 	\textbf{Definition}\\
@@ -155,7 +155,7 @@
 	INSTANCE: three disjoint sets $U, V$ and $W$ of equal cardinality and a subset $T \subseteq U\times V \times W$ with $\left|T\right| \geq \left|U\right|$.\\
 	GOAL: Decide whether there is a subset $S\subseteq T$ of order $\left|U\right|$ s.t. the elements of $S$ are pairwise different in all components.\\
 	\textbf{Theorem}\\
-	\texttt{3 Dimensional Matching} is \textbf{NP complete}.
+	\texttt{3 Dimensional Matching} is \textbf{NP complete}.\\
 	\textbf{Theorem}\\
 	The \texttt{Subset Sum problem} is \textbf{NPC}.
 
@@ -209,7 +209,7 @@
 	\textbf{Comment} (Method of conditional expectation)\\
 	Let $(X,\mathcal{C},c)$ be an instance of \texttt{Maximum Satisfiability}. if $t$ is a random truth assignment for $X$, we get the expected value by \[\mathbb{E}[T] = \sum_{j \in [m]} c(C_j)\cdot \mathbb{P}(C_j \text{ true under } t)\]
 	where $T$ is the random variable that describes the true assignments of $t$. In order to obtain a deterministic approximation algorithm, we apply the \underline{method of conditional expectation}.\\
-	For $p_1,...,p_n \in [0,1]$ let \[c(t(x_1),...,t(x_i),r(p_{i+1}),...,r(p_n)) = \mathbb{E}[\text{total weight of satisfied clauses}\]
+	For $p_1,...,p_n \in [0,1]$ let \[c(t(x_1),...,t(x_i),r(p_{i+1}),...,r(p_n)) = \mathbb{E}[\text{total weight of satisfied clauses}]\]
 	where \begin{itemize}
 		\item the truth values $t(x_1),...,t(x_i)$ are fixed and 
 		\item the remaining $n-i$ truth assignments are chosen randomly. 
@@ -424,4 +424,116 @@
 		q(U\cup \{x\}, x) &= \min_{\emptyset \neq U' \neq U}\{p(U'\cup \{x\}) + p((U\setminus U')\cup \{x\})\}
 	\end{align*}
 	For $\left|U\right| \geq 2$, the term $p(U\cup \{x\})$ equals \[\min\{\min_{y \in U}\{p(U) + dist_{G,c}(x,y)\}, \min_{y \in V(G) \setminus U}\{q(U\cup \{y\}, y)\} + dist_{G,c}(x,y)\}\]
+	\section{Multicommodity Flow}
+	\textbf{Comment}\\
+	We consider the following generalization of the network flow problem:\\
+	INSTANCE: $(D,D',c,b)$ where $D$ and $D'$ are digraphs with the same vertex set, $c:A(F) \to \mathbb{Q}_{\geq 0}$ is a capacity function and $b: A(D') \to \mathbb{Q}_{\geq 0}$ is a demand function.\\
+	GOAL: Is there a family $(x^f)_{f \in A(D)}$ where for every $f = (t,s) \in A(D')$, $x^f$ is an $s-t-$flow of value $b(f)$ ind $D$ s.t. \[\sum_{f \in A(D')}x^f(e) \leq c(e)\] for every arc $e$ of $D$.\\
+	We assume that $D$ and $D'$ may contain cycles of length 2 but no loops or multiple copies of the same arc.\\
+	We can interpret this decision problem as a maximization problem:\\
+	\texttt{Maximum Mulitcommodity Flow}\\
+	INSTANCE: $(D,D',c)$ as before.\\
+	GOAL: Determine a family $(^f)_{f \in A(D')}$ as before but maximize \[\sum_{f \in A(D')}b(f)\] where $b$ is not necessarily given.\\
+	\texttt{Multicommodity Flow} is equivalent to the problem of deciding whether a system of linear inequalities has a solution. \texttt{Maximum Multicommodity Flow} is equivalent to a linear problem of polynomial size. Therefore, both problems are in \textbf{P}. The algorithms are theoretically efficient but there are simpler and faster combinatorial approximation algorithms.\\
+	
+	We now focus on the special case of the integer version of the problem: Let our instance be on an undirected integral weighted tree, therefore \begin{itemize}
+		\item $T$ is a tree
+		\item $c: E(T) \to \mathbb{Z}_{\geq 0}$
+		\item $\{s_1t_1,...,s_kt_k\} \subseteq \binom{V(T)}{2}$ is a set of $k$ distinct unordered pairs of vertices of $T$. 
+	\end{itemize} 
+	For every $i \in [k]$ $T$ contains a unique $s_i-t_i$ path $P_i$, consider the following linear program: \begin{align*}
+		&\max \sum_{i \in [k]} f_i\\
+		\text{s.t.} &\sum_{i \in [k]: e \in E(P_i)} f_i \leq c(e) \;\forall e \in E(T)\\
+		&f_i \geq 0 \;\forall i \in [k]
+	\end{align*}
+	The dual of this is \begin{align*}
+		&\min \sum_{e \in E(T)} c(e)d_e\\
+		\text{s.t.} &\sum_{e \in E(P_i)} d_e \geq 1 \; \forall i \in [k]\\
+		&d_e \geq 0 \; \forall e \in E(T)
+	\end{align*}
+	Let $D_I$ be the restricted version of $D$ with $d_e \in \{0,1\}$. Then $D_I$ describes the problem to determine a cheapest set of edges of $T$ whose deletion separates all pairs $s_it_i$ with $i \in [k]$.\\
+	A feasible solution is the incidence vector of a so-called \underline{multicut}, an optimal solution is a \underline{minimum multicut}.\\
+	We now describe a duality-based approximation algorithm for the integral version of $(P)$ and $(D_I)$. By complementary slackness (,,komplementärer Schlupf'') feasible solutions of both problems iff the following hold: \begin{enumerate}
+		\item $\forall e \in E(T): d_e > 0 \Rightarrow \sum_{i \in [k]: e \in E(P_i)} f_i = c(e)$ and 
+		\item $\forall i \in [k]: f_i >0 \Rightarrow \sum_{e \in E(P_i)} d_e = 1$ which can be relaxed to
+		\item $\forall i \in [k]: f_i>0 \Rightarrow \sum_{e \in E(P_i)} d_e \leq 2$
+	\end{enumerate}
+	Together with the weak duality we can guarantee \[\sum_{e \in E(T)} c(e)d_e \leq 2\cdot OPT(D) \text{ and } \sum_{i \in [k]} f_i \geq \frac{1}{2}\cdot OPT(P)\]
+	Therefore, we can easily find a 2-factor approximation algorithm.\\
+	\par\noindent\rule{\textwidth}{0.4pt}
+	INPUT: $T$, $c$, and $\{s_1t_1,...,s_kt_k\}$\\
+	OUTPUT: $(f_i)_{i\in[k]}$ and a multicut $C$
+	\begin{algorithmic}[1]
+		\State $f_i \gets 0$ for every $i \in [k]$; $C\gets \emptyset$
+		\State Let $v_1,...,v_n$ be an ordering of $T$ not decreasing by depth
+		\For{$j=1$ to $n$}
+		\State Greedily increase $f_i$ in integer values for all $i \in [k]$ for which $v_j$ is the lowest common ancestor of $s_i$ and $t_i$ in $T$. Add all edges $e$ of $T$ to $C$ if they increase the result of \[\sum_{i \in [k]: e \in E(P_i)} f_i = c(e)\]
+		\EndFor
+		\State Let $e_1,...,e_l$ be an order in which the edges were added to $C$
+		\For{$j = l$ down to 1}
+		\If{$C\setminus \{e_j\}$ is a multicut}
+		\State $C \gets C\setminus \{e_j\}$
+		\EndIf
+		\EndFor
+		\State \textbf{return} $(f_i)_{i \in [k]}$, $C$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Lemma}\\
+	Using above notation, $C$ contains at most one edge from the $v-s_i$-path $P$ and at most one edge from the $v-t_i$-path.\\
+	\textbf{Theorem}\\
+	Above algorithm returns a 2-factor approximation algorithm for \texttt{Multicommodity Flow} and its dual.\\
+	\textbf{Lemma}\\
+	If $f:A(D) \to \mathbb{R}_{\geq 0}$ is an $s-t$-flow of non-negative value $v$ in some digraph $D$, then there is \begin{itemize}
+		\item a collection $\mathcal{P}$ of directed $s-t$-paths in $D$
+		\item a collection $\mathcal{C}$ of directed cycles in $D$
+		\item a function $w:\mathcal{P} \cup \mathcal{C} \to \mathbb{R}_{> 0}$ s.t. \begin{align*}
+		f(e) &= \sum_{P \in \mathcal{P}\cup \mathcal{C}: e \in A(P)} w(P) \text{ for every arc $e$ of $D$}\\
+		v &= \sum_{P \in \mathcal{P}}w(P)\\
+		\left|\mathcal{P} \cup \mathcal{C}\right| &\leq \left|A(D)\right|
+		\end{align*}
+	\end{itemize}
+	In particular, \[f': A(D) \to \mathbb{R}_{\geq 0} \text{ with } e\mapsto \sum_{P \in \mathcal{P}: e \in A(P)} w(P)\]
+	is an $s-t$-flow of value $v$ in $D$ s.t. $f' \leq f$ and above decomposition uses paths in $\mathcal{P}$ only.\\
+	\textbf{Theorem}\\
+	Let $(D, D', c, b)$ be an instance of the \texttt{Multicommodity Flow}. Let \begin{itemize}
+		\item $\mathbb{C}$ be the set of all directed cycles in the (not necessarily simple) digraph $D \cup D'$ that contain exactly one arc of $D'$. 
+		\item $M$ be the the incidence matrix of the arcs of $D$ as rows and the cycles in $\mathcal{C}$ as columns.
+		\item $N$ be the incidence matrix of the arcs of $D'$ versus the cycles in $\mathcal{C}$.
+	\end{itemize}
+	$(D,D',c,b)$ is a yes-instance iff the polyhedron \[\{y \in \mathbb{R}_{\geq 0}\}^\mathcal{C}: My \leq c \text{ and } Ny = b\] is non-empty.\\
+	\textbf{Corollary}\\
+	Let $(D,D',c,b)$ be an instance of \texttt{Multicommodity Flow}. It is a yes-instance iff \[\sum_{f = (t,s)\in A(D')} b(f)dist_(D,x)(s,t) \leq \sum_{e \in A(D)} c(e)z(e)\] for every $z: A(D) \to \mathbb{R}_{\geq 0}$.\\
+	\textbf{Comment}\\
+	Take an instance as above. Let $\mathcal{P}$ be the set of all directed paths in $D$ s.t. each $P \in \mathcal{P}$ is a directed $s-t$-path for some arc $(t,s)$ of $D'$. Now by the previous Lemma, \texttt{Multicommodity Flow} is equivalent to the following program: \begin{align*}
+		\max &\sum_{P \in \mathcal{P}} y_P\\
+		\text{s.t.} \sum_{P \in \mathcal{P}: e \in A(P)} y_P &\leq c(e) \; \forall e \in A(D)\\
+		y_P &\geq 0 \; \forall P \in \mathcal{P}
+	\end{align*}
+	with its dual \begin{align*}
+		\min &\sum_{e \in A(D)} c(e)z_e\\
+		\text{s.t.} \sum_{e \in A(P)} z_e & \geq 1 \; \forall P \in \mathcal{P}\\
+		z_e &\geq 0 \; \forall e \in A(D)
+	\end{align*}
+	Note that $\mathcal{P}$ can be of exponential size and that a feasible $\{0,1\}$-solution if the dual is the incidence vector of directed multicut.\\
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\underline{Garg-Könemann-Algorithm}\\
+	INPUT: an instance $(D,D',c)$ and a $0 < \varepsilon < \frac{1}{2}$\\
+	OUTPUT: a feasible solution for the program $P$ encoded by a $\mathcal{P}' \subset \mathcal{P}$, non-negative $y_P$
+	\begin{algorithmic}[1]
+		\State $\delta \gets (1+\varepsilon)(n(1+\varepsilon))^{\lceil \frac{5}{\varepsilon}\rceil}$; $z_e \gets \delta$ for all $e \in A(D)$; $\mathcal{P}' \gets \emptyset$
+		\While{$\alpha(z) = \min \{dist_{D,z}(s,t): (t,s) \in A(D')\}<1$}
+		\State Let $P \in \mathcal{P}$ be s.t. $z(A(P)) = \alpha(z)$; $\gamma \gets \min \{c(e): e \in A(P)\}$
+		\State $y_P \gets \begin{cases}
+			y_P + \gamma, & P \in \mathcal{P}'\\
+			\gamma&, P \notin \mathcal{P}'
+		\end{cases}$
+		\State $\mathcal{P}' \gets \mathcal{P}' \cup \{P\}$
+		\State $z_e \gets \left(1+\frac{\varepsilon \gamma}{c(e)}\right)z_e$ for all $e \in A(P)$
+		\EndWhile
+		\State $\zeta \gets \max \left\{\frac{\sum_{P \in \mathcal{P}': e \in A(P)}y_P}{c(e)}: e \in A(D)\right\}$; $y_P \gets \frac{y_P}{\zeta}$ for every $P \in \mathcal{P}'$
+		\State \textbf{return} $\mathcal{P}'$ and $(y_P)_{P \in \mathcal{P}'}$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Theorem}\\
+	The output of this algorithm encodes a \texttt{Multicommodity Flow} $(x^f)_{f \in A(D')}$ of total flow value at least $\frac{1}{1+\varepsilon}OPT(I)$. 
 \end{document}
