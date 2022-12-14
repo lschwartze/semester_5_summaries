@@ -272,6 +272,7 @@
 	\textbf{Theorem}\\
 	Every graph with $\delta(G) \geq 3$ contains a subdivision of $K_4$.
 	\section{Colouring}
+	\subsection{vertex colourings}
 	\textbf{Definition}\\
 	A vertex colouring is defined by an assignment $c: V(G) \to C$ for any set $C$ such that $uv \in E(G) \Rightarrow c(u) \neq c(v)$.\\
 	The chromatic number $\chi(G)$ is the smallest number of colours (i.e. $\left|C\right|$) such that $c$ exists.\\
@@ -287,5 +288,28 @@
 	\textbf{Theorem}\\
 	A planar graph $G$ that has no triangle subgraph satisfies $\chi(G)\leq 3$.\\
 	\textbf{Theorem}\\
-	If $G$ is connected and neither complete nor an odd cycle, then $\chi(G) \leq \Delta(G)$.
+	If $G$ is connected and neither complete nor an odd cycle, then $\chi(G) \leq \Delta(G)$.\\
+	\textbf{Conjecture}\\
+	Let $G$ be any graph, then \[\chi(G) \leq \left\lceil \frac{\Delta(G) + 1 + \omega(G)}{2} \right\rceil\]
+	\textbf{Theorem}\\
+	$\forall k \; \exists$ a triangle-free graph with $\chi(G) \geq k$.\\
+	\textbf{Definition}\\
+	The girth of a graph $G$ is the length of the shortest cycle of $G$. A forest has a girth of $\infty$.\\
+	\textbf{Theorem} (Paul Erdös)\\
+	$\forall k \; \exists G$ such that girth($G$)$\geq k$ and $\chi(G) \geq k$.
+	\subsection{edge colourings}
+	\textbf{Definition}\\
+	An edge colouring is a map $c: E(G) \to C$ for a set of colours $C$ s.t. whenever $e,f \in E(G)$ share an endvertex, then $c(e)\neq c(f)$. The chromatic index is defined as following: $\chi'(G) := \min \left|C\right|$ for a set $C$ as above.\\
+	\textbf{Theorem}\\
+	It is obvious that $\chi'(G) \geq \Delta(G)$. But $\chi'(G) \leq \Delta(G)+1$ also holds for all $G$.\\
+	\textbf{Theorem}\\
+	If $G$ is bipartite, then $\chi'(G) = \Delta(G)$.\\
+	\textbf{Lemma}\\
+	For every graph $G$ there exists a regular graph $G'$ s.t. \begin{itemize}
+		\item $\Delta(G') = \Delta(G)$
+		\item $G\subseteq G'$
+		\item if $G$ is bipartite, then so is $G'$.
+	\end{itemize}
+	\textbf{Lemma}\\
+	Let $M_i$ be the set of edges coloured with $i$. Then $\left|E(G)\right| = \sum_{i=1}^{k} \left|M_i\right| \leq k\cdot \left\lfloor\frac{\left|V(G)\right|}{2}\right\rfloor$.
 \end{document}
