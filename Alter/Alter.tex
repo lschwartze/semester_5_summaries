@@ -270,5 +270,54 @@
 	Die \texttt{Find}-Operation kann mittels Pfadoptimierung verbessert werden. Die Einträge des Arrays, die bis zur Wurzel durchlaufen wurden, werden mit dem Wert des Wurzelknotens überschrieben. Dadurch entsteht also ein Baum mit der Tiefe 1.
 	\subsection{Kürzeste Wege in Graphen}
 	Gegeben sei ein gewichteter Graph $G$ der von einem Startknoten $v$ durchquert werden soll. Gesucht sind die kürzesten Wege von $v$ zu allen anderen Knoten.\\
-	Dijksttra's Algorithmus ist ein Greedy-Löser.
+	Dijkstra's Algorithmus ist ein Greedy-Löser. Die Komplexität ist beschränkt durch $\mathcal{O}(n^2)$ in der naiven Implementierung.\\
+	
+	Mit einem Heap lässt sich folgendermaßen eine bessere Laufzeit erreichen: Aufbau des Heaps wie bei Heapsort in $\mathcal{O}(n)$, Entfernen des Minimums und Aufrufen von heapify in $\mathcal{O}(\log n)$, Update der $l(v)$ Werte in $\mathcal{O}(\log n)$.
+	\subsection{Repräsentation von Graphen}
+	Wir betrachten zwei Möglichkeiten, um einen Graphen kompakt zu speichern: \begin{itemize}
+		\item Adjazenzlisten: an der $k$-ten Stelle der Liste sind Zeiger auf die Nachbarn des Knoten $k$ gespeichert
+		\item Adjazenzmatrix: wie gewohnt.
+	\end{itemize}
+	Die Adjazenzliste erlaubt das Durchlaufen der $k$ Nachbarn eines Knotens in $\mathcal{O}(k)$, was bei einer Adjazenzmatrix nicht möglich ist. Über diese Implementierung kann man Dijkstra mit $\mathcal{O}((n+m)\log n)$ ausführen.
+	
+	\section{Datenkompression}
+	\subsection{Texte}
+	Statt Zeichen durch gleich lange Wörter zu speichern, kann man mittels einer Häufigkeitsanalyse eine komprimierte Version speichern. Häufig auftretende Zeichen mit kürzeren und seltene mit längeren Codewörtern.\\
+	\textbf{Definition}\\
+	Gegeben sind ein Alphabet $\Sigma$ und eine Wahrscheinlichkeitsverteilung $P$ auf $\Sigma$, die jedem $a_i \in \Sigma$ eine Wahrscheinlichkeit $p_i$ zuordnet. \\
+	Gesucht ist ein eindeutig decodierbarer Code $c$, d.h. $\hat{c}$ ist injektiv. Die mittlere Codelänge von $c$ ist $\sum_{a_ \in \Sigma} p_i \cdot \left|c(a_)\right|$. Ein Code ist optimal, wenn die mittlere Codelänge minimal ist.\\
+	\textbf{Definition} (Präfixcode)\\
+	Ein Präfixcode $c$ ist ein Code, bei dem kein Codewort ein Präfix eines anderen Wortes ist. Diese Codes sind eindeutig decodierbar. Anfang und Ende der Codewörter können im komprimierten Code eindeutig identifiziert werden.\\
+	\textbf{Definition} (Codebaum)\\
+	Das sind Binärbäume, die die Darstellung von Präfixcodes erlauben. In jedem Knoten entspricht die linke Kante einer 0, die rechte einer 1. Jeder Code lässt sich als Codebaum darstellen. Bei Präfixcodes sind die Codewörter ausschließlich an den Blättern zu finden. Zum Decodieren wird ein Code solange im Baum nachvollzogen, bis ein Blatt erreicht wird, dann wird wieder an der Wurzel begonnen.
+	\subsection{Huffman-Codes}
+	Initialisierung: Jedes Zeichen $a_i$ wird als Baum aufgefasst, dessen Bewertung ist $p_i$. Dann wird folgendes Verfahren wiederholt bis nur ein Baum übrig ist:\begin{enumerate}
+		\item zwei Bäume mit kleinster Bewertung werden zu einem Baum zusammengefasst.
+		\item Der neue Baum besteht aus einem Knoten als Wurzel und den beidem Teilbäumen als Nachkommen. 
+		\item Die Bewertung des neuen Baumes ist die Summe der Bewertung der beiden Teilbäume.
+	\end{enumerate} 
+	Die Teilbäume werden in einer Priority-Queue verwaltet. Dies kann z.B. ein Heap sein. \begin{itemize}
+		\item Initialisieren $\mathcal{O}(n)$
+		\item Zusammenfassen bringt zwei Teilbäume, d.h. $n-1$ Wiederholungen
+		\item Jedes Zusammenfassen erfordert $\mathcal{O}(\log n)$
+	\end{itemize}
+	D.h. insgesamt $\mathcal{O}(\log n)$.\\
+	\textbf{Theorem}\\
+	Der Algorithmus nach Huffman erzeugt einen optimalen Präfixcode. Für natürliche Sprachen erreicht man eine Kompressionsrate von ca. $\frac{2}{3}$.
+	\section{Algorithmen auf Graphen}
+	\subsection{Repräsentation von Graphen}
+	Wir kennen schon Adjazenzlisten und Adjazenzmatrizen. Die Verwendung ist abhängig von der Situation und von Einschränkungen an die Repräsentation. Listen wurden z.B. in Dijkstra's Algorithmus verwendet während man in Algorithmen auf vollständigen Graphen eher zu Matrizen tendieren würden.\\
+	
+	Listen speichern nur tatsächlich vorhandene Kanten. Allen Nachbarn zu untersuchen ist leicht, aber Vorgänger eines Knotens zu finden ist umständlich. Speicherplatz ist $\mathcal{O}(n+m)$.\\
+	Bei Matrizen ist der Test, ob eine Kante existiert in konstanter Zeit möglich, Nachbarschaftsanalysen sind schwierig. Der Speicherplatz beträgt $\mathcal{O}(n^2)$.
+	\subsection{Durchsuchen eines Graphen}
+	Es bieten sich zwei Strategien, Breiten- und Tiefensuche an.
+	\subsection{Breitensuche}
+	Wir verwenden Dijkstra mit ungewichteten Kanten: \begin{itemize}
+		\item Als Datenstruktur wird eine Queue (FIFO) verwendet.
+		\item Diese enthält zunächst den Startknoten $u$.
+		\item Es wird jeweils der erste Knoten der Schlange entnommen, die Nachbarn betrachtet und hinten angefügt.
+		\item Damit ein Knoten nicht mehrmals eingefügt wird, kann die Distanz $d$ herangezogen werden, wenn diese nicht unendlich ist, wurde ein Knoten bereits betrachtet.
+	\end{itemize}
+	Da das Verfahren nur Dijkstra ist, ist die Komplexität beschränkt durch $\mathcal{O}((n+m)\log n)$. Da man aber keinen Heap benötigt, reicht sogar $\mathcal{O}(n+m)$.
 \end{document}
