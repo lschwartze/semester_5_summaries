@@ -24,7 +24,7 @@
 		\item Einselement: $\exists e \in G\; s.t.\; \forall g \in G: e\cdot g = g = g\cdot e$
 		\item $\forall g \in G: \; \exists h \in G: \; g\cdot h = e$
 	\end{enumerate}
-$G$ heißt abelsch falls die Gruppe kommutativ ist.
+$G$ heißt abelsch falls die Gruppe kommutativ ist.\\
 \textbf{Lemma} \begin{enumerate}
 	\item Die Identität ist eindeutig
 	\item $g_1h = g_2h \Rightarrow g_1 = g_2$
@@ -45,7 +45,7 @@ $(G,\cdot_G)$ und $(H,\cdot_H)$ Gruppen, dann ist ein Homomorphismus $\varphi: (
 	\item $\varphi$ ist injektiv $\Leftrightarrow \; ker(\varphi) = \{e_G\}$
 \end{enumerate}  
 \subsection{$(\mathbb{Z}, +)$}
-\textbf{Lemma}\\ $I\subset \mathbb{Z}$ ist Untergruppe, wenn $I = \{0\}$ oder wenn $I = (a) = \{k\cdot a: k \in \mathbb{Z}\}$.
+\textbf{Lemma}\\ $I\subset \mathbb{Z}$ ist Untergruppe, wenn $I = \{0\}$ oder wenn $I = (a) = \{k\cdot a: k \in \mathbb{Z}\}$.\\
 \textbf{Definition}\\
 Seien $a,b\in\mathbb{Z}$ nicht beide 0. \[ggT(a,b) = \max\{d \in \mathbb{N} \; s.t.\; d|a \text{ und } d|b\}\]
 \textbf{Lemma} (Bézout)\\
@@ -90,7 +90,7 @@ Sei $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$. \begin{enumerate}
 	\item $\overline{a}$ hat (additive) Ordnung $n$ genau dann, wenn $ggT(a,n)=1$.
 	\item $\overline{a}$ hat (additive) Ordnung $n$ $\Leftrightarrow$ $\overline{a}$ hat ein \underline{multiplikatives} Inverses. 
 \end{enumerate}
-Es folgt $\overline{a}$ generiert $\mathbb{Z}/n\mathbb{Z} \Leftrightarrow \; \overline{a} \in (\mathbb{Z}/n\mathbb{Z})^*$. Eine endliche Gruppe zyklische Gruppe der Ordnung $n$ besitzt genau $\varphi(n)$ Erzeuger.\\
+Es folgt $\overline{a}$ generiert $\mathbb{Z}/n\mathbb{Z} \Leftrightarrow \; \overline{a} \in (\mathbb{Z}/n\mathbb{Z})^*$. Eine endliche zyklische Gruppe der Ordnung $n$ besitzt genau $\varphi(n)$ Erzeuger.\\
 \textbf{Satz}\\
 Sei $G$ zyklisch, dann ist jede Untergruppe von $G$ zyklisch.\\
 Wenn $\left|G\right|=n$, und $d|n$, dann existiert genau eine Untergruppe von $G$ der Ordnung $d$.\\
@@ -139,7 +139,7 @@ Allgemein gilt: \begin{itemize}
 	\item $A_n$ wird von seinen Dreierzyklen erzeugt.
 \end{itemize}
 \subsection{Gruppenwirkungen}
-Sei $G$ eine Grupp4, $X$ eine Menge. Eine \underline{Wirkung} von $G$ auf $X$ ist eine Abbildung \begin{eqnarray*}
+Sei $G$ eine Gruppe, $X$ eine Menge. Eine \underline{Wirkung} von $G$ auf $X$ ist eine Abbildung \begin{eqnarray*}
 	&\rho: G\times X \to X\\
 	&(g,x) \mapsto \rho(g,x) = g\cdot x
 \end{eqnarray*}
@@ -421,7 +421,7 @@ Sei $\sigma: K_1 \to K_2$ ein Körperisomorphismus. \begin{enumerate}
 	\item Ist $L_i = K_i[x]/(f_i)$, der zu $fi$ gehörige Körper und sind $\alpha_i$ Nullstellen von $f_i$ in $L_i$ so gibt es einen eindeutigen Isomorphismus $\tau: L_1 \to L_2$.
 \end{enumerate} 
 \textbf{Lemma}\\
-Sei $f \in K[x]$ und seien $L_1, L_2$ Zerfällungskörper von $f$. Seien Zeischenkörper $M_i$ mit K $\subset M_i \subset L_i$ gegeben und sei $\sigma: M_1 \to M_2$ ein $K$-Isomorphismus. Dann existiert ein Isomorphismus $\tau: L_1 \to L_2$ der $\sigma$ fortsetzt.
+Sei $f \in K[x]$ und seien $L_1, L_2$ Zerfällungskörper von $f$. Seien Zwischenkörper $M_i$ mit K $\subset M_i \subset L_i$ gegeben und sei $\sigma: M_1 \to M_2$ ein $K$-Isomorphismus. Dann existiert ein Isomorphismus $\tau: L_1 \to L_2$ der $\sigma$ fortsetzt.
 \subsection{Separierbarkeit}
 \textbf{Definition}\\
 Sei $K$ ein Körper und $f \in K[x]$ nicht konstant. \begin{itemize}
@@ -505,7 +505,7 @@ Seien $K_1$ und $K_2$ zwei Körper mit $\left|K_1\right| = \left|K_2\right| = p^
 Ist $K$ endlich, so ist $K^*$ zyklisch.\\
 \textbf{Theorem}\\
 Seien $K_1, K_2$ Körper mit $\left|K_i\right| = p^{n_i}$. Dann gilt $K_1 \subset K_2 \Leftrightarrow n_1|n_2$.\\
-\section{Module}
+\section{Moduln}
 \subsection{Definitionen}
 Sei $R$ ein Ring. Ein $R$-Modul ist eine abelsche Gruppe $(M,+)$ mit skalarer Multiplikation \begin{align*}
 	R\times M &\to M\\
@@ -526,4 +526,57 @@ Sei $M$ ein $R$-Modul und seien $M_1,...,M_n$ Teilmodule. Dann sind folgende Aus
 	für alle $i \in [n]$.
 	\item Jedes $x \in M$ hat eine eindeutige Darstellung $m = x_1+...+x_n$ für $x_i \in M_i$.
 \end{itemize} 
+\textbf{Definition}\\
+Sei $M$ ein $R$-Modul. \begin{itemize}
+	\item $M$ heißt noethersch, falls jedes $R$-Untermodul von $M$ endlich erzeugt ist über $R$.
+	\item $R$ heißt noethersch falls jedes Ideal in $R$ endlich erzeugt ist.
+\end{itemize}
+\textbf{Satz}\\
+Ist $R$ ein noetherscher Ring, dann ist $R[x]$ noethersch.\\
+\textbf{Satz}\\
+Ist $R$ noethersch, so gilt \begin{enumerate}
+	\item jedes endlich erzeugte $R$-Modul ist noethersch
+	\item jeder Ring der Form $S = R[x_1,...,x_n]/R$ ist noethersch.
+\end{enumerate}
+\textbf{Definition}\\
+Sei $R$ ein Ring, $M$ ein $M$-Modul, $S = (m_i)_{i\in I}$. Dann heißt $S$ linear unabhängig falls \[\sum_{i \in I}a_i m_i = 0 \Rightarrow a_i = 0\] wenn $a_i \in R$ null für fast alle $i \in I$ ist. Eine Basis von $M$ ist ein linear unabhängiges Erzeugersystem.\\
+\textbf{Lemma}\\
+\begin{enumerate}
+	\item Sei $A \in M_{n,n}(R)$. Dann ist $A \in Gl_n(R) \Leftrightarrow \det(A) \in R^*$
+	\item Seien $A \in M_{m,n}(R), \; B \in M_{n,m}(R)$, sodass $AB = I_m$. Dann ist $n \geq m$ und sogar $AB=BA=I_m$ falls $n=m$.
+\end{enumerate}
+\textbf{Definition}\\
+Ein Modul heißt frei, falls $M \cong \oplus_{i \in I} R$. Dies ist genau dann der Fall, wenn $M$ eine Basis hat.\\
+\textbf{Satz}\\
+Ist $M$ frei und endlich erzeugt, so hat $M$ eine endliche Basis $(m_1,...,m_n)$, deren Kardinalität eindeutig bestimmt ist.
+\subsection{Torsion}
+\textbf{Definition}\\
+Das Torsion-Untermodul ist definiert als \[M_{tor} = \{m \in M: \; \exists a \in R\setminus \{0\}: a\cdot m = 0\}\]
+\textbf{Satz}\\
+Sei $A \in M_{n,n}(R)$, dann ist $c_A(t) = \det(A-tI_n) \in R[t]$. Es gilt $C_A(A) = 0$.\\
+\textbf{Satz}\\
+Sei $M$ ein endlich erzeugtes freies Modul über $R$ und sei $N \subseteq M$ ein freies $R$-Modul. Dann ist $N$ endlich generiert und $rk(N)\leq rk(M)$.\\
+\textbf{Bemerkung}\\
+Ein nicht freies Untermodul eines Moduls ist nicht zwingend endlich erzeugt.
+\subsection{Geometrische Anwendungen}
+\textbf{Definition}\\
+Sei $B$ ein topologischer Raum. Ein Vektor Bündel von rang $n$ über $B$ ist eine stetige Abbildung \[\pi: E \to B\] wobei $E$ ein topologischer Raum ist. $\pi$ erfüllt folgende Eigenschaften: \begin{itemize}
+	\item $\forall x \in B$ hat $E_x = \pi^{-1}(x)$ die Struktur eines $n$ dimensionalen Vektorraums
+	\item $\forall x \in B$ existiert eine Umgebung $U$ und ein Homeomorphismus $\phi: B \times \mathbb{R}^n \to \pi^{-1}(U)$ sodass $\phi \circ \pi$ die kanonische Projektion ist und $\phi$ induziert einen Homeomorphismus von Vektorräumen.
+\end{itemize}
+\textbf{Lemma}\\
+Sei $\pi: E \to B$ ein Vektor Bündel und sei $R = \mathcal{C}(B,\mathbb{R})$. Dann ist $\pi$ trivial genau dann, wenn $M_\pi$ ist ein freies $R$-Modul. 
+\subsection{Moduln über Hauptidealringe}
+\textbf{Definition}\\
+Sei $R$ ein Hauptidealring und $M$ ein $R$-Modul. Wir definieren \[ann(M) = \{r \in R: \forall m \in M: r\cdot m = 0\}\]
+Diese Menge ist ein Ideal.
+\textbf{Satz}\\
+Sei $R$ ein Hauptidealring und $M$ ein freies $R$-Modul von Rang $r$. Ist $N\subset M$ ein Untermodul, dann ist $N$ frei von Rang höchstens $r$.\\
+\textbf{Lemma}\\
+Ist $R$ ein Hauptidealring und $M$ ein endlich generiertes $R$-Modul mit $M_{tor} = 0$, dann ist $M$ frei.\\
+\textbf{Theorem}\\
+Sei $R$ ein Hauptidealring und $M$ ein endlich erzeugtes $R$-Modul. \begin{itemize}
+	\item $M/M_{tor}$ ist frei
+	\item Es gibt ein $F \subset M$ frei mit endlichem Rang, sodass $M = F\oplus M_{tor}$
+\end{itemize}
 \end{document}
