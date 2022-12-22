@@ -320,4 +320,195 @@
 		\item Damit ein Knoten nicht mehrmals eingefügt wird, kann die Distanz $d$ herangezogen werden, wenn diese nicht unendlich ist, wurde ein Knoten bereits betrachtet.
 	\end{itemize}
 	Da das Verfahren nur Dijkstra ist, ist die Komplexität beschränkt durch $\mathcal{O}((n+m)\log n)$. Da man aber keinen Heap benötigt, reicht sogar $\mathcal{O}(n+m)$.
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{Breitensuche($G,u$)}
+	\begin{algorithmic}[1]
+		\For{$v \in V$}
+		\State $d(v) = \infty$
+		\EndFor
+		\State $d(u) = 0$
+		\State $Q = \{u\}$
+		\While{$Q \neq \emptyset$}
+		\State $v$ = erstes Element aus $Q$
+		\State entferne $v$ aus $Q$
+		\For{$v' \in N(v)$}
+		\If{$d(v') = \infty$}
+		\State $d(v') = d(v')+1$
+		\State $Q = Q\cup \{v'\}$
+		\EndIf
+		\EndFor
+		\EndWhile
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\subsection{Tiefensuche}
+	Der Pfad wird in die Tiefe verlängert. Für einen Knoten $v$ wird die Tiefensuche rekursiv für alle $u \in N(v)$ aufgerufen. Die Komplexität ist auch hier beschränkt durch $\mathcal{O}(n+m)$.
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{Tiefensuche($v$)}
+	\begin{algorithmic}[1]
+		\State $f(u) = v$
+		\For{$v \in N(u)$}
+		\If{$f(v) =$ weiß}
+		Tiefensuche($v$)
+		\EndIf
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\subsection{Topologische Sortierung}
+	Ein Graph ist topologisch sortiert, wenn eine Nummerierung der Knoten vorliegt, sodass $v_iv_j$ eine Kante ist genau dann, wenn $i<j$.\\
+	\textbf{Lemma}\\
+	Ein Graph ist topologisch sortierbar genau dann, wenn er azyklisch ist. Die einfachste Methode der topologischen Sortierung ist folgender Algorithmus:
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\begin{algorithmic}[1]
+		\For{$v \in V$}
+		\State $f(v) =$ weiß
+		\EndFor
+		\For{$v \in V$}
+		\If{$f(v) =$ weiß}
+		Tiefensuche($v$)
+		\EndIf
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\subsection{Transitive Hülle}
+	Die Transitive Hülle eines Graphen ist definiert als die Kantenmenge $E'$, sodass $u,v \in E' \; \Leftrightarrow \exists u-v$-Pfad in $G$.
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\begin{algorithmic}[1]
+		\State $E' = \emptyset$
+		\For{$u \in V$}
+		\State Breitensuche($G, u$)
+		\For{$v \in V$}
+		\If{$d(v) \neq \infty$}
+		\State $E' = E' \cup \{uv\}$
+		\EndIf
+		\EndFor
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Mittels dynamischem Programmieren lässt sich die transitive Hülle in $\mathcal{O}(n^3)$ finden. Dafür verwenden wir den Warshall Algorithmus:
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{Warshall Algorithmus}
+	\begin{algorithmic}[1]
+		\For{$k = 1$ to $n$}
+		\For{$i = 1$ to $n$}
+		\If{$A[i,k] = 1$}
+		\For{$j = 1$ to $n$}
+		\If{$A[k,j] = 1$}
+		\State $A[i,j] = 1$
+		\EndIf
+		\EndFor
+		\EndIf
+		\EndFor
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}
+	Wobei $A$ hierbei die Adjazenzmatrix von $G$ sei.
+	\subsection{Kürzeste Wege}
+	Eine Modifikation des Warshall Algorithmus kann die kürzeste Wege zwischen allen Knotenpaaren eines Graphen berechnen. Das unterscheidet sich von Dijkstra, da hier lediglich die Kürzesten Wege von einem Startknoten aus bestimmt werden. Wir definieren nun analog zur Adjazenzmatrix $A$ die Gewichtmatrix $D$: \[D[i,j] = \begin{cases}
+		0, & i=j\\
+		w(i,j), & ij \in E\\
+		\infty, & \text{sonst}
+	\end{cases}\]
+	Dann können wir die kürzesten Wege mithilfe dem folgenden Algorithmus bestimmen: 
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{Algorithmus von Floyd}
+	\begin{algorithmic}[1]
+		\For{$k = 1$ to $n$}
+		\For{$i = 1$ to $n$}
+		\For{$j = 1$ to $n$}
+		\If{$D[i,k]+D[k,j] < D[i,j]$}
+		\State $D[i,j] = D[i,k] + D[k,j]$
+		\EndIf
+		\EndFor
+		\EndFor
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\subsection{Flüsse in Netzwerken}
+	Gegeben ist ein gerichteter Graph, eine Quelle $s$ und eine Senke $t$. Das Kantengewicht ist die Kapazität.\\
+	Ein \underline{Fluss} ist eine Funktion definiert auf $V\times V$ für die gilt \begin{itemize}
+		\item $f(u,v) \leq c(u,v)$
+		\item $f(u,v) = -f(u,v)$
+		\item für alle $u,v \notin \{s,t\}$ ist der Eingangsfluss gleich dem Ausgangsfluss
+	\end{itemize}
+	\textbf{Definition} (Restnetzwerk)\\
+	Gegeben sei ein Netzwerk $G$. Die Restkapazität ist definiert als \[c_f(u,v) = c(u,v) - f(u,c)\]
+	Die Kantenmenge ist gegeben als \[E_f = \{uv \in V\times V: \; c_f(u,v) > 0\}\]
+	\textbf{Definition} (Erweiterungspfad)\\
+	Das ist ein kreisfreier Pfad $P$ im Restnetzwerk $G_f$. Die Restkapazität des Pfades ist \[c_f(P) = \min\{c_f(u,v): \; uv \in E(P)\}\]
+	Man kann den Fluss entlang von $P$ um $c_f(P)$ erhöhen.\\
+	\textbf{Ford-Fulkerson}\\
+	Dieser Algorithmus erhöht den Fluss nach der Methode der Erweiterungspfade.
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{Ford-Fulkerson}
+	\begin{algorithmic}[1]
+		\ForAll{$(u,v) \in E$}
+		\State $f(u,v) = 0$, $f(v,u) = 0$
+		\EndFor
+		\Repeat
+		\State Berechne das Restnetzwerk $G_f$
+		\State Suche einen Erweiterungspfad $P$ in $G_f$
+		\State $c_f(P) = \min\{c_d(u,v): \; uv \in E(P)\}$
+		\State $g(u,v) = \begin{cases}
+			c_f(P),& uv \in E(P)\\
+			-c_f(P),& vu \in E(P)\\
+			0,& \text{sonst}
+		\end{cases}$
+		\State $f = f+g$
+		\Until{es gibt keinen Pfad von $s$ nach $t$ in $G_f$}
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\subsection{Min-Cut, Max-Flow}
+	\textbf{Definition}\\
+	Gegeben sein ein Netzwerk wie immer. Ein Schnitt ist eine Zerlegung der Knotenmenge $V$ in disjunkte Teilmengen $A,B$, sodass $s \in A$, $t \in B$. Die Kapazität des Schnittes ist die Summer aller Kapazitäten von Kanten, die zwischen $A$ und $B$ laufen.\\
+	\textbf{Theorem}\\
+	Folgende Aussagen sind äquivalent: \begin{enumerate}
+		\item $f$ ist maximal
+		\item $G_f$ enthält keinen Erweiterungspfad
+		\item $\left|f\right| = c(A,B)$ für einen Schnitt in $G$.
+	\end{enumerate}
+	Die Wahl des Erweiterungspfades im Ford-Fulkerson-Algorithmus ist nicht weiter eingeschränkt. Durch ungeschicktes Wählen, kann die Laufzeit in Abhängigkeit des maximalen Flusses wachsen. Dann ist die Komplexität $\mathcal{O}(\left|f\right|\cdot \left|E\right|)$. Die Edmonds-Kapr Strategie ist es, immer einen kürzesten Erweiterungspfad auszuwählen. Dadurch kann eine Laufzeit von $\mathcal{O}(\left|V\right|\cdot \left|E\right|^2)$ erreicht werden.\
+	\subsection{Maximales Matching}
+	Das Problem kann gelöst werden, indem eine Quelle und eine Senke hinzugefügt werden und auf dem Graphen das ungewichtete Netzwerk-Fluss Problem mit Ford-Fulkerson löst. Aufgrund der Natur von bipartiten Graphen erhält man eine Laufzeit von nur $\mathcal{O}(n\cdot m)$.\\
+	\textbf{Satz}\\
+	Satz von Hall: es gibt ein Matching der Größe $\left|V_1\right|$ genau dann, wenn die Nachbarschaft aller Teilmengen von $V_1$ in $V_2$ mindestens so groß ist.
+	\section{Algebraische und Zahlentheoretische Algorithmen}
+	\subsection{Multiplikation großer Zahlen}
+	Die naive Methode hat Komplexität $\Theta(n^2)$. Wir führen die Methode von Karatsuba und Ofman ein:\\
+	Multipliziere $x$ und $y$. Man zerlegt sie in zwei gleich lange Teile. Man multipliziert die beiden Teile und summiert sie. Dieses Verfahren kann rekursiv implementiert werden. Das Master Theorem liefert nun eine Laufzeit von $\Theta(n^2)$. Das heißt im allgemeinen Fall ist diese Methode nicht besser als der naive Algorithmus!\\
+	Schreibt man den gemischten Term nun aber um $x_1y_2 = x_0y_0 + x_0y_ + (x_1-x_0)(y_0-y_1)$. Dann erreicht man eine Laufzeit von $\Theta(n^{\log_2 n})$.
+	\subsection{Schnelle Matrixmultiplikation}
+	Die schnelle Matrixmultiplikation verfolgt einen ähnlichen Ansatz, indem die Matrizen geviertelt werden. Dann können die Einträge der Produktmatrix in Rechnungen auf den Teilmatrizen berechnet werden. Genauso können die Teilmatrizen wieder zerlegen und erhalten ein Divide and Conquer Verfahren: 
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{Mat-Prod($n,A,B$)}
+	\begin{algorithmic}[1]
+		\If{$n$ = 1}
+		\State \textbf{return} $A\cdot B$
+		\Else
+		\State Teile in vier Teile auf und berechne \texttt{Mat-Prod($n/2, A, B)$}
+		\EndIf
+		\State \textbf{return} $A\cdot B$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Die Laufzeit ist dann beschränkt durch $\Theta(n^{\log 7})$. Allerdings ist diese Methode mit einem großen Vorfaktor behaftet und ist daher nur bei großen $n$ tatsächlich besser als der naive Algorithmus.
+	\subsection{RSA-Kryptografie}
+	Alice will Bob eine Nachricht senden. Sie verwendet dazu einen öffentlich zugänglichen Schlüssel $(e,n)$. Bob verwendet seinen privaten Schlüssel $d$ um die Nachricht wieder zu entschlüsseln.\\
+	\textbf{Schlüsselgenerierung}\\
+	Man wähle zwei Primzahlen $p \neq q$ und berechnet $n = p \cdot q$. Wann wähle nun eine zu $(p-1)(q-1)$ teilerfremde Zahl $e$. Dann ist $(e,n)$ der öffentliche Schlüssel. $d$ ist ein multiplikativ inverses Element zu $e$ modulo $(p-1)(q-1)$.\\
+	Alice kennt $(e,n)$ und verschlüsselt ihre Nachricht $m$, eine natürliche Zahl. Sie berechnet $m^e \mod n$ und erhält $c$. Diese verschlüsselte Nachricht wird an Bob geschickt. Bob entschlüsselt diese Nachricht wieder, indem er $c^d \mod n$ berechnet. Das Ergebnis ist wieder $m$, das ist eine Konsequenz des folgenden Satzes: \\
+	\textbf{Satz}\\
+	$m \equiv (m^e)^d \mod n$.\\
+	\subsection{Euklidischer Algorithmus}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{Euklid(a,b)}
+	\begin{algorithmic}[1]
+		\If{$b = 0$}
+		\State \textbf{return} $a$
+		\Else
+		\State \textbf{return} \texttt{Euklid($b, a \mod b$)}
+		\EndIf
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Der euklidische Algorithmus hat eine Bitkomplexität von $\mathcal{O}(n^2)$.\\
+	\subsection{prime Restklassengruppe}
+	
 \end{document}
