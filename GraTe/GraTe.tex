@@ -312,4 +312,27 @@
 	\end{itemize}
 	\textbf{Lemma}\\
 	Let $M_i$ be the set of edges coloured with $i$. Then $\left|E(G)\right| = \sum_{i=1}^{k} \left|M_i\right| \leq k\cdot \left\lfloor\frac{\left|V(G)\right|}{2}\right\rfloor$.
+	\subsection{Chromatic number of the plane}
+	Two points $x,y \in \mathbb{R}^2$ with distance exactly one need different colours. With this restriction, it is known that the chromatic number is in $\{5,6,7\}$.\\
+	\textbf{Theorem}\\
+	Now, alternatively only colour the points of $\mathbb{Q}^2$. Then it is known that the chromatic number $\chi(\mathbb{Q}^2) = 2$.
+	\section{Extremal Graph Theory}
+	\textbf{Definition}\\
+	For a graph $H$, define ex$(n,H) =$ largest number of edges of any graph on $n$ vertices without $H$ as a subgraph. A graph $G$ on $n$ vertices is called \underline{extremal} without $H$-subgraph if $H\not \subseteq G$ and $\left|E(G)\right| = $ex$(n,H)$.\\
+	A graph is called $r$-partite if there is a partition $V_1,...,V_r$ of $V(G)$ such that any partition class has no edge. Equivalently $\chi(G) \leq r$.\\
+	$G$ is complete $r$-partite if $\forall i \neq j$ every vertex in $V_i$ is adjacent to every edge in $V_j$. For $r$ define $T^r(n)$ the Turán graph as the complete $r$-partite graph on $n$ vertices with partition classes $V_1,...,V_r$ s.t. $\left|V_i\right| - \left|V_j\right| \in \{-1,0,1\} \; \forall i,j$.\\
+	\textbf{Theorem}\\
+	For $K_r$ the Turán graphs are the unique extremal graphs. That means \[\text{ex}(n,K_{r+1}) = \left|E(T^r(n))\right| = t_r(n) \approx \frac{n^2}{2} \frac{r-1}{r}\]
+	\textbf{Theorem}\\
+	$\forall \varepsilon,r,s \; \exists N$ s.t. if $G$ has $n$ vertices and $n \geq N$ and $t_{r-1}(n) + \varepsilon n^2$ edges, then $K_r^s \subseteq G$ (the complete $r$-partite graph with $s$ vertices in each partition class).\\
+	\textbf{Corollary}\\
+	It holds $\lim\limits_{n \to \infty} \frac{\text{ex}(n,H)}{\binom{n}{2}} = \frac{\chi(H)-2}{\chi(H)-1}$ where $H$ has at least one edge.\\
+	\textbf{Lemma}\\
+	For the Turán graph we have $\lim\limits_{n \to \infty} \frac{t_{r-1}(n)}{\binom{n}{2}} = \frac{r-2}{r-1}$. Also \[\frac{n}{2} (r-2) \left\lfloor\frac{n}{r-1}\right\rfloor \leq t_{r-1}(n) \leq \frac{n}{2} (r-2) \left\lceil\frac{n}{r-1}\right\rceil\]
+	As a consequence we know the following: if $\chi(H) \geq 3$ then ex($n,H$) $\approx c\cdot n^2$. We call graphs like this \underline{dense}.\\
+	For bipartite graphs, above corollary implies ex($n,H$) $< c\cdot n^2$.\\
+	\textbf{Theorem}\\
+	$\forall 2 \leq s \leq t \; \exists c > 0$ such that ex($n,K_{s,t}$) $\leq c\cdot n^{2-\frac{1}{s}}$.\\
+	\textbf{Theorem}\\
+	$\exists c'>0$ such that $\forall N \; \exists G$ on $n \geq N$ vertices with $\left|E(G)\right| \geq c'n^{2-\frac{1}{2}}$ such that the four cycle is not in $G$.
 \end{document}
