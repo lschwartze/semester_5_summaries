@@ -425,6 +425,11 @@
 	\end{align*}
 	For $\left|U\right| \geq 2$, the term $p(U\cup \{x\})$ equals \[\min\{\min_{y \in U}\{p(U) + dist_{G,c}(x,y)\}, \min_{y \in V(G) \setminus U}\{q(U\cup \{y\}, y)\} + dist_{G,c}(x,y)\}\]
 	\section{Multicommodity Flow}
+	\textbf{Comment} (FPTAS)\\
+	A \underline{fully polynomial time approximation scheme} is an algorithm that for a problem $P$ \begin{itemize}
+		\item determines a feasible solution for $I$ with \[\frac{OPT(I)}{1+\varepsilon} \leq A(I,\varepsilon) \leq (1+\varepsilon)OPT(I)\]
+		\item and has a polynomial running time.
+	\end{itemize}
 	\textbf{Comment}\\
 	We consider the following generalization of the network flow problem:\\
 	INSTANCE: $(D,D',c,b)$ where $D$ and $D'$ are digraphs with the same vertex set, $c:A(F) \to \mathbb{Q}_{\geq 0}$ is a capacity function and $b: A(D') \to \mathbb{Q}_{\geq 0}$ is a demand function.\\
@@ -496,15 +501,15 @@
 	is an $s-t$-flow of value $v$ in $D$ s.t. $f' \leq f$ and above decomposition uses paths in $\mathcal{P}$ only.\\
 	\textbf{Theorem}\\
 	Let $(D, D', c, b)$ be an instance of the \texttt{Multicommodity Flow}. Let \begin{itemize}
-		\item $\mathbb{C}$ be the set of all directed cycles in the (not necessarily simple) digraph $D \cup D'$ that contain exactly one arc of $D'$. 
+		\item $\mathcal{C}$ be the set of all directed cycles in the (not necessarily simple) digraph $D \cup D'$ that contain exactly one arc of $D'$. 
 		\item $M$ be the the incidence matrix of the arcs of $D$ as rows and the cycles in $\mathcal{C}$ as columns.
 		\item $N$ be the incidence matrix of the arcs of $D'$ versus the cycles in $\mathcal{C}$.
 	\end{itemize}
 	$(D,D',c,b)$ is a yes-instance iff the polyhedron \[\{y \in \mathbb{R}_{\geq 0}\}^\mathcal{C}: My \leq c \text{ and } Ny = b\] is non-empty.\\
 	\textbf{Corollary}\\
 	Let $(D,D',c,b)$ be an instance of \texttt{Multicommodity Flow}. It is a yes-instance iff \[\sum_{f = (t,s)\in A(D')} b(f)dist_(D,x)(s,t) \leq \sum_{e \in A(D)} c(e)z(e)\] for every $z: A(D) \to \mathbb{R}_{\geq 0}$.\\
-	\textbf{Comment}\\
-	Take an instance as above. Let $\mathcal{P}$ be the set of all directed paths in $D$ s.t. each $P \in \mathcal{P}$ is a directed $s-t$-path for some arc $(t,s)$ of $D'$. Now by the previous Lemma, \texttt{Multicommodity Flow} is equivalent to the following program: \begin{align*}
+	\textbf{Comment} (Linear Program for \texttt{Maximum Multicommodity Flow})\\
+	Take an instance as above. Let $\mathcal{P}$ be the set of all directed paths in $D$ s.t. each $P \in \mathcal{P}$ is a directed $s-t$-path for some arc $(t,s)$ of $D'$. Now by the previous Lemma, \texttt{Maximum Multicommodity Flow} is equivalent to the following program: \begin{align*}
 		\max &\sum_{P \in \mathcal{P}} y_P\\
 		\text{s.t.} \sum_{P \in \mathcal{P}: e \in A(P)} y_P &\leq c(e) \; \forall e \in A(D)\\
 		y_P &\geq 0 \; \forall P \in \mathcal{P}
@@ -514,7 +519,7 @@
 		\text{s.t.} \sum_{e \in A(P)} z_e & \geq 1 \; \forall P \in \mathcal{P}\\
 		z_e &\geq 0 \; \forall e \in A(D)
 	\end{align*}
-	Note that $\mathcal{P}$ can be of exponential size and that a feasible $\{0,1\}$-solution if the dual is the incidence vector of directed multicut.\\
+	Note that $\mathcal{P}$ can be of exponential size and that a feasible $\{0,1\}$-solution of the dual is the incidence vector of directed multicut.\\
 	\par\noindent\rule{\textwidth}{0.4pt}
 	\underline{Garg-Könemann-Algorithm}\\
 	INPUT: an instance $(D,D',c)$ and a $0 < \varepsilon < \frac{1}{2}$\\
@@ -530,10 +535,41 @@
 		\State $\mathcal{P}' \gets \mathcal{P}' \cup \{P\}$
 		\State $z_e \gets \left(1+\frac{\varepsilon \gamma}{c(e)}\right)z_e$ for all $e \in A(P)$
 		\EndWhile
-		\State $\zeta \gets \max \left\{\frac{\sum_{P \in \mathcal{P}': e \in A(P)}y_P}{c(e)}: e \in A(D)\right\}$; $y_P \gets \frac{y_P}{\zeta}$ for every $P \in \mathcal{P}'$
+		\State $\xi \gets \max \left\{\frac{\sum_{P \in \mathcal{P}': e \in A(P)}y_P}{c(e)}: e \in A(D)\right\}$; $y_P \gets \frac{y_P}{\xi}$ for every $P \in \mathcal{P}'$
 		\State \textbf{return} $\mathcal{P}'$ and $(y_P)_{P \in \mathcal{P}'}$
 	\end{algorithmic}
 	\par\noindent\rule{\textwidth}{0.4pt}\\
 	\textbf{Theorem}\\
-	The output of this algorithm encodes a \texttt{Multicommodity Flow} $(x^f)_{f \in A(D')}$ of total flow value at least $\frac{1}{1+\varepsilon}OPT(I)$. 
+	The output of this algorithm encodes a \texttt{Multicommodity Flow} $(x^f)_{f \in A(D')}$ of total flow value at least $\frac{1}{1+\varepsilon}OPT(I)$ and runs in polynomial time in $size(I)$. Thus, it is an FPTAS. 
+	\section{\texttt{Minimum Makespan} and \texttt{Bin Packing}}
+	\textbf{Comment}\\
+	Let $I = (n,m,(a_i)_{i \in [n]})$ be an instance of \texttt{Minimum Makespan}. Let \[LB = \max\left\{a_1,...,a_n, \left\lceil\frac{a_1+...+a_n}{m} \right\rceil\right\}\] the lower bound. We know $LB \leq OPT \leq 2\cdot LB$. For some rational $\varepsilon$ and an integer $t \in [LB, 2LB]$ we consider the instance $I' = (a_1',...,a_n')$ of \texttt{Bin Packing} with \[a_i' = \begin{cases}
+		0, & \text{if } a_i < t\varepsilon\\
+		\varepsilon(1+\varepsilon)^l, & \text{if } a_i \in [t\varepsilon(1+\varepsilon)^l, t\varepsilon(1+\varepsilon)^{l+1}] \text{ for some } l \in \mathbb{N}_0
+	\end{cases}\]
+	Clearly $a_i't \leq a_i$ and $a_i \leq a_i't(1+\varepsilon)$ whenever $a_i \geq t \varepsilon$. Also, $a_i \leq t$ and $\varepsilon(1+\varepsilon)^l \geq 1$ for $l \geq \log_{1+\varepsilon}(\frac{1}{\varepsilon})$. Thus \[\left|\{a_1',...,a_n'\}\right| \leq \log_{1+\varepsilon}(\frac{1}{\varepsilon})+2\]
+	The instance $I'$ can be solved exactly in polynomial time!\\
+	\textbf{Lemma}\\
+	Let $\varepsilon >0$ and $K \in \mathbb{N}$ fixed. There is a polynomial-time algorithm that determines an optimal solution for a given instance $I$ of \texttt{Bin Packing} that satisfies $\min(a_i) \geq \varepsilon$ and $\left|\{a_1,...,a_n\}\right|\leq K$.
+	\par\noindent\rule{\textwidth}{0.4pt}
+	INPUT: $(I,t,\varepsilon)$ as in above Comment\\
+	OUTPUT: An integer $\alpha(I,t,\varepsilon)$
+	\begin{algorithmic}[1]
+		\State Solve the \texttt{Bin Packing} instance $I'$ as in above Comment exactly. That is pack the items of sizes \[a_1't(1+\varepsilon),...,a_n't(1+\varepsilon)\]
+		in the minimum number of bins of size $t(1+\varepsilon)$
+		\State Assign every item $i$ with $a_i \geq t\varepsilon$ to the same bin as $a_i't(1+\varepsilon)$. Distribute the items $a_i < t\varepsilon$ to the existing and if necessary in new bins of same size.
+		\State \textbf{return} the number of bins that is used
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Lemma}\\
+	Above algorithm has a polynomial running time and \[OPT\left(\frac{a_1}{(1+\varepsilon)t},...,\frac{a_n}{(1+\varepsilon)t}\right) \leq \alpha(I,t,\varepsilon) \leq OPT\left(\frac{a_1}{t},...,\frac{a_n}{t}\right)\]
+	\textbf{Comment}\\
+	By above Lemma and the Theorem of Graham we obtain \begin{align*}
+		OPT(I) &= \min\left\{t \in \mathbb{N}: OPT\left(\frac{a_1}{t},...,\frac{a_n}{t}\right) \leq m\right\}\\
+		& \geq \min\left\{t \in \mathbb{N}: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\right\}
+	\end{align*} and \begin{align*}
+	\alpha(I, 2LB, \varepsilon) & \leq OPT\left(\frac{a_1}{2LB},...,\frac{a_n}{2LB}\right) \leq m
+	\end{align*} which implies $\min\{t \in \mathbb{N}: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\} \in [LB,2LB]$. Using binary search we determine an integer $T$ with $\min\{t \in \mathbb{N}: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\} \in [T-\varepsilon LB, T]$ using $\mathcal{O}\left(\log \frac{1}{\varepsilon}\right)$ calls of above algorithm. Note that \[T \leq OPT(I)+\varepsilon LB \leq (1+\varepsilon) LB\]
+	\textbf{Theorem}\\
+	Let $\varepsilon$ be fixed. There is a polynomial time algorithm that, for a given instance $I$ of \texttt{Minimum Makespan} determines a feasible solution for $I$ whose objective function value is at most $(1+\varepsilon)^2OPT(I)$. That means there is a PTAS for \texttt{Minimum Makespan}.
 \end{document}
