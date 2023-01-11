@@ -334,5 +334,24 @@
 	\textbf{Theorem}\\
 	$\forall 2 \leq s \leq t \; \exists c > 0$ such that ex($n,K_{s,t}$) $\leq c\cdot n^{2-\frac{1}{s}}$.\\
 	\textbf{Theorem}\\
-	$\exists c'>0$ such that $\forall N \; \exists G$ on $n \geq N$ vertices with $\left|E(G)\right| \geq c'n^{2-\frac{1}{2}}$ such that the four cycle is not in $G$.
+	$\exists c'>0$ such that $\forall N \; \exists G$ on $n \geq N$ vertices with $\left|E(G)\right| \geq c'n^{2-\frac{1}{2}}$ such that the four cycle is not in $G$.\\
+	
+	How large must $d(G)$, the average degree be such that $G$ is guaranteed to have $K_r$ as a minor/subgraph?\\
+	\textbf{Theorem}\\
+	for $r \geq 2$: if $G$ is a graph with $d(G) \geq 2^{r-2}$, then $K_r$ is a minor.\\
+	\textbf{Theorem}\\
+	For $r \geq 2$ there exists $c$ s.t. if $d(G) \geq c\cdot r \cdot \sqrt{\log(r)}$, then $K_r$ is a minor of $G$.\newpage
+	\noindent\textbf{Theorem}\\
+	$\forall r \geq 2 \; \exists c$ s.t. \[d(G) \geq c\cdot r^2 \Rightarrow G \text{ contains a $K_r$ subdivision}\]
+	\textbf{Theorem}\\
+	$\forall r \geq 2 \; \exists f$ s.t. if a graph $G$ has $\delta(G) \geq 3$ and $g(G) \geq f(r)$ then $K_r$ is a minor of $G$.\\
+	\textbf{Lemma}\\
+	Let $d$ and $k$ be integers, $d \geq 3$. If $\delta(G) \geq d$ and $g(G) \geq 8k+3$, then $G$ has a minor $H$ of $\delta(H) \geq d(d-1)^k$.\\
+	
+	$\forall r$ is there an $n_0$ such that a graph on $n \geq n_0$ vertices satisfies $\omega(G) \geq r$ or $\alpha(G) \geq r$?\\
+	Equivalently, $\forall r$ is there an $n_0$ s.t. for all edge colourings of $K_{n_0}$ with two colours there is always a monochromatic $K_r$?\\
+	The smallest such $n_0$ is called Ramsey number $R(r)$.\\
+	\textbf{Theorem}\\
+	$R(k) \leq 2^{2k}$. 
+	The same theorem can be stated and proved with $c$ colours.
 \end{document}
