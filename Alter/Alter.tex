@@ -510,5 +510,70 @@
 	\par\noindent\rule{\textwidth}{0.4pt}\\
 	Der euklidische Algorithmus hat eine Bitkomplexität von $\mathcal{O}(n^2)$.\\
 	\subsection{prime Restklassengruppe}
-	
+	Zunächst wird gezeigt, dass der größte gemeinsame Teiler von $a$ und $b$ eine Linearkombination der beiden ist. \[ggT(a,b) = \min(\{a\cdot x + b \cdot y \;|\; x,y\in \mathbb{Z}\} \cap \mathbb{N}_+)\]
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{EE(a,b)}
+	\begin{algorithmic}[1]
+		\If{$b = 0$}
+		\State \textbf{return} $(a,1,0)$
+		\Else
+		\State $(d',x',y') =$ \texttt{Euklid($b, a \mod b$)}
+		\State $d = d'$, $x = y'$, $y = x'-(a \div b)\cdot y'$
+		\State \textbf{return} $(d,x,y)$
+		\EndIf
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Die Komplexität ändert sich nicht gegenüber des Euklidischen Algorithmus. Will man nun das multiplikative Inverse von $a \in (\mathbb{Z}/n\mathbb{Z})^*$, dann gilt $ggT(a,n) = 1$ und $1 = ax+ny \Leftrightarrow 1-ny = ax = 1 \mod n$. Wendet man den erweiterten Euklidischen Algorithmus auf $a$ und $n$ an, findet man also $x$, das inverse zu $a$.\\
+	\subsection{Berechnen der modularen Exponentiation $a^b \mod n$}
+	$a,b,n$ seien Zahlen mit höchstens $m$ Bits. Die naive Methode der Berechnung liefert eine Bitkomplexität von $\mathcal{O}(m^22^m)$, weil eine Multiplikation Bitkomplexität $\mathcal{O}(m^2)$ hat. Besser wird es, wenn man $b$ zunächst in binäre Form überführt: $b = (b_k...b_1b_0)_2$. Durch wiederholtes Quadrieren (und Multiplikation mit $a$) falls $b_i = 1$, kann man nun leichter die Potenz bestimmen.\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{ModExp($a,b,n$)}
+	\begin{algorithmic}[1]
+		\State $b = (b_k...b_1b_0)_2$
+		\State $d \gets 1$
+		\For{$i=k$ \textbf{to} 0}
+		\State $d \gets (d\cdot d) \mod n$
+		\If{$b_i = 1$}
+		\State $d \gets (d\cdot a) \mod n$
+		\EndIf
+		\EndFor
+		\State \textbf{return} d
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\section{Polynommultiplikation}
+	Wir beschreiben zwei Polynome $a(x)$ und $b(x)$ als $a = (a_0,...,a_{n-1})$ und $(b_0,...,b_{n-1})$ wobei der Grad als gleich angenommen werden kann, da sonst mit $0$ aufgefüllt werden kann. Genau so können wir annehmen, dass $n$ eine Zweierpotenz ist. Die naive Implementierung mittels Faltung erreicht $\mathcal{O}(n^2)$. Mann kann die Polynome aber genauso an $2n-1$ Punkten darstellen, da das Produkt Polynom damit eindeutig festgelegt ist. Diese Multiplikation von $2n-1$ Punkten hat demnach eine Laufzeit von $\mathcal{O}(n)$. Die Implementierung mittels Horner-Schema und die erneute Interpolation des Produktes erfordern aber beide $\mathcal{O}(n^2)$, man gewinnt also nichts.
+	\subsection{Diskrete Fourier Transformation}
+	Die diskrete Fourier Transformation wertet ein Polynom gegeben durch $(a_0,...,a_{N-1})$ an den $N$-ten Einheitswurzeln aus. Wir halten $x_{k,N} = e^{i k(2\pi/N)}$ fest.\\
+	Zu einem Koeffizientenvektor $a$ berechnen wir die Auswertung an den $N$-ten Einheitswurzeln und erhalten \[y_k = A(x_{k,N}) = \sum_{j=0}^{N-1} a_j x_{k,N}^j = \sum_{j=0}^{N-1}a_j e^{ijk(2\pi/N)}\]
+	Den Vektor $y = (y_0,...,y_{N-1})$ bezeichnen wir als diskrete Fourier Transformierte.\\
+	Ein Polynom $A$ sei gegeben. Dann kann man in $A^e$ und $A^o$ mit geraden bzw. ungeraden Koeffizienten zerlegen. Die Koeffizientenvektoren $a^e$ und $a^o$ sind analog gegeben. Bemerke aber, dass \begin{align*}
+		A^e(x) &= \sum_{j=0}^{\frac{N}{2}-1} a_{2k}x^k\\
+		A^o(x) &= \sum_{j=0}^{\frac{N}{2}-1} a_{2k+1}x^k
+	\end{align*}
+	Dann folgt $A(x) = A^e(x^2) + x\cdot A^o(x^2)$.
+
+	Wenn $x$ eine $N$-te Einheitswurzel ist, dann ist $x^2$ eine $\frac{N}{2}$-te Einheitswurzel. Die Auswertung des Polynoms kann also auf die Auswertung von $A^e$ und $A^o$ zurückgeführt werden.
+	\subsection{FFT Algorithmus}
+	Gegeben sei $A$ als Vektor $a$. Diesen zerlegen wir in $a^e$ und $a^e$. Wir wenden den FFT Algorithmus rekursiv auf diese beiden Vektoren an. Wir erhalten die Fourier Transformierten $y^e$ und $y^o$. Die finale Transformierte $y$ erhält man schlussendlich durch \[y_k = y_k^e + x_{k,N}\cdot y_k^o\] für $k \leq \frac{N}{2}-1$. Sonst bekommt man \[y_{\frac{N}{2}+k} = y_k^e - x_{k,N}\cdot y_k^o\]
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\texttt{FFT($N,a$)}
+	\begin{algorithmic}[1]
+		\If{$N = 1$}
+		\Return $a_0$
+		\Else
+		\State $a^e \gets (a_0,a_2,...,a_{N-2})$
+		\State $a^o \gets (a_1,a_3,...,a_{N-1})$
+		\State $y^e \gets$ FFT($\frac{N}{2},a^e$)
+		\State $y^o \gets$ FFT($\frac{N}{2},a^o$)
+		\State $z \gets e^{i(2\pi(N))}$
+		\State $x \gets 1$
+		\For{$k=0$ to $\frac{N}{2}-1$}
+		\State $y_k \gets y_k^e + x\cdot y_k^o$
+		\State $y_{\frac{N}{2}+k} \gets y_k^e - x\cdot y_k^o$
+		\State $x \gets z\cdot x$
+		\EndFor
+		\EndIf\\
+		\Return $(y_0,...,y_{N-1})$ 
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Mit Master Theorem findet man eine Komplexität von $\Theta(N\log N)$.
 \end{document}
