@@ -1,0 +1,165 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{algpseudocode}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{claim}{Claim}[theorem]
+\newtheorem{alg}{Algorithm}[section]
+
+\begin{document}
+	\begin{titlepage} 
+		\title{Knapsack}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	The following gives an overview on everything that has been part of the Optimization II lectures and exercises in the winter term 2022/23 regarding the knapsack problem. 
+	\section{Introduction}
+	An instance $I$ of knapsack is given by \[I = (n,(c_i)_{i \in [n]}, (w_i)_{i \in [n]}, W)\]
+	where the goal is to find a subsect $S \subseteq [n]$ that maximizes $\sum_{i \in S} c_i$ under the constraint that $\sum_{i \in S} w_i \leq W$. This can be interpreted as follows:
+	\begin{quote}
+		\textit{Imagine, you have a a backpack that can only hold items of a total size $W$. You are given $n$ items that each have assigned a cost $c_i$ and a weight $w_i$. What is the best choice of items to out in your backpack that achieve the maximum cumulative value?}
+	\end{quote}
+	\section{Complexity}
+	\begin{theorem}
+		Knapsack is NP-complete.
+	\end{theorem}
+	\begin{proof}
+		That knapsack is in fact in NP can be shown very easily:
+		We define a decision version of knapsack via an instance $(n,(c_i)_{i \in [n]}, (w_i)_{i \in [n]}, W, k)$ where the question is whether a feasible solution of value at least $k$ exists.\\
+		Let $S$ be a feasible solution. We only need to check whether \[\sum_{i \in S} c_i \geq k\] and \[\sum_{i \in S} w_i \leq W\]
+		both of which can be done in $\mathcal{O}(n)$ time. Thus knapsack is an NP problem.\\
+		The completeness follows by reduction from the subset sum problem:\\
+		Let $I = (a_1,...,a_n, c)$ be an instance of the subset sum problem. The goal is to decide, whether there is a subset $S$ of $[n]$ such that $\sum_{i \in S} a_i = c$. Subset sum is NP-complete, which can be shown by reduction from 3-SAT. We can reduce the instance $I$ easily to an instance $I'$ of knapsack:\\
+		Define $I' = (c_1 = a_1,...,c_n = a_n,w_1 = a_1,...,w_n  =a_n,W=c,k=c)$. Then there is a subset $S$ of $[n]$ with $\sum_{i \in S} a_i = c$ if and only if there is a subset $L \subseteq [n]$ with $\sum_{i \in L} w_i \leq W = c$ and $\sum_{i \in L} c_i \geq k = W$. The reduction can be obviously done in polynomial time, thus knapsack is NP complete.
+	\end{proof}
+	\section{Algorithms}
+	The knapsack problem can be easily translated to an integer linear program $(P_I)$: \begin{align*}
+		\max \sum_{i \in [n]} c_i x_i &\\
+		\text{s.t.}  \sum_{i \in [n]} w_i x_i &\leq W\\
+		 x_i &\in \{0,1\} \; \forall i \in [n]
+	\end{align*}
+	Relaxing this problem to $x_i \in [0,1]$ yields a much easier linear program.
+	\begin{theorem}
+		If $\frac{c_1}{w_1} \geq ... \geq \frac{c_n}{w_n}$ and $i^* = \min \left\{i \in [n]: \sum_{j \in [i]} w_j \geq W\right\}$ then \[x_i = \begin{cases}
+			1, & 1 \leq i \leq i^*-1\\
+			\left(W- \sum_{j \in [i^*-1]}/w_{i^*}\right) & i = i^*\\
+			0,& \text{ else}
+		\end{cases}\]
+	as a greedy approach yields an optimal solution.
+	\begin{proof}
+		Let $x$ be a lexicographically maximal solution to our relaxed problem $(P)$. Clearly $\sum_{i \in [n]} x_i w_i = W$. Suppose there is an $i$ with $x_i < 1$ and $x_{i+1} > 0$. We set \[\varepsilon = \min \left\{x_{i+1}, \frac{w_i}{w_i+1}(1-x_i)\right\}\]
+		Let $\tilde{x}$ be constructed from $x$ by setting $\tilde{x}_i = x_i + \frac{w_{i+1}}{w_i}\varepsilon$, $\tilde{x}_{i+1} = x_{i+1} - \varepsilon$ and $\tilde{x}_j = x_j$ for all other $j$. Clearly, $w^Tx = w^T\tilde{x}$. However one can easily show $c^T\tilde{x} \geq c^Tx$ contradicting our choice of $x$.
+	\end{proof}
+	\end{theorem}
+	Notice that our greedy approach can return two feasible solutions for the integer linear program $x' = (\underbrace{1,...,1}_{i^*-1},0...,0)$ and $x'' = (\underbrace{0,...,0}_{i^*-1},1,0,...,0)$. For an optimal solution $x$ we get the inequality \[c^Tx \leq c^T(x'+x'')\]
+	This gives rise to an easy two-factor approximation to our integer linear program.
+	\begin{lemma}
+		Our construction above creates a 2-factor approximation \[\max\left\{c^Tx', c^Tx''\right\} \geq \frac{1}{2} OPT(P) \geq \frac{1}{2} OPT(P_I)\]
+	\end{lemma}
+	\begin{proof}
+		Follows directly from our notes above.
+	\end{proof}
+	We now consider the natural greedy approach for knapsack. Here, we add items to the backpack as long as there is space available. 
+	\begin{theorem}
+		The greedy algorithm does not provide an $\alpha$-approximation factor.
+	\end{theorem}
+	\begin{proof}
+		Assume a $\alpha$-approximation on an instance $(I = n, c_1,...,c_n,w_1,...,w_n, W)$ were feasible. If we let $n=2$, $w_1=w_2=W$ and $c_1 = 1$, $c_2 = \alpha + 1$, then the greedy algorithm only achieves a value of $A(I) = 1$. The optimum however would be choosing item two, returning a value of $OPT(I) = \alpha + 1$. Thus \[\frac{1}{\alpha}OPT(I) \not\leq A(I)\]
+	\end{proof}
+	However, we can still analyse the competitive ratio (that is the factor by which this approach might fare worse than an optimal algorithm). Define the following \begin{align}
+		 U &= \max\left\{\frac{c_i}{w_i}: i \in [n]\right\}\\
+		 L &= \min\left\{\frac{c_i}{w_i}: i \in [n]\right\}\\
+		 \varepsilon &= \max\left\{\frac{w_i}{W}: i \in [n]\right\}
+	\end{align}
+	\begin{theorem}
+		The greedy approach has a competitive ratio of $\frac{U}{(1-\varepsilon)L}$.
+	\end{theorem}
+	\begin{proof}
+		Notice that the return value of the greedy algorithm is at least $L\cdot(1-\varepsilon)\cdot W$. The general optimal solution can be no more that $U\cdot W$ proving the statement.
+	\end{proof}
+	Using above definitions, we can give an online approximation algorithm that achieves a competitive ratio of at most $\left(\frac{Ue}{L}^{2\varepsilon}\right)\left(1+\ln \left(\frac{U}{L}\right)\right)$. The decision whether or not to choose an item is based on a function $\psi: [0,1] \to [0,U]$ defined by \begin{align}
+		\psi(z) = \begin{cases}
+			L, & 0 \leq z \leq z_L\\
+			\frac{1}{e}\left(\frac{Ue}{L}^z\right) & \text{else}
+		\end{cases}
+	\end{align}
+	where $z_L = \frac{1}{1+\ln(\frac{U}{L})}$.
+	\begin{alg} Online algorithm for knapsack. \normalfont
+		\begin{algorithmic}[1]
+			\State $S \gets \emptyset$
+			\State $z_1 \gets 0$
+			\For{$i=1$ to $n$}
+			\If{$\frac{c_i}{w_i} \geq \psi(z_i)$ and $z_i + \frac{w_i}{W} \leq 1$}
+			\State $S \gets S \cup \{i\}$
+			\State $z_{i+1} \gets z_i + \frac{w_i}{W}$
+			\Else
+			\State $z_{i+1} \gets z_i$
+			\EndIf
+			\EndFor\\
+			\Return $S$
+		\end{algorithmic}
+	\end{alg}
+	\begin{theorem}
+		Above algorithm achieves a competitive ratio of at most $\left(\frac{Ue}{L}^{2\varepsilon}\right)\left(1+\ln \left(\frac{U}{L}\right)\right)$. 
+	\end{theorem}
+	\begin{proof}
+		This proof is quite involved and requires some heavy arithmetic. We only present the basic steps.
+		Let $Z = z_{n+1}$. $\frac{c_i}{w_i} \geq L$ and $w_1+...+w_n > W$ imply that $Z \geq z_L$. Let $S^*$ be an optimal solution. Then we can deduce \begin{align}
+			c(S \cap S^*) &= \sum_{i \in S\cap S^*} c_i \geq \sum_{i \in S\cap S^*}\psi(z_i)w_i = P_1\\
+			c(S\setminus S^*) &= \sum_{i \in S\setminus S^*} c_i \geq \sum_{i \in S\setminus S^*} \psi(z_i)w_i = P_2
+		\end{align}
+	Furthermore, \(P_1 \leq \psi(Z)ZW\). With some set theoretical operations this implies $\frac{c(S^*)}{c(S)} \leq \frac{\psi(Z)ZW + c(S^*\setminus S)}{\sum_{i \in S}\psi(z_i)w_i}$. Using $\frac{w_i}{W} \leq \varepsilon$ and $z_{i+1} - z_i = \frac{w_i}{W}$ we obtain $\psi(z_{i+1}) \leq \psi(z_i)\left(\frac{Ue}{L}\right)^\varepsilon$. Doing some heavy arithmetic implies \[\sum_{i \in S}\psi(z_i)w_i \geq W\left(\frac{Ue}{L}\right)^{-\varepsilon}z_L\psi(Z)\]
+	Now if $\not\exists i \in S^*\setminus S$ with $z_i + \frac{w_i}{W} > 1$, we conclude $\frac{c_i}{w_i} \leq \psi(z_i)$ for all $i \in S^*\setminus S$ and thus $c(S^*\setminus S) \leq \psi(Z)(1-Z)W$. From this we can follow the statement.\\
+	If on the other hand $\exists i \in S^* \setminus S$ with $z_i + \frac{w_i}{W} > 1$, we have $Z > 1-\varepsilon$ and hence $\psi(Z) > U\left(\frac{Ue}{L}\right)^{-\varepsilon}$. Doing some more number crunching will also give the desired result.
+	\end{proof}
+	We know consider a simpler version if the knapsack problem, where each item has $w_i = c_i \in [0,1] \cap \mathbb{Q}$ and $W=1$.
+	\begin{lemma}
+		There is no deterministic online $\alpha$-approximation algorithm for this problem.
+	\end{lemma}  
+	\begin{proof}
+		Assume such an algorithm $A$ exists. We use an infinite sequence $(2\varepsilon)_{i=1}^\infty$ of small items. Let $j$ be the first item of this sequence that $A$ chooses. We can assume $j$ to be finite, because otherwise for $n = \frac{1}{2\varepsilon}$ $A$ would only achieve a value of zero for the instance $(2\varepsilon)_{i=1}^n$, while the optimum is 1. Therefore, pick an instance $(2\varepsilon)_{i=1}^j, 1-\varepsilon$. $A$ would now achieve a value of exactly $2\varepsilon$, while the optimum is $1-\varepsilon$. We can make the epsilon as small as desired, contradicting that $A$ achieves an $\alpha$-approximation. 
+	\end{proof}
+	\begin{lemma}
+		In the scenario above, we can achieve a $\frac{1}{2}$ approximation factor, if the size of the largest item is given.
+	\end{lemma}
+	\begin{proof}
+		Let $s = \max\{w_i: i \in [n]\}$. Choose items of size less $s$ as long as their cumulative weight is at most $1-s$. Afterwards, pick items greedily. This results in an approximation factor of $\frac{1}{2}$. If $s \geq \frac{1}{2}$, this is obvious. If the items before $s$ add up to more than half the capacity, it is clear as well. Therefore, we can only miss the $\frac{1}{2}$ factor if for some items after the first item of size $s$, there is no room in the backpack. But since, any other item has size at most $s$, this implies that we must have already packed an items of cumulative size $1-s$. Since we assumed $s < \frac{1}{2}$, this shows our approximation factor.\\
+		Using $j$ as defined in the previous proof, we can even show, that no deterministic online algorithm can do better than $\frac{1}{2}$. For this we use the instance $(\frac{1}{2} + \varepsilon), (e)_{i=2}^j, (\frac{1}{2} - \varepsilon)$. Since any other deterministic algorithm picks a $\varepsilon$, we only achieve a value of $1+2\varepsilon$, while the optimum is 1.
+	\end{proof}
+	We now consider a more difficult version of unweighted knapsack, where we can discard the entire bag, and pick the next item in line if it doesn't fit.
+	\begin{lemma}
+		This problem admits a 2-factor approximation.
+	\end{lemma}
+	\begin{proof}
+		Greedily add items. If the $k$-th item doesn't fit, either the cumulative weight of items in the bag or $w_k$ is at least $\frac{1}{2}$ giving us a 2-factor.
+	\end{proof}
+	\begin{lemma}
+		If, instead of removing all items, we are only allowed to discard the last $k$ items, no approximation factor exists.
+	\end{lemma}
+	\begin{proof}
+		On an instance of $j \geq k+1$ items of size $\varepsilon$ we can guarantee that any algorithm picks $k+1$ of those elements. If we then give an item of size 1, the optimum is 1, while any such algorithm only achieves $(1+k)\varepsilon$ which is arbitrarily small.
+	\end{proof}
+	The knapsack problem also qualifies for an (F)PTAS, that is a (fully) polynomial time approximation scheme. This is an algorithm $A$ that for a given instance $(I, \varepsilon)$ determines a solution with \[\frac{OPT(I)}{1+\varepsilon} \leq A(I) \leq (1+\varepsilon)OPT(I)\] with $\varepsilon > 0$. The algorithm has a polynomial running time in $size(I)$ and $\frac{1}{\varepsilon}$. In the case of a polynomial time approximation scheme, the polynomial $p$ may be dependent on $\varepsilon$.
+	\subsection{FPTAS approach}
+	We first give a pseudo-polynomial algorithm for knapsack that can find an optimum in $\mathcal{O}(n \cdot C)$ time, where $C$ is an upper bound for the optimum. Let for example $C = \sum_{i \in [n]} c_i$. \begin{alg}
+		We define $C$ as above and \[x(i,k) = \min \left\{\sum_{j \in S} w_j : S\subseteq [i] \; \land \; \sum_{j \in S} c_j = k\right\}\]
+		where $k \in [C]$. We want to determine the largest $k$ such that there is an $S \subseteq [i]$ whose items reach value $k$. Since the optimal value of any instance $I$ is surely at most $C$, this is then an optimal solution. Thus we need to calculate $x(n,k)$ for all $k$. We notice, that we can do so recursively as follows: \[x(i+1,k) = \begin{cases}
+			x(i,k), & w_{i+1} + x(i,k) > W\\
+			\min\left\{x(i,k), x(i,k-c_{i+1}) + w_{i+1}\right\}, & \text{else} 
+		\end{cases}\]
+	with the base case \[x(1,k) = \begin{cases}
+		w_1, & k = c_1\\
+		\infty, & \text{else}
+	\end{cases}\]
+	We can hence find any $x(n,k)$ in $n$ steps and therefore require a running time of $\mathcal{O}(n\cdot C)$.
+	\end{alg}
+	Now we attempt to scale down our instance $I$. Using $C$ from above algorithm, we define $t = \max\left\{1, \frac{\varepsilon C}{n}\right\}$ and $c_i' = \left\lfloor \frac{c_i}{t}\right\rfloor$. With our pseudo-polynomial algorithm previously introduced, we generate an optimal solution $S'$ for this instance $I'$. Notice first however, that $c_i \geq t \cdot c_i'$ and $t \cdot c_i' \geq c_i - t$. Also, $S' \geq t\cdot c'^Tx$ where $x$ encodes an optimal solution of the problem. Thus $S' \geq OPT(I) - \varepsilon t \geq OPT(I) - \varepsilon OPT(I) = (1-\varepsilon) OPT(I)$. Therefore, we have an FPTAS.
+\end{document}
