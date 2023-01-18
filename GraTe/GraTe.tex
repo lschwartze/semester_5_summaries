@@ -347,11 +347,34 @@
 	$\forall r \geq 2 \; \exists f$ s.t. if a graph $G$ has $\delta(G) \geq 3$ and $g(G) \geq f(r)$ then $K_r$ is a minor of $G$.\\
 	\textbf{Lemma}\\
 	Let $d$ and $k$ be integers, $d \geq 3$. If $\delta(G) \geq d$ and $g(G) \geq 8k+3$, then $G$ has a minor $H$ of $\delta(H) \geq d(d-1)^k$.\\
+	\textbf{Conjecture}\\
+	Does $\chi(G) \geq s$ imply $K_s$ minor?
+	This has been proven to be true for complete graphs up to $K_6$ but not further.
 	
+	\section{Ramsey Theory}
 	$\forall r$ is there an $n_0$ such that a graph on $n \geq n_0$ vertices satisfies $\omega(G) \geq r$ or $\alpha(G) \geq r$?\\
 	Equivalently, $\forall r$ is there an $n_0$ s.t. for all edge colourings of $K_{n_0}$ with two colours there is always a monochromatic $K_r$?\\
 	The smallest such $n_0$ is called Ramsey number $R(r)$.\\
 	\textbf{Theorem}\\
 	$R(k) \leq 2^{2k}$. 
 	The same theorem can be stated and proved with $c$ colours.
+	
+	\section{Random graphs and probabilistic methods}
+	\textbf{Theorem}\\
+	For every graph $G$ is $\alpha(G) \geq \sum_{v \in V(G)} \frac{1}{d(v)+1}$. This statement can be proven using methods from elementary probability theory.\\
+	
+	Now we construct graphs by means of probability. Take a fixed set $V(G)$ of nodes. For any two vertices $u,v \in V(G), \; v \neq u$ we add the vertex $uv$ to $E(G)$ with a fixed probability $p$. The set of graphs on $n$ vertices where any edge is picked with probability $p$ is denoted by $G(n,p)$. For any possible graph $G$ from this set we have \[\mathbb{P}[G] = p^{\left|E(G)\right|} \cdot (1-p)^{\binom{n}{2}-\left|E(G)\right|}\] 
+	If we want to construct a graph that that contains a specific subgraph, we obtain \[\mathbb{P}[H \subset G] = p^{\left|E(H)\right|}\]
+	Similarly we find $\mathbb{P}[K_k \subseteq G] = p^{\binom{k}{2}}$.
+	Using the union bound for probability we also find \[\mathbb{P}[\omega(G)\geq k] = \mathbb{P}\left[\bigcup_{i=1}^{\binom{n}{k}} S_i \text{ is complete}\right] \leq \binom{n}{k}p^{\binom{k}{2}}\] 
+	\textbf{Theorem}\\
+	We define the Ramsey number $R(k) = n$, if for all G with $n$ vertices we have $\alpha(G) \geq k$ or $\omega(G) \geq k$. Then we have $R(k) > 2^\frac{k}{2}$.\\
+	
+	Using $m = \binom{n}{2}$ we can easily give a random variable $X$ that models the number of edges in our random graph, $X \sim \left|E(G)\right|$. Then $\mathbb{P}[X = k] = \binom{m}{2}p^k(1-p)^{m-k}$. The expected value than simplifies to \[\mathbb{E}[X] = \sum_{u,v \in E(G)} \mathbb{E}[X_{u,v}] = \sum_{u,v \in E(G)} \mathbb{P}[X_{u,v} = 1] = \binom{n}{2}p\]
+	\textbf{Lemma}\\
+	$\mathbb{E}[\# l-\text{cycles in } G \in G(n,p)] = \frac{(n)_lp^l}{2l}$.\\
+	\textbf{Reminder}\\
+	Markov's inequality: Let $X$ be a non-negative random variable, then \[\mathbb{P}[X \geq a] \leq \frac{\mathbb{E}[X]}{a}\]
+	\textbf{Theorem}\\
+	$\forall k \; \exists G$ with $\chi(G) \geq k$ and $g(G) \geq k$.
 \end{document}
