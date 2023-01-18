@@ -572,4 +572,29 @@
 	\end{align*} which implies $\min\{t \in \mathbb{N}: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\} \in [LB,2LB]$. Using binary search we determine an integer $T$ with $\min\{t \in \mathbb{N}: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\} \in [T-\varepsilon LB, T]$ using $\mathcal{O}\left(\log \frac{1}{\varepsilon}\right)$ calls of above algorithm. Note that \[T \leq OPT(I)+\varepsilon LB \leq (1+\varepsilon) LB\]
 	\textbf{Theorem}\\
 	Let $\varepsilon$ be fixed. There is a polynomial time algorithm that, for a given instance $I$ of \texttt{Minimum Makespan} determines a feasible solution for $I$ whose objective function value is at most $(1+\varepsilon)^2OPT(I)$. That means there is a PTAS for \texttt{Minimum Makespan}.
+	\section{Spreading Dynamics and Graph Convexities}
+	\textbf{Definition}\\
+	These are models for various types of spreading dynamics in networks such as opinions, viruses, etc. If for example the nodes $u$ and $v$ of a graph are infected, then under the model of the \underline{shortest path convexity} all nodes $w$ on the shortest path between $u$ and $v$ will be infected as well. Another example arises from the \underline{$P_3$ convexity} where every node that has two infected neighbours will be infected in the next step.
+	
+	\subsection{$P_3$-convexity}
+	Using the last module, we define the \underline{$P_3$-convex hull}. Given a $S \subseteq V(G)$ we iteratively add vertices $v$ to $S$ if two neighbours of $v$ are in $S$. The set on which this process stabilizes is the convex hull.\\
+	\textbf{Definition}\\
+	$S$ is called a $P_3$-hull set if the $P_3$ convex hull equals $V(G)$. The $P_3$-hull number $h_{P_3}(G)$ is the size of a smallest $P_3$-hull set of $G$.\\
+	In a \underline{$P_3$-interval set} $S$ of $G$ every vertex of $V(G)\setminus S$ has two neighbours in $S$. The $P_3$-interval number $i_{P_3}(G)$ is the cardinality of the smallest such set.
+	
+	\subsection{shortest-path-convexity}
+	All definitions from the previous section also apply to the shortest-path-convexity strategy. The shortest-path-hull number $h_{sp}(G)$ and the shortest-path-interval number $i_{sp}(G)$ are defined as above.
+	
+	\subsection{NP-hardness}
+	Each of the four parameters we just defined are \textbf{NP}-hard to determine on any given graph $G$ as input.
+	
+	\subsection{Different Graphs}
+	\textbf{Definition}\\
+	A \underline{unit interval graph} is a graph $G$ such that any induced cycle is a $C_3$.
+	An \underline{$X$-free graph} is a graph that does not contain any \textit{induced} subgraph isomorphic to an element of $X$.\\
+	The \underline{paw graph} arises from a $C_3$ by connecting one of the vertices with a fourth vertex.\\
+	\textbf{Theorem}\\
+	In the shortest-path convexity, the hull number of a given $\{\text{paw}, P_5\}$-free graph containing an induced $P_4$ graph can be computed efficiently.\\
+	
+	$h_{sp}(G)$ can be found in polynomial time for $P_4$-free graphs and for $\{\text{paw}, P_5\}$-free graphs but it is an open question for $P_L$-free graphs with $L \in \{5,6,7,8\}$. After that it is in \text{NPC}.
 \end{document}
