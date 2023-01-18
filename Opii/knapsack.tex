@@ -25,7 +25,7 @@
 	An instance $I$ of knapsack is given by \[I = (n,(c_i)_{i \in [n]}, (w_i)_{i \in [n]}, W)\]
 	where the goal is to find a subsect $S \subseteq [n]$ that maximizes $\sum_{i \in S} c_i$ under the constraint that $\sum_{i \in S} w_i \leq W$. This can be interpreted as follows:
 	\begin{quote}
-		\textit{Imagine, you have a a backpack that can only hold items of a total size $W$. You are given $n$ items that each have assigned a cost $c_i$ and a weight $w_i$. What is the best choice of items to out in your backpack that achieve the maximum cumulative value?}
+		\textit{Imagine, you have a backpack that can only hold items of a total size $W$. You are given $n$ items that each have assigned a cost $c_i$ and a weight $w_i$. What is the best choice of items to put in your backpack that achieves the maximum cumulative value?}
 	\end{quote}
 	\section{Complexity}
 	\begin{theorem}
@@ -72,7 +72,7 @@
 		The greedy algorithm does not provide an $\alpha$-approximation factor.
 	\end{theorem}
 	\begin{proof}
-		Assume a $\alpha$-approximation on an instance $(I = n, c_1,...,c_n,w_1,...,w_n, W)$ were feasible. If we let $n=2$, $w_1=w_2=W$ and $c_1 = 1$, $c_2 = \alpha + 1$, then the greedy algorithm only achieves a value of $A(I) = 1$. The optimum however would be choosing item two, returning a value of $OPT(I) = \alpha + 1$. Thus \[\frac{1}{\alpha}OPT(I) \not\leq A(I)\]
+		Assume a $\alpha$-approximation on an instance $(I = n, c_1,...,c_n,w_1,...,w_n, W)$ were possible. If we let $n=2$, $w_1=w_2=W$ and $c_1 = \alpha$, $c_2 = \alpha + \alpha^2$, then the greedy algorithm only achieves a value of $A(I) = \alpha$. The optimum however, would be choosing item two, returning a value of $OPT(I) = \alpha + \alpha^2$. Thus \[\frac{1}{\alpha}OPT(I) \not\leq A(I)\]
 	\end{proof}
 	However, we can still analyse the competitive ratio (that is the factor by which this approach might fare worse than an optimal algorithm). Define the following \begin{align}
 		 U &= \max\left\{\frac{c_i}{w_i}: i \in [n]\right\}\\
@@ -85,10 +85,10 @@
 	\begin{proof}
 		Notice that the return value of the greedy algorithm is at least $L\cdot(1-\varepsilon)\cdot W$. The general optimal solution can be no more that $U\cdot W$ proving the statement.
 	\end{proof}
-	Using above definitions, we can give an online approximation algorithm that achieves a competitive ratio of at most $\left(\frac{Ue}{L}^{2\varepsilon}\right)\left(1+\ln \left(\frac{U}{L}\right)\right)$. The decision whether or not to choose an item is based on a function $\psi: [0,1] \to [0,U]$ defined by \begin{align}
+	Using above definitions, we can give an online approximation algorithm that achieves a competitive ratio of at most $\left(\frac{Ue}{L}\right)^{2\varepsilon}\left(1+\ln \left(\frac{U}{L}\right)\right)$. The decision whether or not to choose an item is based on a function $\psi: [0,1] \to [0,U]$ defined by \begin{align}
 		\psi(z) = \begin{cases}
 			L, & 0 \leq z \leq z_L\\
-			\frac{1}{e}\left(\frac{Ue}{L}^z\right) & \text{else}
+			\frac{1}{e}\left(\frac{Ue}{L}\right)^z & \text{else}
 		\end{cases}
 	\end{align}
 	where $z_L = \frac{1}{1+\ln(\frac{U}{L})}$.
@@ -108,7 +108,7 @@
 		\end{algorithmic}
 	\end{alg}
 	\begin{theorem}
-		Above algorithm achieves a competitive ratio of at most $\left(\frac{Ue}{L}^{2\varepsilon}\right)\left(1+\ln \left(\frac{U}{L}\right)\right)$. 
+		Above algorithm achieves a competitive ratio of at most $\left(\frac{Ue}{L}\right)^{2\varepsilon}\left(1+\ln \left(\frac{U}{L}\right)\right)$. 
 	\end{theorem}
 	\begin{proof}
 		This proof is quite involved and requires some heavy arithmetic. We only present the basic steps.
@@ -116,11 +116,11 @@
 			c(S \cap S^*) &= \sum_{i \in S\cap S^*} c_i \geq \sum_{i \in S\cap S^*}\psi(z_i)w_i = P_1\\
 			c(S\setminus S^*) &= \sum_{i \in S\setminus S^*} c_i \geq \sum_{i \in S\setminus S^*} \psi(z_i)w_i = P_2
 		\end{align}
-	Furthermore, \(P_1 \leq \psi(Z)ZW\). With some set theoretical operations this implies $\frac{c(S^*)}{c(S)} \leq \frac{\psi(Z)ZW + c(S^*\setminus S)}{\sum_{i \in S}\psi(z_i)w_i}$. Using $\frac{w_i}{W} \leq \varepsilon$ and $z_{i+1} - z_i = \frac{w_i}{W}$ we obtain $\psi(z_{i+1}) \leq \psi(z_i)\left(\frac{Ue}{L}\right)^\varepsilon$. Doing some heavy arithmetic implies \[\sum_{i \in S}\psi(z_i)w_i \geq W\left(\frac{Ue}{L}\right)^{-\varepsilon}z_L\psi(Z)\]
+	Furthermore, \(P_1 \leq \psi(Z)ZW\). With some set theoretical operations this implies $\frac{c(S^*)}{c(S)} \leq \frac{\psi(Z)ZW + c(S^*\setminus S)}{\sum_{i \in S}\psi(z_i)w_i}$. Using $\frac{w_i}{W} \leq \varepsilon$ and $z_{i+1} - z_i = \frac{w_i}{W}$ we obtain $\psi(z_{i+1}) \leq \psi(z_i)\left(\frac{Ue}{L}\right)^\varepsilon$. Doing some heavy arithmetic we find \[\sum_{i \in S}\psi(z_i)w_i \geq W\left(\frac{Ue}{L}\right)^{-\varepsilon}z_L\psi(Z)\]
 	Now if $\not\exists i \in S^*\setminus S$ with $z_i + \frac{w_i}{W} > 1$, we conclude $\frac{c_i}{w_i} \leq \psi(z_i)$ for all $i \in S^*\setminus S$ and thus $c(S^*\setminus S) \leq \psi(Z)(1-Z)W$. From this we can follow the statement.\\
 	If on the other hand $\exists i \in S^* \setminus S$ with $z_i + \frac{w_i}{W} > 1$, we have $Z > 1-\varepsilon$ and hence $\psi(Z) > U\left(\frac{Ue}{L}\right)^{-\varepsilon}$. Doing some more number crunching will also give the desired result.
 	\end{proof}
-	We know consider a simpler version if the knapsack problem, where each item has $w_i = c_i \in [0,1] \cap \mathbb{Q}$ and $W=1$.
+	We now consider a simpler version of the knapsack problem, where each item has $w_i = c_i \in [0,1] \cap \mathbb{Q}$ and $W=1$.
 	\begin{lemma}
 		There is no deterministic online $\alpha$-approximation algorithm for this problem.
 	\end{lemma}  
@@ -131,10 +131,10 @@
 		In the scenario above, we can achieve a $\frac{1}{2}$ approximation factor, if the size of the largest item is given.
 	\end{lemma}
 	\begin{proof}
-		Let $s = \max\{w_i: i \in [n]\}$. Choose items of size less $s$ as long as their cumulative weight is at most $1-s$. Afterwards, pick items greedily. This results in an approximation factor of $\frac{1}{2}$. If $s \geq \frac{1}{2}$, this is obvious. If the items before $s$ add up to more than half the capacity, it is clear as well. Therefore, we can only miss the $\frac{1}{2}$ factor if for some items after the first item of size $s$, there is no room in the backpack. But since, any other item has size at most $s$, this implies that we must have already packed an items of cumulative size $1-s$. Since we assumed $s < \frac{1}{2}$, this shows our approximation factor.\\
+		Let $s = \max\{w_i: i \in [n]\}$. Choose items of size less than $s$ as long as their cumulative weight is at most $1-s$. Afterwards, pick items greedily. This results in an approximation factor of $\frac{1}{2}$. If $s \geq \frac{1}{2}$, this is obvious. If the items before $s$ add up to more than half the capacity, it is clear as well. Therefore, we can only miss the $\frac{1}{2}$ factor if for some items after the first item of size $s$, there is no room in the backpack. But since, any other item has size at most $s$, this implies that we must have already packed an items of cumulative size $1-s$. Since we assumed $s < \frac{1}{2}$, this shows our approximation factor.\\
 		Using $j$ as defined in the previous proof, we can even show, that no deterministic online algorithm can do better than $\frac{1}{2}$. For this we use the instance $(\frac{1}{2} + \varepsilon), (e)_{i=2}^j, (\frac{1}{2} - \varepsilon)$. Since any other deterministic algorithm picks a $\varepsilon$, we only achieve a value of $1+2\varepsilon$, while the optimum is 1.
 	\end{proof}
-	We now consider a more difficult version of unweighted knapsack, where we can discard the entire bag, and pick the next item in line if it doesn't fit.
+	We now consider a more difficult version of unweighted knapsack, where we can discard the entire bag, and pick the next item in line if it didn't fit.
 	\begin{lemma}
 		This problem admits a 2-factor approximation.
 	\end{lemma}
@@ -161,5 +161,14 @@
 	\end{cases}\]
 	We can hence find any $x(n,k)$ in $n$ steps and therefore require a running time of $\mathcal{O}(n\cdot C)$.
 	\end{alg}
-	Now we attempt to scale down our instance $I$. Using $C$ from above algorithm, we define $t = \max\left\{1, \frac{\varepsilon C}{n}\right\}$ and $c_i' = \left\lfloor \frac{c_i}{t}\right\rfloor$. With our pseudo-polynomial algorithm previously introduced, we generate an optimal solution $S'$ for this instance $I'$. Notice first however, that $c_i \geq t \cdot c_i'$ and $t \cdot c_i' \geq c_i - t$. Also, $S' \geq t\cdot c'^Tx$ where $x$ encodes an optimal solution of the problem. Thus $S' \geq OPT(I) - \varepsilon t \geq OPT(I) - \varepsilon OPT(I) = (1-\varepsilon) OPT(I)$. Therefore, we have an FPTAS.
+	We start the FPTAS by using the greedy algorithm to determine a feasible solution $S_1$ of value $m$ that then satisfies $2m \geq OPT(I)$. We set $t = \max\left\{1, \frac{\varepsilon\cdot m}{n}\right\}$ and create a new instance \[\tilde{I} = (n, \tilde{c}_1 = \left\lfloor\frac{c_1}{t}\right\rfloor, ..., \tilde{c}_n = \left\lfloor \frac{c_n}{t}\right\rfloor, w_1,...,w_n,W)\]
+	Using the algorithm aforementioned algorithm, we create an optimal solution $S_2$ of this instance $\tilde{I}$. We then return the better of the two solutions.\\
+	We still need to show that this is in fact an FPTAS. Obviously if $t = 1$, then $I = \tilde{I}$ and $S_2$ is an optimal solution. Hence, assume $t = \frac{\varepsilon m}{n}$ in the following. Let $S^*$ be an optimal solution, then we have \begin{align}
+		c(S_2) = \sum_{i \in S_2} c_i \geq t\sum_{i \in S_2}\tilde{c}_i \geq t \sum_{i \in S^*} \tilde{c}_i \geq t \sum_{i \in S^*}\left(\frac{c_i}{t}-1\right) \geq c(S^*)-\varepsilon c(S_1)
+	\end{align}
+	This shows that in any case we can find \[(1+\varepsilon)\max\{c(S_1),c(S_2)\} \geq c(S_2) + \varepsilon c(S_1) \geq OPT(I)\]
+	Lastly, we notice that the optimal solution of the instance $\tilde{I}$ is bounded by $C = \frac{2m}{t}$ showing a running time of \begin{align}
+		\mathcal{O}(n\cdot C) = \mathcal{O}\left(n \cdot \frac{2m}{t}\right) = \mathcal{O}\left(n^2\frac{1}{\varepsilon}\right)
+	\end{align}
+	Thus we conclude that an FPTAS for knapsack exists.
 \end{document}
