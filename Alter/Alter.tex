@@ -575,5 +575,27 @@
 		\Return $(y_0,...,y_{N-1})$ 
 	\end{algorithmic}
 	\par\noindent\rule{\textwidth}{0.4pt}\\
-	Mit Master Theorem findet man eine Komplexität von $\Theta(N\log N)$.
+	Mit Master Theorem findet man eine Komplexität von $\Theta(N\log N)$.\\
+	
+	Zur Interpolation fehlt die inverse FFT, die ebenfalls in $\mathcal{O}(n\cdot \log n)$ gelingen sollte. Die Fourier Transformation lässt sich als Matrix-Vektor Multiplikation \[y = A \cdot a\] interpretieren. Dabei ist die Matrix $A$ die Vandermonde Matrix mit $(A)_{kj} = z^{jk}$. Diese Matrix ist invertierbar, damit ist die Rückrichtung leicht gegeben durch $a = A^{-1}y$. Es kann leicht gezeigt werden, dass $(A^{-1})_{jk} = \frac{z^{-jk}}{N}$. Mittels der inversen Matrixmultiplikation benötigt man aber $\mathcal{O}(n^2)$ Zeit. Wenn man aber im FFT-Algorithmus \begin{enumerate}
+		\item die Rollen von $a$ und $y$ vertauscht
+		\item $z$ durch $\overline{z}$ ersetzt
+		\item jede Komponente des Ergebnis durch $N$ teilt
+	\end{enumerate}
+	dann erhält man die Rückrichtung in $\mathcal{O}(n\cdot \log n)$ Zeit.\\
+	
+	Für zwei Polynome $a$ und $b$ gegeben als Koeffizientenvektoren kann man das Produktpolynom also bestimmen durch $FFT^{-1}(FFT(a)\cdot FFT(b))$ in $\mathcal{O}(n\cdot \log n)$ Zeit.
+	
+	\section{Suchbäume}
+	Suchbäume unterstützen die meisten Operationen auf Mengen in mittlerer Komplexität von $\mathcal{O}(n\cdot \log n)$ und im worst-case in $\mathcal{O}(n)$ Zeit.\\
+	Beispiel Binärer Suchbaum. Sei $T$ ein Binärbaum. Man bezeichne die Wurzel als Schlüssel $x$. Damit die Suchbaum Eigenschaft gilt, muss $T$ erfüllen: \begin{itemize}
+		\item Für jeden Teilbaum auf der linken Seite ist der Schlüssel höchstens $x$
+		\item im rechten umgekehrt.
+	\end{itemize}
+	Der Suchalgorithmus, die Suche nach Minimum und die nach Maximum werden durch diese Struktur leicht möglich.
+	\subsection{AVL Bäume}
+	Ein binärer Suchbaum heißt AVL-Baum, wenn sich die Höhe des linken und rechten Teilbaums um maximal 1 unterscheiden. Der Balance-Grad ist definiert als Höhe(rechter Teilbaum)-Höhe(linker Teilbaum), $bal(T) = h(T_r)-h(T_l) \in \{-1,0,1\}$. AVL-Bäume können nicht degenerieren, also in eine Liste entarten. Ein AVL Baum der Höhe hat mindestens $F_{h+2}$ Blätter, wobei $F_{h+2}$ die $h+2$-te Fibonacci-Zahl ist. Die Höhe eines AVL-Baumes ist proportional zu $\log n$.\\
+	
+	Das Einfügen eines Elementes in einem AVL-Baum kann die AVL-Eigenschaft verletzen. Daher muss man eine große Fallunterscheidung vornehmen. Der Balance-Grad muss bei jedem Knoten mitgeführt werden, um eine effiziente Implementierung zu ermöglichen.\\
+	Die Implementierung muss mehrere Fallunterscheidungen treffen und benötigt dafür eine rekursive Hilfsmethode. Die Laufzeit kann aber mit $\mathcal{O}(n\cdot \log n)$ beschränkt werden. Das Löschen aus einem AVL-Baum kann mit einem ähnlichen Algorithmus mit den selben Fällen implementiert werden.
 \end{document}
