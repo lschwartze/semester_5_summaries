@@ -1,0 +1,101 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{algpseudocode}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{claim}{Claim}[theorem]
+\newtheorem{alg}{Algorithm}[section]
+
+\begin{document}
+	\begin{titlepage} 
+		\title{Minimum Makespan}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	The following gives an overview on everything that has been part of the Optimization II lectures and exercises in the winter term 2022/23 regarding the minimum makespan problem. 
+	\section{Introduction}
+	An instance of minimum makespan is defined by integers $n,m,a_1,...,a_n$ where the goal is to determine a function $f:[n] \to [m]$ that minimizes \[\max_{j \in [m]} a_{f^{-1}(j)} = \max_{j \in [m]} \sum_{i \in [n]: f(i) = j} a_i\]
+	This problem can be described as follows: \begin{quote}
+		Imagine there are $m$ identical machines and there are $n$ jobs that have to be completed. The $i$-th job requires $a_i$ amount of time to finish. What is the best distribution of these jobs onto the $m$ machines to minimize the time that is required?
+	\end{quote}
+	This is also the reason why the optimum $OPT(I)$ is often referred to as the completion time. One can find a very natural lower bound for the optimum \[OPT(I) \geq LB := \max\left\{a_1,...,a_n,\left\lceil\frac{a_1+...+a_n}{m}\right\rceil\right\}\]
+	\section{Complexity}
+	To analyse the complexity of minimum makespan we first need to introduce a decision version of the problem. Let $I$ be an instance of minimum makespan. Then $(I,k)$ is an instance of the decision version, where the question is, whether a distribution of the jobs on the machines exists, that requires a completion time of at most $k$.
+	\begin{theorem}
+		Minimum makespan is NP-complete
+	\end{theorem}
+	\begin{proof}
+		First, we need to show that the decision whether a given function $f$ is a feasible solution, is checkable in polynomial time. This can easily be seen, since the computation of the completion time can be done in linear time in $n$ and $m$.\\
+		We prove the completeness by a reduction from bin packing.\\
+		Let $I = (n,m,a_1,...,a_n)$ be an instance of bin packing where the question is, whether the $n$ items can be distributed on $m$ bins of equal size 1. This gives rise to an instance $I' = (n,m,a_1,...,a_n,1)$ of minimum makespan, where we attempt to distribute the jobs such that the completion time is at most 1.\\
+		Identifying the bins with machines shows directly that a function $f$ is feasible and a yes-instance of $I'$ if and only it is feasible and a yes-instance for $I$.
+	\end{proof}
+	\subsection{Approximation Algorithms}
+	Notice that this problem admits a very natural greedy algorithm. \begin{alg}
+		Greedy algorithm for job scheduling.		\normalfont
+		\begin{algorithmic}[1]
+			\For{$i=1 \text{ to } n$}
+			\State $f(i) \gets j, \text{ where $j$ minimizes } \sum_{l \in [i-1] | f(l) = j} a_l$
+			\EndFor\\
+			\Return $f$
+		\end{algorithmic}
+	\end{alg}
+	\begin{theorem} (Graham)\\
+		Above algorithm returns a solution $f$ that satisfies \[\max_{j \in [m]} a_{f^{-1}(j)} \leq 2\cdot LB \leq 2OPT(I)\]
+	\end{theorem}
+	\begin{proof}
+		Let $k$ be the machine that requires the most amount of time. Let $l \in [n]$ be maximal such that $f(l) = k$ and let $t$ satisfy \[t = \sum_{i \in [l-1]: f(i) = k} a_i = a_{f^{-1}(k)} - a_l\]
+		Obviously, all machines had completion time at least $t$, when job $l$ was assigned to machine $k$. This implies $LB \geq t$ and thus \[a_{f^{-1}(k)} = t + a_l \leq LB + LB = 2\cdot LB \leq 2\cdot OPT(I)\]
+	\end{proof}
+	\begin{theorem}
+		Above algorithm cannot have an approximation factor that is better than $\frac{3}{2}$.
+	\end{theorem}
+	\begin{proof}
+		Take the instance $I = (n=3,m=2,1,1,2)$. The greedy algorithm returns the state $((1,2),(1))$ with a completion time of 3, when the optimum would be an equal distribution of time 2 showing that $A(I) \not < \frac{3}{2}OPTI(I)$
+	\end{proof}
+	\subsection{PTAS}
+	\begin{alg}PTAS for minimum makespan\\
+		Choose an integer $t \in [LB, 2\cdot LB]$ and an $\varepsilon > 0$ which should be rational (that is to ensure that the exact number can be saved in a computer). We can transform any instance $I$ of minimum makespan to an instance of bin packing by setting $I' = (a_1',...,a_n')$ where \[a_i' = \begin{cases}
+			0, & a_i < t \varepsilon\\
+			\varepsilon(1+\varepsilon)^l, & a_i \in \left[t \varepsilon(1+\varepsilon)^l, t \varepsilon(1+\varepsilon)^{l+1}\right) \text{for some }l \in \mathbb{N}_0
+		\end{cases}\]  
+		This definition implies $a_i' \cdot t \leq a_i$ and $a_i \leq a_i' \cdot t \cdot (1+\varepsilon)$ whenever $a_i \geq t \varepsilon$. Furthermore, $a_i \leq t$ and $\varepsilon(1+\varepsilon)^l \geq 1$ for $\log_{1+\varepsilon}\left(\frac{1}{\varepsilon}\right)$ ensure \[\left|\{a_1',...,a_n'\}\right| \leq \log_{1+\varepsilon}\left(\frac{1}{\varepsilon}\right) + 2\]
+		This instance of bin packing can then be solved efficiently as follows.
+	\end{alg}
+	\begin{theorem}
+		For $\varepsilon > 0$ and $K \in \mathbb{N}$ there is a polynomial-time algorithm that determines an optimum solution for a given instance $I$ of bin packing that satisfies $\min(a_i) \geq \varepsilon$ and $\left|\{a_1,...,a_n\}\right| \leq K$
+	\end{theorem}
+	\begin{proof}
+		Let $I$ be an instance that satisfies above requirements. Define $M = \left\lfloor\frac{1}{\varepsilon}\right\rfloor$ and $\{a_1,...,a_n\} \subseteq \{s_1,...,s_K\}$ for a sequence $s_1 < ... < s_K$. Every way of filling a bin with items of the $K$ different sizes corresponds to a vector $\{0,1,...,M\}^K$, that means there are at most $(M+1)^K$ different ways to fill a bin. The $i$-th component of the vector corresponds to the amount of items of size $s_i$ are picked. Every solution to a bin packing problem needs at most $n$ bins, thus there are at most $(n+1)^{(M+1)^K}$ possible solutions which is polynomial in $n$. Every possibility can hence be checked efficiently.
+	\end{proof}
+	\begin{alg} Solving the bin packing instance created above.\\
+		\normalfont Assign the items of instance $I' = (a_1',...,a_n')$ of sizes $a_i'\cdot t \cdot (1+\varepsilon)$ to bins of size $t\cdot (1+\varepsilon)$ optimally. Then return to the instance $I$.\\
+		Assign every item with $a_i \geq t\cdot \varepsilon$ to the same bin as $a_i'\cdot t \cdot (1+\varepsilon)$. Distribute the remaining items to the existing bins of size $(1+\varepsilon)t$ such that either no new bin is used or all but at most one bin is filled up to at least $t$.
+		Return $\alpha := \alpha(I,t,\varepsilon)$, the number of bins obtained.
+	\end{alg}
+	\begin{theorem}
+		Above algorithm has polynomial running time and returns a solution that satisfies \[OPT\left(\frac{a_1}{(1+\varepsilon)t},...,\frac{a_n}{(1+\varepsilon)t}\right) \leq \alpha \leq OPT\left(\frac{a_1}{t},...,\frac{a_n}{t}\right)\]
+	\end{theorem}
+	\begin{proof}
+		We pack the items $a_1,...,a_n$ in bins of size $(1+\varepsilon)t$ so the first inequality is trivial.\\
+		If $OPT(I') = \alpha$, that is no new bins are needed for all the small items, then $a_i' \leq \frac{a_i}{t}$ implies \[OPT\left(\frac{a_1}{t},...,\frac{a_n}{t}\right) \geq OPT(I') = \alpha\] and if $OPT(I') \leq \alpha$, then $OPT\left(\frac{a_1}{t},...,\frac{a_n}{t}\right) \geq \frac{a_1+...+a_n}{t} > \frac{(m-t)t}{t} = \alpha-1$.
+	\end{proof}
+	\begin{lemma}
+		The theorem of Graham implies \[OPT(I)  = \min\left\{t \in \mathbb{N}: OPT\left(\frac{a_1}{t},...,\frac{a_n}{t}\right) \leq m\right\} \geq \min\left\{t \in \mathbb{N}: t \geq LB \text{ and } \alpha \leq m\right\}\] and \[\alpha(I,2LB,\varepsilon) \leq OPT\left(\frac{a_1}{2LB},...,\frac{a_n}{2LB}\right) \leq m\] which implies \[\min\left\{t \in \mathbb{N}: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\right\} \in [LB, 2LB]\]
+		Using binary search, we obtain an integer $T$ with \[\min\left\{t: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\right\} \in [T-\varepsilon LB, T]\] which requires $\mathcal{O}\left(\log_2\left(\frac{1}{\varepsilon}\right)\right)$ calls of the algorithm above. Notice that $T \leq (1+\varepsilon)OPT(I)$.
+	\end{lemma}
+	\begin{theorem}
+		There is a PTAS for minimum makespan that returns a solution of at mis t$(1+\varepsilon)^2OPT(I)$.
+	\end{theorem}
+	\begin{proof}
+		Determine $T$ as above. For a fixed $\varepsilon$ this can be achieved in polynomial time. Clearly $\alpha(I,T,\varepsilon) \leq m$. We can then pack the items in at most $m$ bins of size $(1+\varepsilon)T$ and therefore achieve a completion time of \[(1+\varepsilon)T \leq (1+\varepsilon)^2OPT(I)\] 
+	\end{proof}
+\end{document}
