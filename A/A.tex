@@ -625,4 +625,70 @@ Sein $K$ ein Körper und $A \in M_{n,n}(K)$ mit invarianten Faktoren $a_1,...,a_
 	\item $C_A(A) = 0$
 	\item $\exists \alpha > 0$ mit $c_A | m_A^\alpha$
 \end{itemize}
+\section{Lokalisierung}
+Sei $R$ ein Integritätsring und $Q(R)$ der Bruchkörper.\\
+Wir wollen allgemeinere solche Ringe (aus einem gegebenen $R$) definieren. Die Elemente des neuen Rings werden der Form $\frac{a}{s}$ mit $a \in R$ und $s \in S \subseteq R$ sein. Wir setzen hierbei voraus, dass $S$ \underline{multiplikativ abgeschlossen} ist. Des weiteren sei $0 \not\in S$ und $1 \in S$.\\
+\underline{Erster Versuch}\\
+Wir betrachten Paare $(a,s) \in R\times S$ mit der Äquivalenz $(a_1,s_1) \sim (a_2,s_2)$ falls $a_1s_2 = a_2s_1$, überprüfen wir die Transitivität, alles andere ist leicht\\
+Gelte $(a_1,s_1) \sim (a_2,s_2)$ und $(a_2,s_2) \sim (a_3,s_3)$. Dann ist \begin{align*}
+	a_1s_2 &= a_2s_1\\
+	a_2s_3 &= a_3s_2
+\end{align*}
+Es gilt $a_1s_3s_2 = a_2s_1s_3 = a_3s_2s_1$.\\
+Wir können schließen, dass $a_1s_3 = a_3s_1$ ist, wenn $R$ ein Integritätsring ist, da $s_2 \neq 0$. Hierbei haben wir mehrfach Kommutativität verwendet.\\
+\textbf{Bemerkung}\\
+Ist $R$ kein Integritätsring, so ist $R \setminus \{0\}$ nicht multiplikativ abgeschlossen. Der erste Versuch ist im allgemeinen Fall also gescheitert.\\
+\underline{Zweiter Versuch}\\
+Wir schreiben nun $(a_1,s_1) \sim (a_2,s_2)$, falls $(a_1s_2-a_2s_1)t = 0$ für ein $t \in S$. Wieder muss nur die Transitivität überprüft werden.\\
+Gelte $(a_1,s_1) \sim (a_2,s_2)$ und $(a_2,s_2) \sim (a_3,s_3)$. Wir multiplizieren obige Gleichung mit $s_3u$, wobei $u$ sodass $(a_2s_3-a_3s_2)u = 0$:\begin{align*}
+	a_1s_2ts_3u = a_2s_1ts_3u
+\end{align*}
+Genau so finden wir in der zweiten Gleichung mit $s_1t$ \begin{align*}
+	a_2s_3us_1t = a_3s_2us_1t
+\end{align*}
+Wir schließen $a_1s_2ts_3u = a_3s_2us_1t$ und damit $(a_1s_3-a_3s_1)\underbrace{s_2tu}_{\in S} = 0$ und daher \[(a_1,s_1) \sim (a_3,s_3)\]
+\textbf{Definition}\\
+Sei $S \subseteq R$ multiplikativ abgeschlossen (also $0 \notin S$, $1 \in S$). Wir definieren die Lokalisierung $S^{-1}R$ von $R$ in $S$ durch $R\times S /\sim \ni \frac{a_1}{s_1}$, das Bild von $(a_1,s_1)$.\\
+Dies ist auf kanonische Weise ein Ring.\\
+
+\underline{Frage: $\frac{a}{1} = 0 \; \Leftrightarrow a = 0$?}\\
+Falsch. Rückrichtung gilt: Ist $a = 0$, dann ist $(a-0\cdot 1)1 = $ und damit $(a,1) \sim (0,1)$.\\
+Die Hinrichtung ist falsch: $\frac{a}{1} = \frac{0}{1}$ bedeutet $(a-0\cdot 1)s = as = 0$, daraus folgt nur in Integritätsringen $a = 0$.\\
+Beispiele für diese Frage sind $R = \mathbb{Z}/6\mathbb{Z}$ und $S = \{1,2,4\}$. Dann gilt $\frac{0}{1} = \frac{3}{1}$ in $S^{-1}R$. Daraus folgern wir, die Abbildung $R \to S^{-1}R$ muss nicht injektiv sein.\\
+
+\underline{Frage: Ist $R \to S^{-1}R$ mit $r \mapsto \frac{r}{1}$ injektiv, falls $R$ ein Integritätsring ist?}\\
+Wahr. Es gilt sogar noch mehr: Ist $R$ ein Integritätsring, so gibt es eine Injektion $S^{-1}R \to Q(R)$ mit $\frac{a}{s} \mapsto \frac{a}{s}$. Gilt nämlich $\frac{a_1}{s_1} = \frac{a_2}{s_2}$ in $Q(R)$, so ist $(a_1s_2-a_1s_2)1 = 0$ und $\frac{a_1}{s_1} = \frac{s_2}{s_2}$ in $S^{-1}R$.\\
+Die Abbildung ist wohldefiniert, da $\frac{a_1}{s_1} = \frac{a_s}{s_2}$ in $S^{-1}R$ impliziert $(a_1s_2-a_2s_1)t = 0$ für ein $t \in S$. Folglich $t \neq 0$ und $a_1s_2 = a_2s_1$ da $R$ ein Integritätsring ist. Dann ist $\frac{a_1}{s_1} = \frac{a_2}{s_2}$ in $Q(R)$.\\
+
+Ist $M$ ein $R$-Modul, so können wir genau so $S^{-1}M = (M\times S) / \sim \ni \frac{m}{2}$ bilden. Es gilt $\frac{m_1}{s_1} = \frac{m_2}{s_2}$ falls $(m_1s_2 - m_2s_1)t = 0$ für ein $t \in S$.\\
+\textbf{Beispiele}\\
+\begin{enumerate}
+	\item $R = \mathbb{Z}, \; S = \{1,p,p^2,...\}$. Dann $S^{-1}R \ni \frac{a}{s}$ mit $a \in \mathbb{Z}, \; s \in S$. Nun gilt \begin{align*}
+		\frac{a_1}{s_1} = \frac{a_2}{s_2}\\
+		\Leftrightarrow a_1s_2 = a_2s_1
+	\end{align*}
+Man bemerkt leicht $\mathbb{Z} \subset S^{-1}\mathbb{Z} = \mathbb{Z}[\frac{1}{p}] \subset \mathbb{Q}$.
+\item $R = \mathbb{Z}, \; S = \mathbb{Z}\setminus p \mathbb{Z}$. Bild in $\mathbb{Q}$: alle Brüche, die sich als $\frac{a}{s}$ mit $p \not | s$ schreiben lassen. Ist $\frac{t}{u} \in \mathbb{Q}$, dann ist $\frac{t}{u} \in S^{-1}R \Leftrightarrow \frac{t}{u}$ gekürzt und $p \not | u$.\\
+Diese Lokalisierung wird mit $\mathbb{Z}_{(p)}$ bezeichnet.
+\item Ist $R$ ein Ring mit Primideal $p$, so ist $S = R\setminus p$ multiplikativ abgeschlossen. Die Lokalisierung heißt in diesem Fall $R_p$.
+\item Sei $R = k[x,y], F \in R$ irreduzibel. Die Lokalisierung $R_{(f)} = \left\{\frac{g}{h}: \; g,h \in k[x,y]: \; f \not |\; h\right\}$. Dies sind die rationalen Funktionen, auf der Kurve $X = \{(a,b) \in k^2: f(a,b) = 0\}$. 
+\end{enumerate} 
+\textbf{Proposition}\\
+Ist $M_1 \overset{f}{\to} M_2 \overset{g}{\to} M_3$ eine exakte Sequenz von $R$-Moduln so ist \[S^{-1}M_1 \overset{S^{-1}f}{\to} S^{-1}M_2 \overset{S^{-1}g}{\to} S^{-1}M_3\] eine exakte Sequenz von $S^{-1}M$-Moduln.\\
+$S^{-1}R \ni \frac{a}{s} \frac{m_1}{s_1} = \frac{am_1}{ss_1}$. Beachte die Abbildung \begin{align*}
+	S^{-1}f: S^{-1}M_i \to S^{-1}M_{i+1}\\
+	\frac{m_i}{2} \mapsto \frac{f(m_i)}{s}
+\end{align*}
+\underline{Beweis} $im(S^{-1}f) \subseteq ker(S^{-1}g)$, denn \[\frac{m_1}{2} \mapsto \frac{f(m_1)}{s} \mapsto \frac{g(f(m_1))}{s} = \frac{0}{s} = 0\]
+$ker(S^{-1}g) \subseteq im(S^{-1}f)$: Sei $\frac{m_2}{s} \in ker(S^{-1}g)$ mit $\frac{g(m_2)}{s} = \frac{0}{s}$. Dies bedeutet $g(m_2)t = 0$ für ein $t \in S$. Sei $m_1$ so, dass $f(m_1) = tm_2$. Dann ist $S^{-1}f\left(\frac{m_1}{st}\right) = \frac{f(m_1)}{st} = \frac{m_2t}{st} = \frac{m_2}{s}$\\
+\textbf{Korollar}\\
+Ist $N \subset M$ eine Inklusion von $R$-Moduln, so gilt $S^{-1}(M/N) \cong S^{-1}(M) / S^{-1}(N)$.\\
+\underline{Beweis} Bemerke, dass $S^{-1}N$ ein Untermodul von $S^{-1}M$ ist, da \[N\subset M \Leftrightarrow \; \exists \text{ eine exakte Sequent } 0 \to N \to M\]
+Damit findet man die exakte Sequenz \[0 \to S^{-1}N \to S^{-1}M\] mit $\frac{n}{s} \mapsto \frac{n}{s}$.\\
+Sei $Q = M/N$. Dann gibt es eine Sequenz \[N \to M \to Q \to 0\]
+Man sieht $S^{-1}N \to S^{-1}M \to S^{-1}Q \to 0$.\\
+Die Abbildung $S^{-1}M \to S^{-1}(M/N) = S^{-1}Q$ mit $\frac{m}{s} \mapsto \frac{\overline{m}}{s}$ hat Kern $S^{-1}N$: Isomorphiesatz liefert \begin{align*}
+	S^{-1}M/S^{-1}M &\to S^{-1}(M/N)\\
+	\frac{m}{s} &\mapsto \frac{\overline{m}}{s}
+\end{align*}
 \end{document}
