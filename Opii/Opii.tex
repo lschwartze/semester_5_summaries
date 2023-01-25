@@ -596,5 +596,31 @@
 	\textbf{Theorem}\\
 	In the shortest-path convexity, the hull number of a given $\{\text{paw}, P_5\}$-free graph containing an induced $P_4$ graph can be computed efficiently.\\
 	
-	$h_{sp}(G)$ can be found in polynomial time for $P_4$-free graphs and for $\{\text{paw}, P_5\}$-free graphs but it is an open question for $P_L$-free graphs with $L \in \{5,6,7,8\}$. After that it is in \text{NPC}.
+	$h_{sp}(G)$ can be found in polynomial time for $P_4$-free graphs and for $\{\text{paw}, P_5\}$-free graphs but it is an open question for $P_L$-free graphs with $L \in \{5,6,7,8\}$. After that it is in \text{NPC}.\\
+	\textbf{Theorem}\\
+	For a given $P_9$-free graph $G$ and a given integer $k$ it is \textbf{NP}-complete to decide whether $h_{sp}(G) \leq k$.
+	\section{Fast Exact Algorithms}
+	\textbf{Comment}\\
+	The following section considers exact so-called super-polynomial algorithms. These are not polynomial and sometimes even exponential in running time but are the best we know for \textbf{NP}-complete algorithms.\\
+	
+	For example, in order to obtain an independent set of size maximum size in a graph on $n$ vertices, the trivial slow approach is to consider all $2^n$ possibilities.\\
+	Starting with an empty set $I_1$ one can easily generate $I_{i+1}$ from $I_i$ in polynomial time. Testing the independence of $I_i$ can be done in polynomial time, therefore this naive approach requires $\mathcal{O}(p(n)2^n)$ time.\\
+	
+	Now let $f:D \to \mathbb{R}_{\geq 0}$ and $g: D \to \mathbb{R}_{\geq 0}$ be two functions with $D \subseteq \mathbb{R}$. We define \[f = \mathcal{O}^*(g)\] if there is a polynomial $p$ with \[f(x) \leq p(x) \cdot g(x)\]
+	This notation suppresses polynomial factors that are not essential for the asymptotic behaviour. Like in the independent set problem, many hard problems admit an exponential algorithm by considering all possible scenarios.\\
+	If such a naive approach has a running time of $\mathcal{O}^*(\alpha^n)$ then out interest is to construct an algorithm only requiring $\mathcal{O}^*(\beta^n)$ running time where $\beta < \alpha$.
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\underline{$mis1(G)$}\\
+	INPUT: A graph $G$\\
+	OUTPUT: the maximum cardinality $\alpha(G)$ of an independent set.
+	\begin{algorithmic}[1]
+		\If{$n(G) = 0$} 
+		\Return 0
+		\EndIf
+		\State Choose a vertex $u$ of minimum degree in $G$\\
+		\Return 1+ $\max\left\{mis1(G - N_G[v]: \; v \in N_G[u])\right\}$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Theorem}\\
+	Above algorithm works correctly and has a running time of $\mathcal{O}^*(3^{\frac{n}{3}}) \approx \mathcal{O}^*(1.44^n)$.
 \end{document}
