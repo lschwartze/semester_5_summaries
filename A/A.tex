@@ -661,7 +661,7 @@ Wahr. Es gilt sogar noch mehr: Ist $R$ ein Integritätsring, so gibt es eine Inj
 Die Abbildung ist wohldefiniert, da $\frac{a_1}{s_1} = \frac{a_s}{s_2}$ in $S^{-1}R$ impliziert $(a_1s_2-a_2s_1)t = 0$ für ein $t \in S$. Folglich $t \neq 0$ und $a_1s_2 = a_2s_1$ da $R$ ein Integritätsring ist. Dann ist $\frac{a_1}{s_1} = \frac{a_2}{s_2}$ in $Q(R)$.\\
 
 Ist $M$ ein $R$-Modul, so können wir genau so $S^{-1}M = (M\times S) / \sim \ni \frac{m}{2}$ bilden. Es gilt $\frac{m_1}{s_1} = \frac{m_2}{s_2}$ falls $(m_1s_2 - m_2s_1)t = 0$ für ein $t \in S$.\\
-\textbf{Beispiele}\\
+\textbf{Beispiele}
 \begin{enumerate}
 	\item $R = \mathbb{Z}, \; S = \{1,p,p^2,...\}$. Dann $S^{-1}R \ni \frac{a}{s}$ mit $a \in \mathbb{Z}, \; s \in S$. Nun gilt \begin{align*}
 		\frac{a_1}{s_1} = \frac{a_2}{s_2}\\
@@ -691,4 +691,59 @@ Die Abbildung $S^{-1}M \to S^{-1}(M/N) = S^{-1}Q$ mit $\frac{m}{s} \mapsto \frac
 	S^{-1}M/S^{-1}M &\to S^{-1}(M/N)\\
 	\frac{m}{s} &\mapsto \frac{\overline{m}}{s}
 \end{align*}
+\textbf{Beispiel}\\
+Sei $R = \mathbb{Z}$ und $M = \mathbb{Z}/10\mathbb{Z}$. $S = (2\mathbb{Z})^c$ ist multiplikativ abgeschlossen. Dann schreibt man $S^{-1}R = \mathbb{Z}_{(2)} = \{\frac{a}{s}: a \in \mathbb{Z} \text{ und } s \in \mathbb{Z}\setminus 2\mathbb{Z}\}$.\\
+Dann ist $\# M_{(2)} = \#(\mathbb{Z}/10\mathbb{Z})_{(2)} = 2$\\
+\underline{Schritt 1:} $(\mathbb{Z}/10\mathbb{Z})_{(2)} = \mathbb{Z}_{(2)}/10\mathbb{Z}_{(2)}$. Hierbei gilt $10 = 2\cdot 5$ und da $2\not | 5$ findet man sogar dass $5$ nun eine Einheit ist. Damit findet man die Relation \[10\mathbb{Z}_{(2)} = 2\cdot 5 \mathbb{Z}_{(2)} = 2\mathbb{Z}_{(2)}\]
+Also \[(\mathbb{Z}/10\mathbb{Z})_{(2)} \cong \mathbb{Z}_{(2)}/2\mathbb{Z}_{(2)} \;(\cong \mathbb{Z}/2\mathbb{Z})\]
+\underline{Schritt 2:} Die letzte der beiden Isomorphien soll nun mit dem Isomorphiesatz bewiesen werden. Man hat einen trivialen Homomorphismus \begin{align*}
+	\mathbb{Z} \overset{\phi}{\to} \mathbb{Z}_{(2)}/2\mathbb{Z}_{(2)}
+\end{align*}
+Wir beweisen sogar die stärkere Aussage, wo 2 durch $p$ ersetzt wird. Zu zeigen ist \begin{enumerate}
+	\item $\ker(\phi) = p\mathbb{Z}$
+	\item $\phi$ ist surjektiv
+\end{enumerate}
+Ad 1: wir finden $n \in \ker(\phi) \Leftrightarrow \frac{n}{1} = p\cdot (\frac{a}{s})$ mit $p \not | s$ in $\mathbb{Z}_{(p)}$, das heißt in $\mathbb{Z}$ gilt $ns = pa$. Da $p \not | s$ folgt $p | n$ und damit die erste Aussage.\\
+Ad 2: Sei $\frac{a}{s} \in \mathbb{Z}_{(p)}$. Modulo $p$ gilt $s^{-1}a \equiv n (\mod p)$.\\ Mit anderen Worten $a \equiv sn (\mod p)$ oder $a = sn + kp$ für ein $k \in \mathbb{Z}$. Dann ist $\frac{a}{s} = \frac{sn + kp}{s} = n + \frac{pk}{s} \in \mathbb{Z} + p\mathbb{Z}_{(p)}$. Dann $a = \frac{s}{n} \in \mathbb{Z}_{(p)}/p\mathbb{Z}_{(p)}$. Damit ist $\phi$ surjektiv und liefert \begin{align*}
+	\mathbb{Z}/p\mathbb{Z} &\to \mathbb{Z}_{(p)}/p\mathbb{Z}_{(p)}\\
+	n &\mapsto \frac{n}{1}
+\end{align*}
+Nebenbemerkung: ist $q \neq p$ eine Primzahl, dann ist $\mathbb{Z}_{(p)}/q\mathbb{Z}_{(p)} = 0$, denn $q\frac{1}{q} = 1$.\\
+\textbf{Beispiel}\\
+Genauso kann man finden $(\mathbb{Z}/100\mathbb{Z})_{(5)} \cong \mathbb{Z}_{(5)}/2^2\cdot 5^2\mathbb{Z}_{(p)} \cong \mathbb{Z}_{(5)}/5^2\mathbb{Z}_{(5)} \cong \mathbb{Z}/5^2\mathbb{Z}$.\\
+\textbf{Beispiel}\\
+schwierigere Beispiele sind \begin{itemize}
+	\item $(\mathbb{Z}/18\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z})_{(3)} = \mathbb{Z}/9\mathbb{Z}$
+	\item$(\mathbb{Z}/18\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z})_{(2)} = \mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z}$
+	\item $(\mathbb{Z}/18\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z})_{(p)} \cong (\mathbb{Z}/18\mathbb{Z})_{(p)} \times (\mathbb{Z}/2\mathbb{Z})_{(p)} \cong (\mathbb{Z}_{(p)}/18\mathbb{Z}_{(p)}) \times (\mathbb{Z}_{(p)}/2\mathbb{Z}_{(p)}) = 0 \times 0$ für $p \neq 2,3$
+\end{itemize}
+\textbf{Proposition}\\
+Sei $M$ ein $R$-Modul. dann ist $M = 0 \Leftrightarrow M_f = 0 \Leftrightarrow M_{\underline{m}} = 0$ wobei $f$ ein Primideal und $\underline{m}$ ein maximales Ideal sind.\\
+\underline{Beweis} Buch auf Moodle.\\
+\textbf{Proposition}\\
+Se $\phi: M \to N$ ein Homomorphismus von $R$-Moduln. Dann ist $\phi$ injektiv $\Leftrightarrow \; \phi_{\underline{m}}: M_{\underline{m}} \to N_{\underline{m}}$ injektiv für alle maximale Ideale $\underline{m} \subseteq R$.\\
+\underline{Beweis} $\Rightarrow:$ $\phi$ injektiv $\Leftrightarrow 0 \to M \overset{\phi}{\to} N$ exakt $\Rightarrow 0 \to M_{\underline{m}} \overset{\phi_{\underline{m}}}{\to} N_{\underline{m}}$ exakt und damit ist $\phi_{\underline{m}}$ injektiv.\\
+$\Leftarrow:$ Sei $K = \ker(\phi)$. Dann gibt es die Sequenz \[0 \to K \to M \to N\]
+Dann ist \[0 \to K_{\underline{m}} \to M_{\underline{m}} \to N_{\underline{m}}\] exakt. Folglich ist $K=0$.\\
+
+Vorher: Ist $\underline{a} \subseteq R$ ein Ideal, so sind die Ideale von $R/\underline{a}$ in bijektiver Korrelation mit den Idealen in $R$, die $\underline{a}$ enthalten \begin{align*}
+	b & \mapsto \pi^{-1}(b)\\
+	\pi(\overline{b}) &\gets \underline{b}
+\end{align*}
+Sei \begin{align*}
+	l: R &\to S^{-1}R\\
+	r &\mapsto \frac{r}{1}
+\end{align*}
+\textbf{Theorem}
+\begin{enumerate}
+	\item Sei $\underline{a} \subseteq R$ ein Ideal. Dann $S^{-1}a = \left\{\frac{a}{s}: a \in \underline{a}, \; s \in S\right\} = \langle l(\underline{a})\rangle = \langle \frac{a}{1} \rangle$.
+	\item Sei $\underline{b} \subseteq S^{-1}R$. Dann $\underline{b} = S^{-1}(l^{-1}(\underline{b})) = \langle l(l^{-1}(\underline{b})) \rangle$
+	\item $\left\{p \subset R \text{ prim }: \; p \cap S = \emptyset\right\} \leftrightarrow \left\{q \subseteq S^{-1}R \text{ prim}\right\}$ durch \begin{align*}
+		p &\mapsto S^{-1}p\\
+		l^{-1}(q) &\gets q
+	\end{align*}
+\end{enumerate}
+\underline{Beweis}: im Buch. 
+
+Eine Konsequenz ist, dass man in einer Lokalisierung $R_p$ mit $S = p^c$ die Primideale identifizieren kann mit $q \subseteq R$ sodass $q \cap p^c = \emptyset$, also $q \subseteq p$.
 \end{document}
