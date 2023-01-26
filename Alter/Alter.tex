@@ -598,4 +598,94 @@
 	
 	Das Einfügen eines Elementes in einem AVL-Baum kann die AVL-Eigenschaft verletzen. Daher muss man eine große Fallunterscheidung vornehmen. Der Balance-Grad muss bei jedem Knoten mitgeführt werden, um eine effiziente Implementierung zu ermöglichen.\\
 	Die Implementierung muss mehrere Fallunterscheidungen treffen und benötigt dafür eine rekursive Hilfsmethode. Die Laufzeit kann aber mit $\mathcal{O}(n\cdot \log n)$ beschränkt werden. Das Löschen aus einem AVL-Baum kann mit einem ähnlichen Algorithmus mit den selben Fällen implementiert werden.
+	\subsection{Branch and Bound}
+	Hierbei handelt es sich um eine Methode zur Lösung von Optimierungsproblemen, bei denen keine effizienten Verfahren bekannt sind. Es werden folgende Voraussetzungen gefordert: \begin{enumerate}
+		\item Lösungsraum ist strukturiert
+		\item Baumstruktur: \begin{enumerate}
+			\item Leere Lösung ist Wurzel
+			\item Kindknoten: jeweils nächste Erweiterung der vorherigen Teillösung
+		\end{enumerate}
+	\end{enumerate}
+	Eine leichte Anwendung ist das Travelling Salesman Problem.\\
+	
+	Im Branch Schritt werden neue Kindknoten erzeugt. Dies geschieht analog zur Breitensuche. Jeder Teillösung wird eine obere Schranke zugeordnet. Im TSP Beispiel wird immer die Teillösung mit minimalem Bound gewählt. Hier bietet sich eine Priority Queue für die Verwaltung der Bounds an. Als Queue könnte zum Beispiel ein Min-Heap verwendet werden.\\
+	
+	Der Bound ist anschaulich eine Schranke für die Bewertung der Lösungen, die sich aus dieser Teillösung ergeben. Hat eine Teillösung den Bound $b$, dann hat keine Lösung die sich dadurch ableiten lässt einen Wert, der besser als $b$ ist.\\
+	\underline{Vorgehensweise}\\
+	Berechne Bound $b$ der leeren Lösung $v$ und füge $(v,b)$ in den Heap ein\\
+	Wiederhole: Entferne $(v,b)$ mit minimalem Bound aus dem Heap.\\
+	Falls $v$ vollständige Lösung ist und $v \leq$ alle anderen Bounds, gib $v$ aus.\\
+	Sonst: Erweitere $v$ (Branch). Für jede Erweiterung $w$ von $v$ bestimme $b_w$. Falls $b_w \geq b$, füge $(w,b_w)$ in den Heap ein. Sonst füge $(w,b)$ ein.
+	\subsection{Spielbäume}
+	Fragestellung: Wie bestimmt man den optimalen Zug bei einem strategischen Spiel?\\
+	Es ist in der Regel nicht möglich, alle Spielzustände durchzurechnen (z.B. Schach), daher werden üblicherweise nur die nächsten Stufen simuliert.
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\underline{$Max(x)$}
+	\begin{algorithmic}[1]
+		\If{$x$ ist Blatt}
+		\Return Bewertung von $x$
+		\Else
+		\State Seien $x_1,...,x_k$ die Kinder von $x$
+		\State $w \gets -\infty$
+		\For{$i = 1$ to $k$}
+		\State $v \gets Min(x_i)$
+		\If{$v>w$}
+		\State $w \gets v$
+		\EndIf
+		\EndFor\\
+		\Return $w$
+		\EndIf
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Die Prozedur $Min(x)$ wird analog implementiert.
+	Die beiden Funktionen modellieren einen sogenannten MiniMax-Baum.\\
+	Wir führen nun sogenannte AlphaBeta-Bäume ein, die es erlauben, dass ein Spielbaum nicht vollständig untersucht werden muss:\\
+	
+	Die Maximumsbestimmung kann in einer tieferen Ebene beendet werden, wenn das vorläufige Maximum mindestens so groß wie das vorläufige Minimum einer höheren Ebene ist. Für die Implementierung müssen wir also das vorläufig erreichte Maximum und Minimum in die rekursiven Prozeduren übergeben. Die beiden Werte werden Alpha und Beta genannt. 
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\underline{$AlphaBetaMax(x, \alpha, \beta)$}
+	\begin{algorithmic}[1]
+		\If{$x$ ist Blatt}
+		\Return Bewertung von $x$
+		\Else
+		\State Seien $x_1,...,x_k$ die Kinder von $x$
+		\State $w \gets \alpha$
+		\For{$i = 1$ to $k$}
+		\State $v \gets AlphaBetaMin(x_i, w, \beta)$
+		\If{$v>w$}
+		\State $w \gets v$
+		\EndIf
+		\If{$w\geq \beta$}
+		\Return $w$
+		\EndIf
+		\EndFor\\
+		\Return $w$
+		\EndIf
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Angenommen der Spielbaum habe Verzweigungsgrad $b$. In Tiefe $t$ hat der Baum also $b^t$ Blätter. Der mittlere Verzweigungsgrad von Alpha-Beta-Bäumen ist der Verzweigungsgrad ungefähr $\tilde{b} = \alpha_b/(1-\alpha_b)$ wobei $\alpha_b$ die Lösung von $x^b+x=1$ ist. Für Werte bis ca. $b = 1000$ entspricht das ungefähr der Funktion $0.925\cdot b^{0.747}$. Für Schach haben wir einen mittleren Verzweigungsgrad von 35. In der Tiefe $t$ erhält man also $35^t$ Blätter im MiniMax-Baum. In der Alpha-Beta-Variante ist der Grad auf ungefähr 13 beschränkt. Bei gleichem Speicheraufwand kann im Alpha-Beta-Baum also eine ungefähre Tiefe von $t' = 1.38\cdot t$ erreicht werden.\\
+	
+	Die beiden Funktionen Max und Min können auch in nur einer Prozedur abgearbeitet werden, denn $\max(x,y) = -\min(-x,-y)$. Wenn man sich außerdem eine Methode überlegen könnte, bei der die besseren Kinder in jedem Iterationsschritt als erstes betrachtet werden, könnte man noch weitere Verbesserungen erreichen.
+	\section{String Matching} 
+	Das Problem des String Matchings sind alle Vorkommen eines Musters in einem Text gesucht. Der naive Algorithmus geht alle Positionen durch und vergleicht die Buchstaben des Musters schrittweise mit dem Text. Sobald ein Buchstabe nicht mit dem Text übereinstimmt, wird die nächste Position untersucht. Habe der Text Länge $m$ und das Muster $n$ dann hat die naive Methode eine Laufzeit von $\mathcal{O}(n\cdot m)$.
+	\subsection{Matching durch Hashing}
+	An jeder Stelle soll der Hashwert des Musters mit dem des Teilstrings verglichen werden. Nur wenn die Hahswerte übereinstimmen, dann werden die tatsächlichen Strings verglichen.
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Man betrachte einen Text $T$ der Länge $n$, ein Muster $P$ der Länge $m$ und die Hashwerte $p$ für $P$ und $t$ für den Teilstring $T[1,...,m]$.\\
+	\underline{Rabin-Karp-Matcher}
+	\begin{algorithmic}[1]
+		\For{$s = 0$ to $n-m$}
+		\If{$p = t$}
+		\If{Test($T,P,s$)}
+		\Return $s$
+		\EndIf
+		\EndIf
+		\If{$s<n-m$}
+		\State aktualisiere $t$
+		\EndIf
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Die Test-Funktion überprüft in linearer Zeit, ob zwei Strings gleich sind. Für die Komplexität relevant sind also die Länge des Textes und des Musters und die Anzahl der Kollisionen der gewählten Hashfunktion. Wir wählen als Hashfunktion die Kongruenzmethode $h(x) \equiv x \mod q$ mit Tabellengröße $q$. Die $r$ Buchstaben des Alphabets werden durchnummeriert, und im $r$-adischen System betrachtet, damit jedem Buchstaben eine Ziffer zugeordnet werden kann und wir mit ihnen rechnen können.\\
+	Da jeder Hashwert effizient berechnet werden kann, sind nur noch die Kollisionen relevant zu betrachten.   
 \end{document}
