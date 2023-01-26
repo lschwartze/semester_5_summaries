@@ -376,5 +376,43 @@
 	\textbf{Reminder}\\
 	Markov's inequality: Let $X$ be a non-negative random variable, then \[\mathbb{P}[X \geq a] \leq \frac{\mathbb{E}[X]}{a}\]
 	\textbf{Theorem}\\
-	$\forall k \; \exists G$ with $\chi(G) \geq k$ and $g(G) \geq k$.
+	$\forall k \; \exists G$ with $\chi(G) \geq k$ and $g(G) \geq k$.\\
+	\textbf{Lemma}\\
+	With $p(n) = \frac{\log n}{n}$ we can guarantee $\mathbb{P}[\alpha(G) \geq \frac{n}{k}] \to 0 \; (n \to \infty)$.\\
+	\textbf{Lemma}\\
+	With $p(n) = \frac{\log n}{n}$ then $\mathbb{P}[\text{number of (cycles of length } \leq k) \geq \frac{n}{2}] \to 0$ as $n \to \infty$.\\
+	\textbf{Definition}\\
+	A random graph almost surely satisfies a property $A_n$ if \[\mathbb{P}[G \in G(n,p): G \in A_n] \to 1\] as $n \to \infty$.\\
+	\textbf{Theorem}\\
+	For a constant $p \in (0,1)$, we find $\exists c_1, c_2$ such that $c_1\frac{n}{\log n} \leq \chi(G) \leq c_2 \frac{n}{\log n}$ almost surely.
+	\subsection{Colouring a random graph}
+	The strategy is as follows: \begin{enumerate}
+		\item find the largest independent set $X$
+		\item use $X$ as a colour set
+		\item proceed with $G-X$
+	\end{enumerate}
+	The iteration only works if $G-X$ is indeed still a random graph.\\
+	
+	Let's take a look at graphs on only four vertices and edge probability $p = \frac{1}{2}$.
+	It is a good plan to enumerate the vertices and pick a non-edge that is smallest in lexicographical order. These two vertices will surely be independent. Removing them leaves us with a graph on two vertices that either have an edge (34 such graphs) or have a non-edge (29 graphs).\\
+	This shows that the remaining graphs are not in $G(2,\frac{1}{2})$ because the edge probability is not correct. The strategy above is therefore not optimal.\\
+	
+	Let's fix the set of graphs $G(4,\frac{1}{2})$ again. We attempt to find a better strategy for colour picking. We now consider the vertex $v_1$ and (whenever possible) we extend $v_1$ to a non-edge, again in lexicographically minimal order. If it is not possible we exclude those graphs. The remaining one will be again separated into edges and non-edges. In these two classes we will no find 28 graphs each. This implies, that picking the independent set in this way, results in feasible random graphs!\\
+	
+	To summarize:\\
+	\textbf{Approach 1}
+	\begin{enumerate}
+		\item find some large independent set $X$
+		\item this is possible if there is a maximum independent set
+		\item use $X$ as a colour set
+		\item proceed with $G-X$
+		\item Is $G-X$ random in $G(n',p)$? ($\rightarrow$ most likely no!)
+	\end{enumerate}
+	\textbf{Approach 2}
+	\begin{enumerate}
+		\item iteratively extend to a large independent set $X$
+		\item this is possible if no maximal independent set is small
+		\item use $X$ as a colour set
+		\item is $G-X$ random in $G(n',p)$? ($\rightarrow$ yes!)
+	\end{enumerate}
 \end{document}
