@@ -162,7 +162,7 @@
 	We can hence find any $x(n,k)$ in $n$ steps and therefore require a running time of $\mathcal{O}(n\cdot C)$.
 	\end{alg}
 	We start the FPTAS by using the greedy algorithm to determine a feasible solution $S_1$ of value $m$ that then satisfies $2m \geq OPT(I)$. We set $t = \max\left\{1, \frac{\varepsilon\cdot m}{n}\right\}$ and create a new instance \[\tilde{I} = (n, \tilde{c}_1 = \left\lfloor\frac{c_1}{t}\right\rfloor, ..., \tilde{c}_n = \left\lfloor \frac{c_n}{t}\right\rfloor, w_1,...,w_n,W)\]
-	Using the algorithm aforementioned algorithm, we create an optimal solution $S_2$ of this instance $\tilde{I}$. We then return the better of the two solutions.\\
+	Using the aforementioned algorithm, we create an optimal solution $S_2$ of this instance $\tilde{I}$. We then return the better of the two solutions.\\
 	We still need to show that this is in fact an FPTAS. Obviously if $t = 1$, then $I = \tilde{I}$ and $S_2$ is an optimal solution. Hence, assume $t = \frac{\varepsilon m}{n}$ in the following. Let $S^*$ be an optimal solution, then we have \begin{align}
 		c(S_2) = \sum_{i \in S_2} c_i \geq t\sum_{i \in S_2}\tilde{c}_i \geq t \sum_{i \in S^*} \tilde{c}_i \geq t \sum_{i \in S^*}\left(\frac{c_i}{t}-1\right) \geq c(S^*)-\varepsilon c(S_1)
 	\end{align}

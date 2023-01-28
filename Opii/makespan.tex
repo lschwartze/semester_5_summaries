@@ -74,7 +74,7 @@
 		For $\varepsilon > 0$ and $K \in \mathbb{N}$ there is a polynomial-time algorithm that determines an optimum solution for a given instance $I$ of bin packing that satisfies $\min(a_i) \geq \varepsilon$ and $\left|\{a_1,...,a_n\}\right| \leq K$
 	\end{theorem}
 	\begin{proof}
-		Let $I$ be an instance that satisfies above requirements. Define $M = \left\lfloor\frac{1}{\varepsilon}\right\rfloor$ and $\{a_1,...,a_n\} \subseteq \{s_1,...,s_K\}$ for a sequence $s_1 < ... < s_K$. Every way of filling a bin with items of the $K$ different sizes corresponds to a vector $\{0,1,...,M\}^K$, that means there are at most $(M+1)^K$ different ways to fill a bin. The $i$-th component of the vector corresponds to the amount of items of size $s_i$ are picked. Every solution to a bin packing problem needs at most $n$ bins, thus there are at most $(n+1)^{(M+1)^K}$ possible solutions which is polynomial in $n$. Every possibility can hence be checked efficiently.
+		Let $I$ be an instance that satisfies above requirements. Define $M = \left\lfloor\frac{1}{\varepsilon}\right\rfloor$ and $\{a_1,...,a_n\} \subseteq \{s_1,...,s_K\}$ for a sequence $s_1 < ... < s_K$. Every way of filling a bin with items of the $K$ different sizes corresponds to a vector $\{0,1,...,M\}^K$, that means there are at most $(M+1)^K$ different ways to fill a bin. The $i$-th component of the vector corresponds to the number of items of size $s_i$ that are picked. Every solution to a bin packing problem needs at most $n$ bins, thus there are at most $(n+1)^{(M+1)^K}$ possible solutions which is polynomial in $n$. Every possibility can hence be checked efficiently.
 	\end{proof}
 	\begin{alg} Solving the bin packing instance created above.\\
 		\normalfont Assign the items of instance $I' = (a_1',...,a_n')$ of sizes $a_i'\cdot t \cdot (1+\varepsilon)$ to bins of size $t\cdot (1+\varepsilon)$ optimally. Then return to the instance $I$.\\
@@ -93,7 +93,7 @@
 		Using binary search, we obtain an integer $T$ with \[\min\left\{t: t \geq LB \text{ and } \alpha(I,t,\varepsilon) \leq m\right\} \in [T-\varepsilon LB, T]\] which requires $\mathcal{O}\left(\log_2\left(\frac{1}{\varepsilon}\right)\right)$ calls of the algorithm above. Notice that $T \leq (1+\varepsilon)OPT(I)$.
 	\end{lemma}
 	\begin{theorem}
-		There is a PTAS for minimum makespan that returns a solution of at mis t$(1+\varepsilon)^2OPT(I)$.
+		There is a PTAS for minimum makespan that returns a solution of at most $(1+\varepsilon)^2OPT(I)$.
 	\end{theorem}
 	\begin{proof}
 		Determine $T$ as above. For a fixed $\varepsilon$ this can be achieved in polynomial time. Clearly $\alpha(I,T,\varepsilon) \leq m$. We can then pack the items in at most $m$ bins of size $(1+\varepsilon)T$ and therefore achieve a completion time of \[(1+\varepsilon)T \leq (1+\varepsilon)^2OPT(I)\] 

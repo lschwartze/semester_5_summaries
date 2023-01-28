@@ -1,0 +1,101 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{algpseudocode}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{claim}{Claim}[theorem]
+\newtheorem{alg}{Algorithm}[section]
+
+\begin{document}
+	\begin{titlepage} 
+		\title{Bin Packing}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	The following gives an overview on everything that has been part of the Optimization II lectures and exercises in the winter term 2022/23 regarding the bin packing problem.
+	\section{Introduction}
+	An instance of bin packing is of the form $I = (a_1,...,a_n)$, where the problem is to determine a function $f: [n] \to [k]$ such that \[a_{f^{-1}(j)} = \sum_{i \in [n]: f(i) = j} a_i \leq 1\] minimizing $k$. The scenario can be interpreted as follows: \begin{quote}
+		\textit{You are given $n$ items of different sizes $a_i$. Your job is to pack all items into bins of equal size 1 while trying to use as few bins as possible.}
+	\end{quote}
+	Bin packing can be used in a variety of different settings in optimization as will be discussed below. Above definition of bin packing is obviously an online problem, however we will also consider some offline versions with different preprocessing techniques. 
+	\section{Complexity}
+	\begin{theorem}
+		Bin packing is NP-complete.
+	\end{theorem}
+	\begin{proof}
+		The fact that bin packing is in NP can be easily seen: We only need to check that for any $j \in [k]$ the items $f^{-1}(k)$ do not sum up to more than 1. This can be done in linear time, thus bin packing is in NP.\\
+		The completeness is a bit more tricky. We attempt to construct a reduction from Subset Sum. But in order to show this, we first need to proof that Subset Sum is in fact in NPC. This however, would be shown by a reduction from 3D-Matching, which in turn needs to be shown to be NP-complete. We omit the preliminaries and only show the reduction from Subset Sum to bin packing.\\
+		
+		Let $I = (a_1,...,a_n, k=\frac{1}{2}\sum_{i \in [n]} a_i)$ be an instance of the Subset Sum problem, where the task is to find a subset $S \subseteq [n]$ that satisfies $\sum_{i \in S} a_i = k$. We transform this to an instance $I'$ of bin packing by setting $I' = (\frac{a_1}{k},...,\frac{a_n}{k})$. It is now obvious, that $I$ has a solution $S$ if and only if $I'$ has an optimum of 2. The optimum is reached, if $S$ is packed in the first and $[n]\setminus S$ in the second bin. Note that this specific instance of Subset Sum is also called the Partition problem.
+	\end{proof}
+	\section{Algorithms}
+	\begin{alg} (First-Fit-Decreasing)\\
+		The First-Fit-Decreasing offline algorithm follows a simple principle: For any new item, iterate over all current bins and check if there is enough space left. If none can carry the next item, open a new bin. It is offline because the instance should be sorted at the beginning of the algorithm, requiring preprocessing. \\\normalfont
+		\begin{algorithmic}[1]
+			\State $I \gets I'$ where $I'$ is sorted in a non-increasing way
+			\For{$i=1$ to $n$}
+			\State $f(j) \gets \min_j \left\{(\sum_{l \in [i-1], f(l) = j} a_l) + a_i \leq 1\right\}$
+			\EndFor
+			\State $k \gets \max_{i \in [n]} f(i)$\\
+			\Return $k,f$
+		\end{algorithmic}
+	\end{alg}
+	\begin{theorem} (Simchi-Levi)\\
+		$k$ returned by the algorithm above satisfies \[\left\lceil\frac{2k}{3} \right\rceil\leq OPT(I)\]
+	\end{theorem}
+	\begin{proof}
+		Let $j = \left\lceil\frac{2k}{3}\right\rceil$. We call an item $a_i$ big if it is larger than $\frac{1}{2}$. This implies that no bin can carry two big items. If the $j$-th bin carries a big item, so does every bin before $j$. Thus $OPT(I) \geq j = \left\lceil\frac{2k}{3}\right\rceil$.\\
+		We therefore assume, that the $j$-th bin does not contain a big item. Then, none of the bins after $j$ can contain big items either, so the bins $j,...,k-1$ contain at least two small items each, and the last at least one. By the nature of the algorithm, we can also see that none of these at least $2(k-j)+1$ items fit into any of the $j-1$ preceding bins.
+		Since $j \leq \frac{2k+2}{3}$ we have $j-1 \leq 2(k-1)+1$. Considering each of the first $j-1$ bins together with a different item from the last $k-1+j$ bins, we obtain \[OPT(I) \geq a_1+...+a_n > (j-1) = \left\lceil\frac{2k}{3}\right\rceil -1\]
+	\end{proof}
+	\begin{theorem}
+		For any $\alpha < \frac{11}{9}$, the First-Fit-Decreasing algorithm yields no $\alpha$-approximation. 
+	\end{theorem}
+	\begin{proof}
+		We attempt to construct an instance where the First-Fit-Decreasing algorithm returns 11 bins, while 9 would suffice. We therefore use the following instance of 30 items \[a_i = \begin{cases}
+			1/2 + \varepsilon, & 1 \leq i \leq 6\\
+			1/4 + 2\varepsilon, & 7 \leq i \leq 12\\
+			1/4 + \varepsilon, & 13 \leq i \leq 18\\
+			1/4 - 2\varepsilon, & 19 \leq i \leq 30
+		\end{cases}\]
+		We analyse the algorithm's approach: the first 6 elements will be put in separate bins $b_1,...,b_6$. The next 6 elements will each be added in one of the first 6 bins, leaving $b_j$ to be filled with items of size $3/4 + 3 \varepsilon$ for $j \leq 6$. Items 13 to 19 will be packed in triplets in one bin per triplet. This results in another 2 bins filled with $3/4 + 3 \varepsilon$. Lastly, the remaining 12 items can be partitioned into quadruples, yielding another 3 bins for a total of 11 bins.\\
+		Optimally however, we could fill 6 bins with one item of size $1/2 + \varepsilon$, one of size $1/4 + \varepsilon$ and one of size $1/4 - 2\varepsilon$. Of the remaining 12 items, 6 are of size $1/4+2\varepsilon$ and 6 of size $1/4 - 2\varepsilon$. We use two of each set and combine these four items into one bin each filling it completely. This results in 9 total bins, showing the theorem.
+	\end{proof}
+	Typical online algorithms for bin packing are the so-called Next-Fit or First-Fit-Algorithms. However, all online algorithms have the following problem: \begin{theorem}
+		For $\alpha < \frac{4}{3}$, no online algorithm returns at most $\alpha OPT(I)$ bins.
+	\end{theorem}
+	\begin{proof}
+		Suppose such an algorithm exists. Consider the following two instances \[I_1 = \left(\underbrace{\left(\frac{1}{2} - \varepsilon\right), ..., \left(\frac{1}{2}- \varepsilon\right)}_{2k}\right)\] and \[I_2 = \left(\underbrace{\left(\frac{1}{2}- \varepsilon\right), ..., \left(\frac{1}{2}- \varepsilon\right)}_{2k}, \underbrace{\left(\frac{1}{2}+ \varepsilon\right),...,\left(\frac{1}{2}+ \varepsilon\right)}_{2k}\right)\]
+		On $I_1$ an algorithm A produces a solution using $b_1$ bins containing only one item and $b_2$ bins that contain two. We can ensure that \begin{itemize}
+			\item no bin contains three or more items
+			\item $b_1 + 2b_2 = 2k$
+			\item $OPT(I) = k$
+		\end{itemize}
+		By our assumption, it follows that $b_1+b_2 < \frac{4}{3}k$. Thus \[b_2 = (b_1+2b_2) - (b_1+b_2) > 2k - \frac{4}{3}k = \frac{2}{3}k\]
+		On instance $I_2$ A would achieve the same partial solution for the first half. The remaining items could be evenly distributed onto the $b_1$ bins plus some new ones, requiring \[(2k-b_1) + (b_1+b_2) = 2k + b_2\]
+		bins for $I_2$. Since $2k + b_2 \leq \alpha OPT(I) < \frac{4}{3} OPT(I) = \frac{8}{3}k$, we conclude $b_2 < \frac{2k}{3}$ which is a contradiction.
+	\end{proof}
+	\begin{alg}
+		Greedily pack items into the first bin. For the first item that does not fit, close the first and open a second bin. Iterate this process for all items
+	\end{alg}
+	\begin{theorem}
+		Above algorithm admits a 2-factor approximation. That is to say, we may need at most $2\cdot OPT(I)$ bins.
+	\end{theorem}
+	\begin{proof}
+		Let $k = OPT(I)$. By our construction, two consecutive bins will pack items of cumulative size larger 1. Otherwise, the second bin would not have been opened. Assume the the algorithm returns $m\geq 2k+1$ bins. Then, the cumulative size of contents of the first $2k$ bins is at least $k$. However, later bins are not empty, showing that the size of all items combined is larger than $k$. Since $\sum_{i \in [n]} a_i$ is a trivial lower bound for the number of bins, this contradicts our choice of $k$ as an optimum. 
+	\end{proof}
+	\begin{theorem}
+		For $\varepsilon > 0$ and $K \in \mathbb{N}$ there is a polynomial-time algorithm that determines an optimum solution for a given instance $I$ of bin packing that satisfies $\min(a_i) \geq \varepsilon$ and $\left|\{a_1,...,a_n\}\right| \leq K$
+	\end{theorem}
+	\begin{proof}
+		Let $I$ be an instance that satisfies above requirements. Define $M = \left\lfloor\frac{1}{\varepsilon}\right\rfloor$ and $\{a_1,...,a_n\} \subseteq \{s_1,...,s_K\}$ for a sequence $s_1 < ... < s_K$. Every way of filling a bin with items of the $K$ different sizes corresponds to a vector $\{0,1,...,M\}^K$, that means there are at most $(M+1)^K$ different ways to fill a bin. The $i$-th component of the vector corresponds to the number of items of size $s_i$ that are picked. Every solution to a bin packing problem needs at most $n$ bins, thus there are at most $(n+1)^{(M+1)^K}$ possible solutions which is polynomial in $n$. Every possibility can hence be checked efficiently.
+	\end{proof}
+\end{document}
