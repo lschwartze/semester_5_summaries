@@ -622,5 +622,69 @@
 	\end{algorithmic}
 	\par\noindent\rule{\textwidth}{0.4pt}\\
 	\textbf{Theorem}\\
-	Above algorithm works correctly and has a running time of $\mathcal{O}^*(3^{\frac{n}{3}}) \approx \mathcal{O}^*(1.44^n)$.
+	Above algorithm works correctly and has a running time of $\mathcal{O}^*(3^{\frac{n}{3}}) \approx \mathcal{O}^*(1.44^n)$.\\
+	
+	One can easily construct a fast exact algorithm for \texttt{Satisfiability}. This algorithm considers a partial truth assignment. This means:
+	\begin{itemize}
+		\item we set some literals via an assignment $t$
+		\item we construct $f(t)$ from $f$ by \begin{itemize}
+			\item removing every clause that contains a true literal
+			\item removing every remaining occurrence of a false literal
+		\end{itemize}
+	\end{itemize}
+	Note that $f(t)$ may include empty clauses.
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\underline{sat($f$)}\\
+	INPUT: a boolean formula $f$\\
+	OUTPUT: true iff $f$ is satisfiable
+	\begin{algorithmic}[1]
+		\If{$f$ contains an empty clause}
+		\Return false
+		\EndIf
+		\If{$f$ contains no clause}
+		\Return true
+		\EndIf
+		\State choose a smallest clause $x_1 \lor ... \lor x_k$
+		\State Let $t_i$ be the partial truth assignment setting $x_1,...,x_{i-1}$ to false and $x_i$ to true for $i \in [k]$ and let $f_i = f(t_i)$ for $i \in [k]$
+		\If{$\exists i \in [k]$ such that each clause of $f_i$ contains exactly 3 literals}
+		\Return sat($f_i$)
+		\Else
+			\If{$\exists i \in [k]: sat(f_i)$ is true}
+			\Return true
+			\Else\\
+			\indent\indent\indent\Return false
+			\EndIf
+		\EndIf 
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Theorem}\\
+	Above algorithm has a running time of \[\mathcal{O}^*(\Phi^n)\]
+	where $\Phi = \frac{\sqrt{5}+1}{2}$ is the golden ratio.\\
+	\textbf{Lemma}\\
+	A \texttt{minimum dominating set} $I$ of a graph $G$ with $n = \left|V(G)\right|$ can be found in \[\mathcal{O}^*(2^{n-\left|I\right|})\]
+	\textbf{Lemma}\\
+	If $\alpha \in (0, \frac{1}{2}]$ and $n \in \mathbb{N}$ are such that $\alpha n \in \mathbb{N}$, then \[\sum_{i=0}^{\alpha n} \binom{n}{i} \leq 2^{h(\alpha)n}\] where \[h(\alpha) = -\alpha \log_2(\alpha) - (1-\alpha)\log_2(1-\alpha)\]
+	\textbf{Theorem}\\
+	A \texttt{minimum dominating} set can be found in $\mathcal{O}^*(1.7088^n)$.
+	\par\noindent\rule{\textwidth}{0.4pt}
+	\underline{$mis2(G)$}\\
+	INPUT: a graph $G$\\
+	OUTPUT: $\alpha(G)$
+	\begin{algorithmic}[1]
+		\State $\alpha_1 \gets 0$
+		\While{$\exists u \in V(G): \; d_G(u) \leq 1$}
+		\State $G \gets G-N_G[u]$; $\alpha_1 \gets \alpha_1 + 1$
+		\EndWhile
+		\If{$n(G) = 0$ or $G$ is 2-regular}
+		\State compute $\alpha(G)$ exactly\\
+		\indent\indent\Return $\alpha_1 + \alpha(G)$
+		\EndIf
+		\State Choose a vertex $u$ of maximum degree in $G$\\
+		\Return $\alpha_1 + \max\left\{1 + mis2(G-N_G[u]), mis2(G-u)\right\}$
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\textbf{Comment}\\
+	The method \underline{Measure and Conquer} is a an approach to obtain better estimates for the running time of algorithms. By our current methods we will find a running time of $\mathcal{O}^*(1.3803^n)$. Using the new method however proves the following\\
+	\textbf{Theorem}\\
+	The algorithm is correct and achieves a running time of $\mathcal{O}^*(1.3248^{n(G)})$.
 \end{document}
