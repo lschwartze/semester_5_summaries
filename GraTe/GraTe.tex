@@ -146,7 +146,7 @@
 	Every $2k$-regular graph has a $2$-factor.\\
 	\textbf{Remark}\\
 	Define $q(G)$ as the number of odd components of $G$. We get a new necessary condition for a perfect matching: \[\forall S \subseteq V(G) \text{ it holds } q(G-S) \leq \left|S\right|\]
-	\textbf{Theorem} (Tuttle)\\
+	\textbf{Theorem} (Tutte)\\
 	$G$ has a perfect matching iff above remark holds.\\
 	\textbf{Definition}\\
 	$G$ is factor critical if $\forall v \in V(G)$ it holds, that $G-v$ has a perfect matching.\\
@@ -340,7 +340,7 @@
 	\textbf{Theorem}\\
 	for $r \geq 2$: if $G$ is a graph with $d(G) \geq 2^{r-2}$, then $K_r$ is a minor.\\
 	\textbf{Theorem}\\
-	For $r \geq 2$ there exists $c$ s.t. if $d(G) \geq c\cdot r \cdot \sqrt{\log(r)}$, then $K_r$ is a minor of $G$.\newpage
+	For $r \geq 2$ there exists $c$ s.t. if $d(G) \geq c\cdot r \cdot \sqrt{\log(r)}$, then $K_r$ is a minor of $G$.
 	\noindent\textbf{Theorem}\\
 	$\forall r \geq 2 \; \exists c$ s.t. \[d(G) \geq c\cdot r^2 \Rightarrow G \text{ contains a $K_r$ subdivision}\]
 	\textbf{Theorem}\\
@@ -397,7 +397,7 @@
 	It is a good plan to enumerate the vertices and pick a non-edge that is smallest in lexicographical order. These two vertices will surely be independent. Removing them leaves us with a graph on two vertices that either have an edge (34 such graphs) or have a non-edge (29 graphs).\\
 	This shows that the remaining graphs are not in $G(2,\frac{1}{2})$ because the edge probability is not correct. The strategy above is therefore not optimal.\\
 	
-	Let's fix the set of graphs $G(4,\frac{1}{2})$ again. We attempt to find a better strategy for colour picking. We now consider the vertex $v_1$ and (whenever possible) we extend $v_1$ to a non-edge, again in lexicographically minimal order. If it is not possible we exclude those graphs. The remaining one will be again separated into edges and non-edges. In these two classes we will no find 28 graphs each. This implies, that picking the independent set in this way, results in feasible random graphs!\\
+	Let's fix the set of graphs $G(4,\frac{1}{2})$ again. We attempt to find a better strategy for colour picking. We now consider the vertex $v_1$ and (whenever possible) we extend $v_1$ to a non-edge, again in lexicographically minimal order. If it is not possible we exclude those graphs. The remaining one will be again separated into edges and non-edges. In these two classes we will now find 28 graphs each. This implies, that picking the independent set in this way, results in feasible random graphs!\\
 	
 	To summarize:\\
 	\textbf{Approach 1}
@@ -413,6 +413,15 @@
 		\item iteratively extend to a large independent set $X$
 		\item this is possible if no maximal independent set is small
 		\item use $X$ as a colour set
-		\item is $G-X$ random in $G(n',p)$? ($\rightarrow$ yes!)
+		\item is $G-X$ random in $G(n',p)$? ($\rightarrow$ yes!)\\Also, are there still more than $\frac{n}{\log n}$ vertices? If both are true, go to 1.
 	\end{enumerate}
+	\textbf{Lemma}\\
+	There exist constants $\beta > 0, c >0$ such that \[\mathbb{P}[\exists \text{ maximal independent set of size } \geq \beta\log n] \leq \exp(-c(\log n)^3)\]
+	Now, how many colours does the construction need? We can fix two steps:\begin{itemize}
+		\item iteratively removing independent sets of $G$, resulting in at most $\frac{n}{\beta' \log n}$ steps with one colour each
+		\item colour all remaining vertices in the graph with one colour each, resulting in $\frac{n}{\log n}$ colours
+	\end{itemize}
+	This then shows that we need at most $c\frac{n}{\log n}$ colours.\\
+	\textbf{Conjecture}\\
+	$\forall r$ the following might hold true: If $\chi(G) \geq r$, then there is a $K_r$ minor in $G$.
 \end{document}
