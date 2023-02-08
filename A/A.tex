@@ -736,7 +736,7 @@ Sei \begin{align*}
 \end{align*}
 \textbf{Theorem}
 \begin{enumerate}
-	\item Sei $\underline{a} \subseteq R$ ein Ideal. Dann $S^{-1}a = \left\{\frac{a}{s}: a \in \underline{a}, \; s \in S\right\} = \langle l(\underline{a})\rangle = \langle \frac{a}{1} \rangle$.
+	\item Sei $\underline{a} \subseteq R$ ein Ideal. Dann $S^{-1}\underline{a} = \left\{\frac{a}{s}: a \in \underline{a}, \; s \in S\right\} = \langle l(\underline{a})\rangle = \langle \frac{a}{1} \rangle$.
 	\item Sei $\underline{b} \subseteq S^{-1}R$. Dann $\underline{b} = S^{-1}(l^{-1}(\underline{b})) = \langle l(l^{-1}(\underline{b})) \rangle$
 	\item $\left\{p \subset R \text{ prim }: \; p \cap S = \emptyset\right\} \leftrightarrow \left\{q \subseteq S^{-1}R \text{ prim}\right\}$ durch \begin{align*}
 		p &\mapsto S^{-1}p\\
@@ -745,5 +745,120 @@ Sei \begin{align*}
 \end{enumerate}
 \underline{Beweis}: im Buch. 
 
-Eine Konsequenz ist, dass man in einer Lokalisierung $R_p$ mit $S = p^c$ die Primideale identifizieren kann mit $q \subseteq R$ sodass $q \cap p^c = \emptyset$, also $q \subseteq p$.
+Eine Konsequenz ist, dass man in einer Lokalisierung $R_p$ mit $S = p^c$ die Primideale identifizieren kann mit $q \subseteq R$ sodass $q \cap p^c = \emptyset$, also $q \subseteq p$.\\
+\textbf{Beispiel} Die Korrespondenz ist nicht im allgemeinen gültig: \[R = k[x,y], \; S = (x)^c\]
+Sei $\underline{a}_1 = (x) \supseteq \underline{a}_2 = (xy)$. Es gilt \[\underline{a}_1 \cap S = \emptyset = \underline{a}_2 \cap S\]
+Dann ist $S^{-1}\underline{a}_1 = S^{-1}(x) = (x)$ in $S^{-1}R$. $S^{-1}\underline{a}_2 = S^{-1}(xy) = (x)$. Insgesamt zeigt dieses Beispiel für $\underline{a}_1 \neq \underline{a}_2$, dass trotzdem $S^{-1}\underline{a}_1 = S^{-1}\underline{a}_2$ gelten kann.\\
+Spezialfall $R$, $S = p^c \to R_p = \left\{\frac{a}{s}: a \in R, s \notin p\right\}$. Hier gilt Primideal in $R_p \Leftrightarrow q \subset R$ sodass $q \cap p^c = \emptyset$, $q \subseteq p$. Aber $R_p$ hat ein größeres Primideal $p$. Ein Ring mit einem maximalen Ideal heißt lokal.\\
+Sei $R = \mathbb{C}[x,y]/(x^2+y^2-1)$. Maximale Ideale in $\mathbb{C}[x,y]$ sind $m := (x-a,y-b)$ für $a,b \in \mathbb{C}$.\\
+Sei $R = \mathbb{C}[x,y]_{(x,y)}$, $S = (x,y)^c$. Maximales Ideal in $R$ ist $(x,y)$. Sonst gibt es folgende Primideale: $0, (f)$ für $f(0,0)$.
+\subsection{Ring Erweiterungen}
+\textbf{Definition}\\
+$R \subset S$ heißt endliche Ringerweiterung, falls $S = Rs_1+...+Rs_n$ für bestimmte $s_i \in S$. Mit anderen Worten, $S$ ist ein endlicher $R$-Modul.\\
+\underline{Idee}: Verallgemeinerung algebraischer Körpererweiterungen als sogenannte integrale Ringerweiterung.\\
+\textbf{Beispiel} \begin{itemize}
+	\item $\mathbb{Z}[i] \subseteq \mathcal{C}$ ist eine endliche Erweiterung von $\mathbb{Z}$.
+	\item $\mathbb{Q}$ ist nicht endlich über $\mathbb{Z}$. Sonst wäre $\mathbb{Q} = \mathbb{Z}\frac{a_1}{b_1} + ... + \mathbb{Z}\frac{a_n}{b_n} \subseteq \frac{1}{b_1 \cdot ... \cdot b_n}\mathbb{Z}$. 
+	\item $\mathbb{Z}[1/p]$ ist nicht endlich über $\mathbb{Z}$.
+\end{itemize} 
+\textbf{Definition}\\
+$s \in S$ heißt integral, falls $f(s) = 0$ für $f \in R[x]\setminus \{0\}$ und $f$ normiert. Normiert muss bei Körpern (im Sinne von algebraisch) nicht gefordert, da man den führenden Koeffizienten rausteilen kann.\\
+\textbf{Beispiel}\\
+$R = \mathbb{Z}$, $S = \mathbb{Z}[1/p]$. $S|R$ ist nicht integral. $s = \frac{1}{p}$ ist zwar eine nicht triviale Nullstelle von $g = px-1$ ($cont(g) = 1$), aber $f$ ist nicht normiert. Allgemein: ist $f \in \mathbb{Z}[x]$ mit $f(s) = 0$ normiert, so gilt $g | f$ in $\mathbb{Q}[x]$. Wegen Gauß folgt dann, $g | f$ in $\mathbb{Z}[x]$. D.h. $f$ kann nicht normiert sein. Also ist die Ringerweiterung nicht integral.\\
+\textbf{Theorem}\\
+Es sind äquivalent \begin{itemize}
+	\item $s$ ist integral über $R$
+	\item $R[s] = \left\{\sum_{i=1}^n a_i s^i: \; n > 0 \text{ und } a_i \in R\right\} \subset S$ ist ein endlicher $R$-Modul
+	\item $\exists R \subset T \subset S$, sodass $s \in T$ und $T$ ist ein endlicher $R$-Modul.
+\end{itemize}
+\underline{Frage}: sei $\alpha \in K = \mathbb{Q}[x]/(f)$ mit $R = \mathbb{Z}$. Dann ist $\alpha$ integral genau dann, wenn das Minimalpolynom in $\mathbb{Z}[x]$ ist.\\
+$\Rightarrow$ wahr. Rückrichtung ist klar, Für Hinrichtung nimm primitives Polynom $g$, das $f$ teilt. Dann teilt wegen Gauß $g$ auch $f$ in $\mathbb{Z}$.\\
+\textbf{Korollar}\\
+Sei $S|R$ eine Ringerweiterung. \begin{itemize}
+	\item Sind $s_1, s_2$ integral über $R$, so auch $s_1+s_2$, $s_1-s_2$, $s_1\cdot s_2$.
+	\item der integrale Abschluss $R^S = \{s \in S: s \text{ integral über } R\} \subseteq S$ ist ein Teilring.
+	\item $S|R$ und $T|S$ implizieren $T|R$.
+\end{itemize}
+\subsection{Radikale Ideale}
+\textbf{Definition}\\
+Eine radikales Ideal $rad(I)$ eines Ideals $I$ über einen Ring $R$ ist definiert als \begin{enumerate}
+	\item $rad(I) = \{a \in R: a^n \in I \text{ für ein $n$}\}$.
+	\item $rad(0)$ heißt das Nillradikal.
+	\item Wenn $rad(I) = I$, dann heißt $I$ radikal
+	\item Ein Ring heißt reduziert, wenn $rad(0) = 0$.
+\end{enumerate}
+\textbf{Lemma}\\
+Es gilt $rad(0) = \bigcap_{p \subseteq R \text{ prim }} p$.\\
+\textbf{Satz} \begin{enumerate}
+	\item $rad(I)$ ist ein Ideal von $R$, das $I$ beinhaltet
+	\item $rad(I)/I$ ist das Nillradikal von $R/I$. Man kann zeigen, $I$ ist radikal genau dann, wenn $R/I$ reduziert ist. 
+\end{enumerate}
+\textbf{Lemma}\\
+Seien $a$, $b$ Ideale in einem noetherschen Ring $R$. Sei $b = rad(a)$. Dann gilt $b^n \subseteq a$ für ein $n > 0$.\\
+\textbf{Definition}\\
+Ein \underline{lokaler Ring} ist ein Ring mit eine, eindeutigen maximalen Ideal.\\
+\textbf{Lemma}\\
+Sein $M$ ein endlicher $R$-Modul und $\phi: M \to M$ ein $R$-Endomorphismus. Gilt für $s \subset R$, dass $\phi(M) = aM$, so gibt es $a_i \in R$ mit $\phi^n + a_1\phi^{n-1} + ... + a_n = 0$.\\
+\textbf{Lemma}\\
+Sei $M$ endlich erzeugt, mit $aM = M$. Dann existiert ein $x \in R$ mit $x-1 \in a$, sodass $xM = 0$.\\
+\textbf{Lemma}\\
+Sei jetzt $R$ lokal mit $mM = M$, $M$ endlich erzeugt. Dann ist $M=0$.\\
+\textbf{Lemma}\\
+Sei $N \subseteq M$ ein Untermodul mit $N+mM = M$. Dann $M=N$.\\
+\textbf{Korollar} (Nakayama)\\
+Ost $M$ endlich erzeugt und sind $(m_1,...,m_r) \in M$ sodass $\langle\overline{m}_1,...,\overline{m}_r\rangle = M/mM$ so gilt $\langle m_1,...,m_r\rangle = M$.
+\section{Diskrete Bewertungsringe}
+\textbf{Definition}\\
+Eine diskrete Bewertung auf einem Körper $K$ ist eine Funktion $v: K \to \mathbb{Z}\cup \{\infty\}$ mit den Eigenschaften \begin{align*}
+	v(x) = \infty & \Leftrightarrow x = 0\\
+	v(xy) &= v(x)+v(y)\\
+	v(x+y) & \geq \min\{v(x),v(y)\}
+\end{align*}
+\textbf{Proposition}\\
+Sei $R = \{x \in K: v(x) \geq 0\}$, $m = \{x \in K: v(x) > 0\}$. Dann ist $R$ ein lokaler Ring mit $Q(R) = K$ und $m$ ist das maximale Ideal von $R$.\\
+Wir definieren $O-v = \{x \in K | v(x) \geq 0\}$ und $m = \{x \in K | v(x) > 0\}$. Ma kann beweisen, dass die erste Menge ein Ring und die zweite ein Ideal ist.\\
+Ein Ring $R$ ist ein diskreter Bewertungsring (DVR), wenn $\exists K,v$ sodass $R = O_v$.\\
+\underline{Beispiel}\\
+$K = \mathbb{Q}$, $p = 2$ und $\alpha \in \mathbb{Q}$ mit $\alpha = 2^k\frac{a}{b}$ mit $2\not | ab$. Definiere \begin{align*}
+	V: \mathbb{Q}^* &\to \mathbb{Z}\\
+	\alpha &\mapsto K
+\end{align*}
+Für $\frac{x}{y}$ und $\alpha = n-m$ wir haben $v(\frac{x}{y}) \geq 0 \iff 2 \not |y$. Wir bemerken daher leicht $O_v = \mathbb{Z}_{(\alpha)}$.\\
+\textbf{Definition}\\
+Sei $R$ ein Ring. Wir sagen, dass eine Kette von Primidealen \[p_0 \subsetneq ... \subsetneq p_n\]
+Länge $n$ hat. Dann ist $\dim R = \sup\{n | p_0 \subsetneq ... \subsetneq p_n\}$.\\
+\underline{Beispiel}
+\begin{itemize}
+	\item Ein Körper $K$ erfüllt $\dim K = 0$
+	\item $\dim \mathbb{Z} = 1$, weil alle Primideale von Primzahlen erzeugt werden. Diese sind auch maximal.
+	\item $\dim \mathbb{Z}[x] = 2$
+\end{itemize}
+\textbf{Proposition}\\
+Ein Integritätsring $R$ ist kein Körper und jedes Primideal maximal, genau dann, wenn $\dim R = 1$.\\
+\textbf{Bemerkung}
+\begin{enumerate}
+	\item Ist $R$ ein lokaler noetherscher Ring mit $\dim R = 1$, dann ist $\forall n \in \mathbb{N}$ $m^n \neq m^{n+1}$.
+	\item Ist $R$ wie in 1. und $I$ ein Ideal dann $\exists n \in \mathbb{N}$ s.d. $m^n \subseteq I$
+\end{enumerate}
+\textbf{Theorem}\\
+Ist $R$ wie oben, dann sind äquivalent \begin{enumerate}
+	\item $R$ ist ein DVR
+	\item $R$ ist normal (integral abgeschlossen in $Q(R)$)
+	\item $m$ ist ein Hauptideal
+	\item $\dim_{R/m} m/m^2 = 1$
+	\item Jedes Nicht-Null-Ideal ist eine Potenz von $m$
+	\item Jedes Nicht-Null-Ideal ist von der Form $(x^k)$ für ein festes $x \in R$  
+\end{enumerate}
+\underline{Beweis}\\
+$1 \Rightarrow 2$: Angenommen $R$ ist ein DVR. Sei $I$ ein Ideal ungleich $(0)$. Sei $n_0 = \min\{v(j) | j \in I\}$. Dann $I = \{x \in K: v(x) \geq n_0\} =: A$. Offensichtlich $I = (x_0)$ mit $v(x_0) = n_0$.\\
+Sei nun $I \subseteq A$ und $x_0$ mit minimaler Bewertung Wir folgern $v(\frac{x}{x_0}) ) v(x) - v(x_0) \geq 0$. Daher $\frac{x}{x_0} = y \in R$, dann $x = x_0 y$. DAmit ist $I = (x_0)$ also ein PID und damit $R$ ein UFD. Dann ist $R$ normal.\\
+$2 \Rightarrow 3$: Sei $\alpha \in m$. Nach der zweiten Bemerkung existiert $n$ sodass $m^n \subseteq I = (\alpha)$ und $m^{n-1} \not \subseteq I$. In anderen Worten $\exists \beta$ sodass $\beta \in m^{n-1}$ aber $\beta \notin (\alpha)$. Sei $X = \frac{\alpha}{\beta} \in Q(R)$. Dann ist $x^{-1} \notin R$. Das heißt dieses Element kann nicht integral sein, nach 2. Wir behaupten nun $x^{-1}m \not \subseteq m$. Nehmen wir die gegenteilige Aussage an. Dann ist $x^{-1}m$ faithful als $R[x^{-1}]$-Modul und endlich erzeugt als $R$-Modul. Aber dann ist $x^{-1}$ integral nach einem Lemma oben. Dann ist $x^{-1}m = R$ und $m = Rx$, also ein Hauptideal.\\
+$3 \Rightarrow 4$: Nach der ersten Bemerkung ist $\dim_{R/m} m/m^2 \geq 1$. Aber da $m = (x)$ ein Hauptideal ist gilt auch $m/m^2 = (\overline{x}) = \langle \overline \rangle_{R/m} = 1$.\\
+$4 \Rightarrow 5$: Nach Nakayama ist $m$ ein Hauptideal $m = (x)$. Das bedeutet $\bigcap_{n \in \mathbb{N}} (x^n) = 0$. Angenommen es würde ein $0 \neq y \in \bigcap (x^n)$ existieren. Definiere $N_k = (\frac{y}{x^k})$. Dann gibt es eine unendliche Kette von $N_k$ Moduln, was einen Widerspruch dazu herstellt, dass $R$ noethersch ist.\\
+Sei $I \neq (0)$ nun ein Ideal, sodass $m^n \subseteq I$. $\exists n_0$ maximal sodass $I \subseteq m^{n_0}$ und $m^{n_0+1} \not \supseteq I$. Nun, $m^n = (x)^n = (x^n)$, also $\exists y \in I$ mit $y \notin m^{n_0+1}$. Also $y \in I$ impliziert $y \in m^{n_0}$ also $y = zx^{n_0}$. Dann ist $(y) = (x^{n_0}) = (x)^{n_0} \subseteq I \subseteq m^{n_0} = (x)^{n_0}$, das impliziert $I = (x)^{n_0}$.\\
+$5 \Rightarrow 6$: Ziel ist es zu zeigen, dass $m$ ein Hauptideal ist. Wir wissen $m/m^2 \neq 0$, also $\exists x \in m/m^2$, dann ist $(x) = m^k$ und darum muss $k= 1$. Daher ist $m$ ein Hauptideal, was die Aussage zeigt.\\
+$6 \Rightarrow 1$: Wir definieren $v$ über $R$ und weiten das später auf $K = Q(R)$ aus. Sei $\alpha \neq 0 \in R$ und $(\alpha) = (x^k)$ nach 5. Dann ist $(x^n) \neq (x^{n+1})$. $k$ ist eindeutig bestimmt. Deswegen definiere $v(\alpha) = k$.\\
+Dann ist $v(\frac{\alpha}{\beta}) = v(\alpha) - v(\beta)$. Das ist eine diskrete Bewertung und $R=O_v$.\\
+\textbf{Bemerkung}\\
+Ist $R$ lokal, noethersch, ein Integritätsring und $m$ ein Hauptideal, dann wie in der Implikation von 4. zu 5. ist jedes Ideal ungleich null der Form $I = (x^k)$. 
 \end{document}
