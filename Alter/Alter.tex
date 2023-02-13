@@ -687,5 +687,67 @@
 	\end{algorithmic}
 	\par\noindent\rule{\textwidth}{0.4pt}\\
 	Die Test-Funktion überprüft in linearer Zeit, ob zwei Strings gleich sind. Für die Komplexität relevant sind also die Länge des Textes und des Musters und die Anzahl der Kollisionen der gewählten Hashfunktion. Wir wählen als Hashfunktion die Kongruenzmethode $h(x) \equiv x \mod q$ mit Tabellengröße $q$. Die $r$ Buchstaben des Alphabets werden durchnummeriert, und im $r$-adischen System betrachtet, damit jedem Buchstaben eine Ziffer zugeordnet werden kann und wir mit ihnen rechnen können.\\
-	Da jeder Hashwert effizient berechnet werden kann, sind nur noch die Kollisionen relevant zu betrachten.   
+	Die Aktualisierung des Hashwertes wird wie folgt implementiert:
+	Subtrahiere vom vorherigen Teilstring das vorderste Bit mit der jeweiligen Magnitude (also die Stelle als Zahl). Multipliziere den verbliebenen String mit $\left| \Sigma\right|$ und addiere das neue Bit. Berechne die dabei entstandene Zahl wieder modulo $p$ in der Kongruenzmethode. Dadurch können die neuen Hashwerte in $\mathcal{O}(1)$ berechnet werden.\\
+	Im worst-case kann man mit einer Komplexität von $\mathcal{O}(n\cdot m)$ rechnen. Im average-case kann eine Laufzeit von $\mathcal{O}(n+m)$ bewiesen werden.\\
+	
+	Die naive Methode bietet gute Möglichkeiten zur Verbesserung mittels endlicher Automaten an. Wird in einem Zustand ein falscher Buchstaben eingelesen, wird im endlichen Automaten zu einem früheren Zustand zurückgegangen. Hierbei muss die Länge des vielleicht richtigen Präfixes berücksichtigt werden. Nun kann man sich leicht einen Algorithmus überlegen:\\
+	Zum Pattern wird der endliche Automat aufgebaut. Der Text wird durchlaufen und es wird für den $i$-ten Buchstaben die $i$-te Übergangsfunktion gewählt. Würde der Automat terminieren, so ist der String gefunden und der Algorithmus gibt einen dementsprechenden Output aus.\\
+	
+	Wesentlich effizienter ist der Knuth-Morris-Pratt-Algorithmus. Der KMP-Algorithmus verschiebt bei einem Mismatch das Muster um einen Shift, der den längsten Teilstring, den Prä- und Suffix gemeinsam haben, berücksichtigt. Dafür berechnet man eine Verschiebetabelle für jeden Buchstaben im Muster. Dabei ist \[V[j] = \max\left\{k<j | P[1,...,k] = P[j-k+1,...,j]\right\}\]
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Wir nehmen im Folgenden die Verschiebetabelle $V$ als gegeben an.\\
+	\underline{KMP-Algorithmus}
+	\begin{algorithmic}[1]
+		\State $j \gets 0$
+		\For{$i=1$ to $n$}
+		\While{$j>0$ and $P[j+1] \neq T[i]$}
+		\State $j \gets V[j]$
+		\EndWhile
+		\If{$P[j+1] = T[i]$}
+		\State $j \gets j + 1$
+		\EndIf
+		\If{$j = m$}
+		\State print: pattern occurs with shift $i-m$
+		\State $j \gets V[j]$
+		\EndIf
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Mittels einer sogenannten amortisierten Analyse kann gezeigt werden, dass der Algorithmus sogar eine worst-case Komplexität von $\mathcal{O}(n)$ besitzt.
+	\subsection{Boyer-Moore-Algorithmus}
+	In diesem Fall, wird das Muster von rechts nach links verglichen. Es wird eine Verschiebetabelle erstellt und bei einem Mismatch um $n-V[m]$ verschoben. Es gibt zwei Fälle: \subsubsection{Bad-Character-Heuristik}
+	Sei $\omega$ der Buchstabe des Mismatches im Text. Diese Heuristik verschiebt das Muster bis zur maximalen Stelle, an der ebenfalls ein $\omega$ steht. Vorsicht: steht das Zeichen rechts von dem aktuell verglichenen Teilmuster, wird ein negativer Shift (also in die falsche Richtung) vorgeschlagen. 
+	\subsubsection{Good-Suffix-Heuristik}
+	Es wird so lange nach rechts verschoben, bis wieder ein Teilstring des Musters unter dem gematchten Substring des Textes liegt. Das ist der Good-Suffix des Musters.\\
+	Mit kleinen Veränderungen kann man in der Implementierung eine Laufzeit von $\mathcal{O}(n)$ erreichen. In der Anwendung ist das der schnellste Stringmatcher.
+	\subsection{Boyer-Moore-Horspool}
+	Das ist eine Erweiterung des BM-Algorithmus, die nur auf der Bad-Character Heuristik basiert. Hierbei werden negative Shifts effizient vermieden.\\
+	Man berechne eine Tabelle $\lambda$. Diese Tabelle sagt, kommt ein Buchstabe im vorderen Teil des Strings nicht mehr vor, kann über die gesamte Länge des Musters verschoben werden. Die Tabelle kann effizient wie folgt berechnet werden:
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	\underline{Berechne $\lambda$}
+	\begin{algorithmic}[1]
+		\For{$c \in \Sigma$}
+		\State $\lambda(c) = m$
+		\EndFor
+		\For{$j = 1$ to $m-1$}
+		\State $\lambda(P[j]) = m-1$
+		\EndFor
+	\end{algorithmic}
+	\par\noindent\rule{\textwidth}{0.4pt}\\
+	Im BMH-Algorithmus wird der Shift $s$ immer erhöht auf $s+\lambda(T[s+m])$.
+	\subsection{Suffix-Bäume}
+	Unsere beste Möglichkeit zur exakten String-Suche (also dem Finden aller Matchings) ist momentan ein String-Matcher in bestenfalls $\mathcal{O}(n)$ Zeit. Wri werden Methoden zum Pre-Processing des Textes zeigen, mit denen sich die Laufzeit wesentlich verringert. Ein Suffix-Baum ist ein Baum mit $n$ Blättern mit folgenden Eigenschaften \begin{itemize}
+		\item Jeder innere Knoten außer der Wurzel hat mindestens zwei Kinder
+		\item Jede Kante hat als Label einen nicht-leeren Substring von $T$
+		\item Alle Kanten, die einen beliebigen Knoten verlassen, haben einen anderen ersten Buchstaben
+		\item Wenn man die Labels des Weges der Wurzel bis zum $k$-ten Blatt aneinanderhängt, erhält man den $k$-ten Teilstring. 
+	\end{itemize}
+	Ein Problem, kann sich ergeben, wenn ein Suffix Präfix eines anderen Suffixes ist. Das kann verhindert werden, indem man jeden Suffix implizit mit \$ enden lässt. Der Speicheraufwand ist mit $\mathcal{O}(n^2)$ quadratisch, sollte aber nur linearen Platz brauchen. Das Problem dabei ist, dass jede Kante als Label einen Teilstring besitzt. Speichert man daher nur Anfangs- und Endbit des Teilstrings, erhält man linearen Speicheraufwand.\\
+	
+	Beschäftigen wir uns nun mit der Konstruktion eines Suffixbaums: Die leichteste und nicht effizienteste (weil quadratische) Algorithmus erstellt zunächst eine Kante für den ersten Suffix, also das ganze Wort. Für alle folgenden Teilworte wird überprüft, ob es bereits eine Kante mit selbem Anfangsbuchstaben gibt. Wenn schon, wird an solchen Kanten entlang gegangen und überprüft, ob die folgenden Buchstaben wieder gleich sind. Die Kante mit dem längsten solchen Match wird geteilt und der nicht gematchte Teil des neuen Suffix wird von dem neuen Knoten entlang einer Kante bis zu einem neuen Blatt geschrieben. Macht man eine Tiefensuche in diesem Baum, erhält man eine lexikografisch Sortierte Reihe aller Suffixe.\\
+	Sucht man nun nach einem Muster $P$ in $T$, so werden dieselben Schritte, wie beim Erstellen des Baumes durchgeführt. Man sucht zunächst nach einer Kante, die mit dem selben Buchstaben beginnt. Dann wird an diesen Kanten entlang weiter gesucht usw.
+	\subsection{Suffix-Arrays}
+	Wir ergänzen wieder ein \$ am Ende des Strings, um die oben beschriebene Problematik zu umgehen. Wir versuchen, alle Suffixe des Strings lexikografisch zu sortieren. Mit zum Beispiel Mergesort, benötigt das $\mathcal{O}(n^2\log n)$ Zeit, denn jeder Vergleich von zwei Strings benötigt lineare Zeit. Die Idee ist wieder, statt der Teilstrings nur die Indizes zu speichern, an denen der jeweilige Substring beginnt. Das sortierte Array heißt Suffix-Array. Wie wird in so einem Array nun gesucht?\\
+	Die Idee ist, binäre Suche zu verwenden. Man suche binär nach Indizes, an denen der erste Buchstabe unseres Patterns mit dem Buchstaben des Textes an diesem Index übereinstimmt. Mit $\log n$ Schritten, kann die linke Grenze dieser Buchstaben gefunden werden. Auf die selbe Weise, findet man die rechte Grenze. Dann müssen lediglich die Suffixe in diesem Teilarray untersucht werden. Man kann alle $j$ Instanzen eines Teilstrings der Länge $m$ in einem Text der Länge $n$ in $\mathcal{O}(m \log n + j)$ Zeit finden.
 \end{document}
