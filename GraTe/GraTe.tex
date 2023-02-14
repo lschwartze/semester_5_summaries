@@ -423,5 +423,21 @@
 	\end{itemize}
 	This then shows that we need at most $c\frac{n}{\log n}$ colours.\\
 	\textbf{Conjecture}\\
-	$\forall r$ the following might hold true: If $\chi(G) \geq r$, then there is a $K_r$ minor in $G$. It has been proven for small $r$ but remains largely unknown.
+	$\forall r$ the following might hold true: If $\chi(G) \geq r$, then there is a $K_r$ minor in $G$. It has been proven for small $r$ but remains largely unknown. It can be proven however for random graphs.\\
+	
+	There's another conjecture that failed the test for random graphs:\\
+	\textbf{Conjecture} (Hajós)\\
+	$\forall G, r$ if $\chi(G) \geq r$ then $G$ contains a subdivision of $K_r$. We know, that it is true for $r \leq 5$. We define $\sigma(G)$ as the largest $r$ such that $G$ has a $K_r$ subdivision. Then, the conjecture can be stated as $\chi(G) \leq \sigma(G)$.\\
+	\textbf{Theorem}\\
+	For constant $p \in (0,1)$, almost no $G \in G(n,p)$ satisfies Hajós' conjecture.\\
+	\textbf{Lemma}\\
+	Let $G$ be a graph on $n$ vertices. Then \[\sigma(G) \leq \sqrt{2(r-1)n}\]
+	\textbf{Theorem}\\
+	Let $H$ be a bipartite graph on $A,B$ such that $\forall b \in B$ $\deg(b) \leq s$. Then $\exists c > 0$ such that $ex(n,H) \leq c\cdot n^{2-\frac{1}{2}}$.\\
+	\textbf{Lemma}\\
+	Let $H$ be bipartite on $A,B$. Every vertex of $B$ has degree at most $s$. Let $G$ be a graph and $\exists U \subseteq V(G)$ s.t. \begin{itemize}
+		\item $\left|U\right| = \left|A\right|$
+		\item $\forall W \subseteq U$ of size $s$ there are at least $\left|A\right| + \left|B\right|$ common neighbours of the vertices of $W$ in $G$.
+	\end{itemize}
+	Then $H \subseteq G$.
 \end{document}
