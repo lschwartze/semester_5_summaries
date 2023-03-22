@@ -860,5 +860,97 @@ $5 \Rightarrow 6$: Ziel ist es zu zeigen, dass $m$ ein Hauptideal ist. Wir wisse
 $6 \Rightarrow 1$: Wir definieren $v$ über $R$ und weiten das später auf $K = Q(R)$ aus. Sei $\alpha \neq 0 \in R$ und $(\alpha) = (x^k)$ nach 5. Dann ist $(x^n) \neq (x^{n+1})$. $k$ ist eindeutig bestimmt. Deswegen definiere $v(\alpha) = k$.\\
 Dann ist $v(\frac{\alpha}{\beta}) = v(\alpha) - v(\beta)$. Das ist eine diskrete Bewertung und $R=O_v$.\\
 \textbf{Bemerkung}\\
-Ist $R$ lokal, noethersch, ein Integritätsring und $m$ ein Hauptideal, dann wie in der Implikation von 4. zu 5. ist jedes Ideal ungleich null der Form $I = (x^k)$. 
+Ist $R$ lokal, noethersch, ein Integritätsring und $m$ ein Hauptideal, dann wie in der Implikation von 4. zu 5. ist jedes Ideal ungleich null der Form $I = (x^k)$.\\
+\textbf{Proposition}\\
+Sei $A\subseteq B$. Sei $S\subseteq$ multiplikativ. $S^{-1}A \subseteq S^{-1}B$. Ist $B|A$ integral, dann auch $S^{-1}B|S^{-1}A$.\\
+\textbf{Proposition}\\
+Sei $A\subseteq B$ eine Inklusion. Sei $C$ der integrale Abschluss von $A$ in $B$. Dann ist $S^{-1}C$ der Abschluss von $S^{-1}A$ in $S^{-1}B$.\\
+\textbf{Proposition}\\
+Sei $A$ ein Integritätsring. $A$ ist integral abgeschlossen $\Leftrightarrow$ $A_{\underline{m}}$ ist integral abgeschlossen für alle maximalen $\underline{m}$.\\
+\section{Dedekind Ringe}
+\textbf{Definition}\\
+Ein \underline{Dedekind Ring} ist ein noetherscher Integritätsring der Dimension 1 der integral abgeschlossen ist.\\
+\textbf{Satz}\\
+Sei $A$ ein noetherscher Integritätsring der Dimension 1, dann ist $A$ ein Dedekind Ring $\Leftrightarrow$ $A_{\underline{m}}$ ist ein DVR für alle $\underline{m}$.\\
+\underline{Ziel}: Für $\underline{a} \subset R$ gibt es eine Primfaktorzerlegung $\underline{a} = p_1 \cdot ... \cdot p_r$ die bis auf die Nummerierung eindeutig ist. \begin{enumerate}
+	\item Ist $\underline{a} \neq 0$ so gibt es $P_1,...,p_r$ sodass $\underline{a} \supseteq p_1\cdot .... \cdot p_r$.
+	\item Gegeben $p \subset R$ prim definieren wir $p^{-1} = \left\{x \in K (= Q(R)): x\cdot p \subseteq R\right\}$. Dann gilt $\underline{a}p^{-1} \supsetneq \underline{a}$ für alle $\underline{a}$.
+	\item Es gilt für ein Primideal $p^{-1}p = R$, denn $p \subseteq p^{-1}p \subseteq R$. 
+	\item Sei $S$ die Menge der Ausnahmen und $\underline{a}$ maximale Ausnahme, $\underline{a} \subsetneq p$. Dann ist $\underline{a} \subsetneq ap^{-1} \subset pp^{-1} \subset R$. Außerdem $ap^{-1} = q_1\cdot ... \cdot q_s$ und $a = ap^{-1}p = q_1\cdot ... \cdot q_sp$
+	\item Angenommen $\underline{a} = p_1\cdot ... \cdot p_r = q_1 \cdot ... q_s$. Dann ist $p_1...p_r \subset q_1$ und $p_1 \subset q_1$ o.B.d.A. Dann ist $p_1 = q_1$ und $p_1^{-1}p_1 ... p_r = q_1^{-1}q_1 ... q_s$ und damit mit Induktion die Gleichheit.
+\end{enumerate}
+\section{Klausur}
+Relevant sind Gruppen, Ringe, Körper und Moduln. Integralität und Lokalisierung sind \underline{nicht} verpflichtend.
+\subsection{Gruppen}
+Relevant sind 1.1-1.11.
+\begin{itemize}
+	\item Definitionen von (Unter-)Gruppen, Homomorphismen
+	\item Basisaussagen zu Kern, Bild etc.
+	\item der Fall $\mathbb{Z}$ mit Untergruppen $n\mathbb{Z}$.
+	\item Untergruppen erzeugt von Mengen
+	\item Nebenklassen, Konsequenzen wie Satz von Lagrange
+	\item zyklische Gruppen, $G\subset K^*$ ist zyklisch
+	\item 1.5 optional
+	\item Permutationsgruppen, Verknüpfung, Zerlegung der Zyklen etc.
+	\item signum erklären aber nicht beweisen können, Polynom zu schwer
+	\item Gruppenwirkungen $G \to Sym(X)$, Diedergruppen $D_n$
+	\item platonische Körper zu kompliziert
+	\item Banh-Stabilisator-Satz
+	\begin{itemize}
+		\item Satz von Cauchy (mit Beweis)
+		\item Konjugation
+	\end{itemize}
+	\item Normale Untergruppen mit Isomorphiesatz \boxed{S_4 \to S_3 \implies S_4/V_4 \cong S_3} und \boxed{PGL_2(\mathbb{F}_3) \tilde{\to} S_4}
+	\item Gruppenstruktur von Quotientengruppen
+	\item ab 1.12 fertig
+\end{itemize}
+\subsection{Ringe}
+Relevant sind 2.1-2.8.
+\begin{itemize}
+	\item Definition von (Unter-)Ring und Homomorphismen
+	\item Einheiten, Teilbarkeit und Integritätsring (daraus Bruchkörper)
+	\item Ideale ($a|b \Leftrightarrow (b) \subseteq (a)$)
+	\item Euklidische Ringe nur für teilen mit Rest
+	\item Quotientenringe, z.B. 2.4.9 und Sun Zi
+	\item Prim- und Maximalideale
+	\item Hauptidealringe, z.B. äquivalent \begin{itemize}
+		\item $a$ irreduzibel
+		\item $(a)$ prim
+		\item $(a)$ maximal
+	\end{itemize}
+	\item Faktorielle Ringe als Verallgemeinerung von Hauptidealringen (jeder PID ist UFD)
+	\item $R$ UFD $\implies$ $R[x]$ ist UFD wegen Gauß (irreduzible Elemente in $R[x]$?)
+	\item ab 2.9 fertig
+\end{itemize}
+\subsection{Körper}
+Relevant sind 3.1-3.5.
+\begin{itemize}
+	\item $f \in K[x]$ irreduzibel, dann $K[x]/(f)$ ist Erweiterung von $K$ (Kriterien z.B. Eisenstein)
+	\item $L|K$ und $\alpha \in L$ dann $K(\alpha) \subset L$ Beschreibung als $K[x]/(f)$ kennen (Minimalpolynom kennen)
+	\item Algebraische Erweiterung: \begin{itemize}
+		\item endlich $\iff$ e.e. und algebraisch
+		\item $L|K$ allgemein e.e. $K\underbrace{\subset}_{\text{transzendent}} K(T) \underbrace{\subset}_{\text{algebraisch}} L$ + Beweis (3.4.20)
+		\item $L|K$ allgemein $M = \overline{K}^L = \{\alpha \in L: \alpha \text{ algebraisch über } K\}$ ist ein Körper, der algebraische Abschluss von $K$ in $L$ (von 3.3 ist nur 3.3.3 richtig relevant)
+	\end{itemize}
+	\item Separierbarkeit: ist $L|K$ endlich separierbar, so gilt $L = K(\alpha)$ für ein $\alpha \in L$, mehr von diesem Kapitel nicht gefragt, keine Beweise
+\end{itemize}
+\subsection{Moduln}
+Abschnitte 5.1-2 und 5.4-5; der Formalismus mit exakten Reihen, den wir in der Vorlesung entwickelt habe, ist nicht verpflichtet, da er nicht im Skript steht.
+\begin{itemize}
+	\item Definitionen von (Unter-)Moduln und Homomorphismen
+	\item neotherscher Formalismus (steht nicht in 5 sondern 6.1), Definition und Hilbert'scher Basissatz ohne Beweis (nicht noethersche Ringe schwierig zu finden)
+	\item 5.3 nicht
+	\item freie Moduln für allgemeine kommutative Ringe
+	\begin{itemize}
+		\item $M$ e.e und frei $\implies$ $M$ endlich frei
+		\item $M$ wie oben, $N<M$ frei, dann $N$ e.e. und $rk(N) \leq rk(M)$
+	\end{itemize}
+	\item Moduln über PIDs: \begin{itemize}
+		\item $M$ e.e. + frei, $N<M$, dann wie oben (ohne Beweis)
+		\item $M$ e.e. + torsionsfrei $\implies$ $M$ ist frei
+		\item $M$ wie oben $\implies$ $M = F \oplus M_{tor}$
+		\item Aussagen und Anwendungen (Elementarteiler und Invariante Faktoren, kein Beweis)
+	\end{itemize}
+	\item Fall $K[t]$: rationale Normalform als Konsequenz von Invarianten Faktoren und Jordan-Normalform als Konsequenz von Elementarteilern 
+\end{itemize}
 \end{document}
